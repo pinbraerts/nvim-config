@@ -20,6 +20,18 @@ for _, directory in ipairs(directories) do
 	end
 end
 
+if vim.fn.executable('python3') ~= 0 then
+	vim.g.python3_host_prog = 'python3'
+end
+
+if vim.fn.executable('python') ~= 0 then
+	if vim.fn.has('win32') ~= 0 then
+		vim.g.python3_host_prog = 'python'
+	else
+		vim.g.python_host_prog = 'python'
+	end
+end
+
 require 'setup.plugins'
 require 'setup.style'
 require 'setup.remap'
