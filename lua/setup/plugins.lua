@@ -180,6 +180,14 @@ require 'lazy'.setup {
 	},
 
 	{
+		'mfussenegger/nvim-dap-python',
+		ft = 'python',
+		config = function ()
+			require('dap-python').setup('python')
+		end,
+	},
+
+	{
 		'nvim-telescope/telescope-dap.nvim',
 		lazy = true,
 		ft = debuggable_filetypes,

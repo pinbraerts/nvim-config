@@ -56,17 +56,6 @@ local function lldb_compiling (compiler)
 	}
 end
 
-d.adapters.python = pre_launch {
-	id = 'python',
-	type = 'server',
-	port = '${port}',
-	executable = {
-		command = 'python',
-		args = { '-m', 'debugpy.adapter', '--port', '${port}',	},
-		detached = false,
-	},
-}
-
 local extension_path = '/home/pinbraerts/vscode/extension'
 local codelldb_path = extension_path .. '/adapter/codelldb'
 local liblldb_path =  extension_path .. '/lldb/lib/liblldb.so'
@@ -95,16 +84,6 @@ d.configurations.c = {
 
 d.configurations.rust = {
 	lldb_compiling('rustc -C opt-level=0 -g -o')
-}
-
-d.configurations.python = {
-	{
-		type = 'python',
-		request = 'launch',
-		name = 'Launch python standalone',
-		program = '${file}',
-		cwd = '${workspaceFolder}',
-	},
 }
 
 d.configurations.go = {
