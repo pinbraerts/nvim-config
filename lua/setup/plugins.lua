@@ -61,6 +61,21 @@ require 'lazy'.setup {
 	},
 
 	{
+		"chrishrb/gx.nvim",
+		keys = { { "gx", "<cmd>Browse<cr>", mode = { "n", "x" } } },
+		cmd = { "Browse" },
+		init = function ()
+			vim.g.netrw_nogx = 1
+		end,
+		dependencies = { 'nvim-lua/plenary.nvim' },
+		opts = {
+			handler_options = {
+				search_engine = "duckduckgo",
+			},
+		},
+	},
+
+	{
 		'mbbill/undotree',
 		keys = {
 			{ '<leader>tu', '<cmd>UndotreeToggle<cr>', desc = '[T]oggle [u]ndo tree', silent = true, },
