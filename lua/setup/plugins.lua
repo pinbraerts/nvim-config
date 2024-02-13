@@ -61,6 +61,13 @@ require 'lazy'.setup {
 	},
 
 	{
+		'mbbill/undotree',
+		keys = {
+			{ '<leader>tu', '<cmd>UndotreeToggle<cr>', desc = '[T]oggle [u]ndo tree', silent = true, },
+		},
+	},
+
+	{
 		'nvim-treesitter/nvim-treesitter',
 		dependencies = { 'nvim-treesitter/nvim-treesitter-textobjects' },
 		build = ':TSUpdate',
