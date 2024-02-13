@@ -288,9 +288,6 @@ require 'lazy'.setup {
 
 	{
 		'neovim/nvim-lspconfig',
-		dependencies = {
-			'hrsh7th/cmp-nvim-lsp',
-		},
 		ft = lsp_filetypes,
 		lazy = true,
 		config = function ()
@@ -304,13 +301,15 @@ require 'lazy'.setup {
 	{
 		'hrsh7th/nvim-cmp',
 		dependencies = {
-			'L3MON4D3/LuaSnip',
 			'hrsh7th/cmp-nvim-lsp',
 			'hrsh7th/cmp-buffer',
+			'hrsh7th/cmp-path',
+			'hrsh7th/cmp-cmdline',
+			'petertriho/cmp-git',
+			'L3MON4D3/LuaSnip',
 			'saadparwaiz1/cmp_luasnip',
 		},
-		ft = lsp_filetypes,
-		lazy = true,
+		lazy = false,
 		config = function()
 			require 'setup.completion'
 		end,

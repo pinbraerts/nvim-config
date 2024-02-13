@@ -1,6 +1,7 @@
 local luasnip = require('luasnip')
 local cmp = require('cmp')
-local function snip_next (fallback)
+
+local snip_next = cmp.mapping(function  (fallback)
 	if cmp.visible() then
 		cmp.select_next_item()
 	elseif luasnip.expand_or_jumpable() then
@@ -8,9 +9,9 @@ local function snip_next (fallback)
 	else
 		fallback()
 	end
-end
-snip_next = cmp.mapping(snip_next)
-local function snip_prev (fallback)
+end)
+
+local snip_prev = cmp.mapping(function (fallback)
 	if cmp.visible() then
 		cmp.select_prev_item()
 	elseif luasnip.jumpable(-1) then
@@ -18,8 +19,8 @@ local function snip_prev (fallback)
 	else
 		fallback()
 	end
-end
-snip_prev = cmp.mapping(snip_prev)
+end)
+
 cmp.setup {
 	snippet = {
 		expand = function(args)
@@ -30,6 +31,7 @@ cmp.setup {
 		{ name = 'nvim_lsp' },
 		{ name = 'luasnip' },
 		{ name = 'buffer' },
+		{ name = 'path' },
 	},
 	mapping = cmp.mapping.preset.insert {
 		['<c-u>'] = cmp.mapping.scroll_docs(-4),
@@ -45,3 +47,25 @@ cmp.setup {
 		},
 	},
 }
+
+cmp.setup.filetype('gitcommit', {
+	sources = {
+		{ name = 'buffer' },
+		{ name = 'git' },
+	},
+})
+
+cmp.setup.cmdline({ '/', '?' }, {
+	mapping = cmp.mapping.preset.cmdline(),
+	sources = {
+		{ name = 'buffer' },
+	},
+})
+
+cmp.setup.cmdline(':', {
+	mapping = cmp.mapping.preset.cmdline(),
+	sources = {
+		{ name = 'path' },
+		{ name = 'cmdline' },
+	},
+})
