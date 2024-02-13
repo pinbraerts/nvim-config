@@ -276,7 +276,7 @@ require 'lazy'.setup {
 			require 'setup.lsp'
 		end,
 		keys = {
-			{ 'gh', '<cmd>ClangdSwitchSourceHeader<cr>', silent = true, desc = 'Switch beetween source and header files by clangd', },
+			{ 'gh', '<cmd>ClangdSwitchSourceHeader<cr>', desc = '[G]o to header', silent = true, },
 		},
 	},
 
