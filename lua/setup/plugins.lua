@@ -314,16 +314,28 @@ require 'lazy'.setup {
 		'mfussenegger/nvim-dap',
 		lazy = true,
 		ft = debuggable_filetypes,
-		dependencies = {
-			'rcarriga/nvim-dap-ui',
-		},
 		config = function ()
 			require 'setup.debugging'
 		end,
 	},
 
 	{
+		'rcarriga/nvim-dap-ui',
+		dependencies = { 'mfussenegger/nvim-dap' },
+		keys = { { '<leader>td', desc = '[T]oggle [d]ebug ui' }, },
+		config = function ()
+			local dapui = require 'dapui'
+			dapui.setup()
+			vim.keymap.set(
+				'n', '<leader>td', dapui.toggle,
+				{ desc = "[T]oggle [d]ebug ui" }
+			)
+		end,
+	},
+
+	{
 		'mfussenegger/nvim-dap-python',
+		dependencies = { 'mfussenegger/nvim-dap' },
 		ft = 'python',
 		config = function ()
 			require('dap-python').setup(vim.fn.executable('python3') and 'python3' or 'python')
@@ -332,6 +344,7 @@ require 'lazy'.setup {
 
 	{
 		'leoluz/nvim-dap-go',
+		dependencies = { 'mfussenegger/nvim-dap' },
 		ft = 'go',
 		config = function ()
 			require('dap-go').setup()

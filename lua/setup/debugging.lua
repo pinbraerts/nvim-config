@@ -23,19 +23,6 @@ vim.keymap.set('n', 'K', function ()
 	end
 end, { desc = 'LSP or DAP hover' })
 
-local function pre_launch (adapter)
-   return function (callback, config)
-		if config.preLaunchTask then
-			if type(config.preLaunchTask) == 'string' then
-				vim.fn.system(config.preLaunchTask)
-			else
-				config.preLaunchTask()
-			end
-		end
-		return callback(adapter)
-	end
-end
-
 local function lldb_compiling (compiler)
 	return {
 		type = 'codelldb',
@@ -64,16 +51,6 @@ d.adapters.codelldb = require 'rustaceanvim.config'.get_codelldb_adapter(
 	liblldb_path
 )
 
-d.adapters.delve = pre_launch {
-	type = 'server',
-	port = '${port}',
-	executable = {
-		command = 'dlv',
-		args = { 'dap', '-l', '${port}' },
-	},
-	preLaunchTask = 'go build -o output -p 12',
-}
-
 d.configurations.cpp = {
 	lldb_compiling('clang++ -O0 -g -o')
 }
@@ -84,14 +61,4 @@ d.configurations.c = {
 
 d.configurations.rust = {
 	lldb_compiling('rustc -C opt-level=0 -g -o')
-}
-
-d.configurations.go = {
-	{
-		type = 'delve',
-		request = 'launch',
-		name = 'Compile and run go project',
-		program = '${workspaceFolder}/output/wireguird',
-		cwd = '${workspaceFolder}',
-	},
 }
