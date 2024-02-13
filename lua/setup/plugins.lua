@@ -247,6 +247,7 @@ require 'lazy'.setup {
 			{ '\\gu', '<cmd>G submodule update', desc = '[G]it [u]pdate submodules', silent = true },
 			{ '\\gU', '<cmd>G submodule update --init --recursive<cr>', desc = '[G]it [U]pdate submodules recursive init', silent = true },
 			{ '\\gl', '<cmd>G pull<cr>', desc = '[G]it pu[l]l', silent = true },
+			{ '\\gL', '<cmd>G pull --no-rebase<cr>', desc = '[G]it pu[l]l rebase', silent = true },
 		},
 	},
 
