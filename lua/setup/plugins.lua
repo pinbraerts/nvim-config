@@ -53,7 +53,17 @@ require 'lazy'.setup {
 		},
 	},
 
-	'folke/tokyonight.nvim',
+	{
+		'folke/tokyonight.nvim',
+		opts = {
+			transparent = true,
+			styles = {
+				sidebars = 'transparent',
+				floats = 'transparent',
+			},
+		},
+	},
+
 	{
 		'mtdl9/vim-log-highlighting',
 		lazy = true,
