@@ -25,6 +25,111 @@ require 'lazy'.setup {
 	},
 
 	{
+		'monaqa/dial.nvim',
+		config = function ()
+			local augend = require("dial.augend")
+			require("dial.config").augends:register_group {
+				default = {
+					augend.integer.alias.decimal,
+					augend.integer.alias.hex,
+					augend.integer.alias.binary,
+					augend.integer.alias.octal,
+					augend.date.alias["%d.%m.%Y"],
+					augend.constant.alias.bool,
+					augend.constant.new {
+						elements = { 'True', 'False' },
+						word = true,
+						cyclic = true,
+					},
+					augend.constant.new {
+						elements = { 'and', 'or' },
+						word = true,
+						cyclic = true,
+					},
+					augend.constant.new {
+						elements = {
+							'January',
+							'February',
+							'March',
+							'April',
+							'May',
+							'June',
+							'July',
+							'August',
+							'September',
+							'October',
+							'November',
+							'December',
+						},
+						word = true,
+						cyclic = true,
+					},
+					augend.constant.new {
+						elements = {
+							'Sunday',
+							'Monday',
+							'Tuesday',
+							'Wednesday',
+							'Thursday',
+							'Friday',
+							'Saturday',
+						},
+						word = true,
+						cyclic = true,
+					},
+					augend.constant.new {
+						elements = {
+							'Январь',
+							'Февраль',
+							'Март',
+							'Апрель',
+							'Май',
+							'Июнь',
+							'Июль',
+							'Август',
+							'Сентябрь',
+							'Октябрь',
+							'Ноябрь',
+							'Декабрь',
+						},
+						word = true,
+						cyclic = true,
+					},
+					augend.constant.new {
+						elements = {
+							'Понедельник',
+							'Вторник',
+							'Среда',
+							'Четверг',
+							'Пятница',
+							'Суббота',
+							'Воскресенье',
+						},
+						word = true,
+						cyclic = true,
+					},
+					augend.hexcolor.new { },
+					augend.semver.new { },
+				},
+				visual = {
+					augend.paren.new {
+						patterns = { { "'", "'" }, { '"', '"' } },
+						nested = false,
+						escape_char = [[\]],
+						cyclic = true,
+					},
+				},
+			}
+		end,
+		keys = {
+			{  '<C-a>',  '<Plug>(dial-increment)', mode = { 'n', 'v' }, },
+			{  '<C-x>',  '<Plug>(dial-decrement)', mode = { 'n', 'v' }, },
+			{ 'g<C-a>', 'g<Plug>(dial-increment)', mode = { 'n', 'v' }, },
+			{ 'g<C-x>', 'g<Plug>(dial-decrement)', mode = { 'n', 'v' }, },
+		},
+	},
+
+	{
 		'norcalli/nvim-colorizer.lua',
 		config = function ()
 			require('colorizer').setup(
@@ -129,8 +234,6 @@ require 'lazy'.setup {
 			}
 		end,
 	},
-
-	-- 'pinbraerts/shell.vim',
 
 	{
 		'tpope/vim-fugitive',
