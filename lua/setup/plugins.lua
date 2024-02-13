@@ -260,7 +260,7 @@ require 'lazy'.setup {
 
 	{
 		'nvim-telescope/telescope.nvim',
-		branch = 'master',
+		branch = '0.1.x',
 		dependencies = { 'nvim-lua/plenary.nvim' },
 		config = function ()
 			require 'setup.telescope'
