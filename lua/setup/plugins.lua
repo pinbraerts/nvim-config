@@ -331,6 +331,14 @@ require 'lazy'.setup {
 	},
 
 	{
+		'leoluz/nvim-dap-go',
+		ft = 'go',
+		config = function ()
+			require('dap-go').setup()
+		end,
+	},
+
+	{
 		'nvim-telescope/telescope-dap.nvim',
 		lazy = true,
 		ft = debuggable_filetypes,
