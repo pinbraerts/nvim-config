@@ -344,7 +344,7 @@ require 'lazy'.setup {
 		'mfussenegger/nvim-dap-python',
 		ft = 'python',
 		config = function ()
-			require('dap-python').setup('python')
+			require('dap-python').setup(vim.fn.executable('python3') and 'python3' or 'python')
 		end,
 	},
 
