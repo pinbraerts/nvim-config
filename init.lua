@@ -18,11 +18,3 @@ local local_file = config .. '/lua/local.lua'
 if vim.fn.filereadable(local_file) ~= 0 then
 	vim.cmd.source(local_file)
 end
-
-local local_setup = config .. '/lua/local'
-if vim.fn.isdirectory(local_setup) ~= 0 then
-	local files = vim.fn.glob(local_setup .. '/*.lua')
-	for file in string.gmatch(files, "([^\n]+)") do
-		vim.cmd.source(file)
-	end
-end

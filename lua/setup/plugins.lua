@@ -14,6 +14,12 @@ vim.opt.rtp:prepend(lazypath)
 local lsp_filetypes = { 'lua', 'python', 'c', 'cpp', 'rust', 'go', 'ps1', 'tex', 'plaintex', 'bib' }
 local debuggable_filetypes = { 'python', 'c', 'cpp', 'rust', 'go' }
 
+local local_plugins_file = vim.fn.stdpath('config') .. '/lua/local/plugins.lua'
+local local_plugins = { }
+if vim.fn.filereadable(local_plugins_file) ~= 0 then
+	local_plugins = require('local.plugins')
+end
+
 require 'lazy'.setup {
 	{
 		'nvim-lualine/lualine.nvim',
@@ -23,6 +29,10 @@ require 'lazy'.setup {
 			require 'setup.lualine'
 		end,
 	},
+
+	'EdenEast/nightfox.nvim',
+	{ 'catppuccin/nvim', name = 'catppuccin' },
+	'folke/tokyonight.nvim',
 
 	{
 		'monaqa/dial.nvim',
@@ -147,34 +157,6 @@ require 'lazy'.setup {
 				}
 			)
 		end,
-	},
-
-	{
-		'EdenEast/nightfox.nvim',
-		opts = {
-			options = {
-				transparent = true,
-			},
-		},
-	},
-
-	{
-		'catppuccin/nvim',
-		name = 'catppuccin',
-		opts = {
-			transparent_background = true,
-		},
-	},
-
-	{
-		'folke/tokyonight.nvim',
-		opts = {
-			transparent = true,
-			styles = {
-				sidebars = 'transparent',
-				floats = 'transparent',
-			},
-		},
 	},
 
 	{
@@ -366,4 +348,5 @@ require 'lazy'.setup {
 		end,
 	},
 
+	unpack(local_plugins)
 }
