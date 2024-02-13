@@ -140,6 +140,13 @@ require 'lazy'.setup {
 	},
 
 	{
+		'folke/trouble.nvim',
+		keys = {
+			{ '<leader>te', '<cmd>TroubleToggle<cr>', desc = { "[T]oggle [e]rrors" }, silent = true },
+		},
+	},
+
+	{
 		'norcalli/nvim-colorizer.lua',
 		config = function ()
 			require('colorizer').setup(
