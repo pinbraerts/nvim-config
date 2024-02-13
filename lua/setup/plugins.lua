@@ -67,6 +67,9 @@ require 'lazy'.setup {
 		config = function()
 			require 'setup.treesitter'
 		end,
+		keys = {
+			{ '<leader>ti', '<cmd>InspectTree<cr>', desc = '[T]ree [i]nspect', silent = true, },
+		},
 	},
 
 	{
