@@ -22,10 +22,14 @@ t.setup {
 			horizontal = {
 				preview_width = { 0.5, min = 80, },
 				preview_cutoff = 0,
+				width = 0.9,
+				height = 0.9,
 			},
 			vertical = {
 				preview_cutoff = 0,
 				preview_height = 0.5,
+				width = 0.9,
+				height = 0.9,
 			},
 		},
 		layout_strategy = 'flex',
@@ -82,11 +86,16 @@ t.setup {
 				},
 			},
 		},
+		find_files = {
+			no_ignore = true,
+			hidden = true,
+		},
 	},
 	extensions = {
 		file_browser = {
 			respect_gitignore = false,
 			auto_depth = 2,
+			hidden = true,
 		},
 	},
 }
@@ -115,7 +124,17 @@ vim.keymap.set('n', '<leader>tr', b.resume, { desc = 'Reopen last picker [T]eles
 vim.keymap.set('n', '<leader>fd', b.find_files, { desc = 'Find files (with [fd])' })
 vim.keymap.set('n', '<leader>gf', b.git_files, { desc = '[G]it [f]iles' })
 vim.keymap.set('n', '<leader>rg', b.live_grep, { desc = 'Live grep (with [rg])' })
+vim.keymap.set('n', '<leader>rG', function ()
+	b.live_grep {
+		additional_args = { '-u' },
+	}
+end, { desc = 'Live grep (with [rg], show ignored files)' })
 vim.keymap.set('n', '<leader>gw', b.grep_string, { desc = '[G]rep [w]ord' })
+vim.keymap.set('n', '<leader>gW', function ()
+	b.grep_string {
+		additional_args = { '-u' },
+	}
+end, { desc = '[G]rep [w]ord' })
 vim.keymap.set('n', '<leader>rf', b.oldfiles, { desc = '[R]ecent [f]iles' })
 
 vim.keymap.set('n', '<leader>ld', b.current_buffer_tags, { desc = '[L]SP buffer [t]ags' })
