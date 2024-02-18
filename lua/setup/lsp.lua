@@ -30,6 +30,7 @@ lspconfig.powershell_es.setup {
 	single_file_support = true,
 	bundle_path = 'D:/PowerShellEditorServices',
 }
+lspconfig.bashls.setup { }
 lspconfig.texlab.setup {
 	settings = {
 		texlab = {

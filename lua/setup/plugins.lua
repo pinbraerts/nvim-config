@@ -11,7 +11,7 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-local lsp_filetypes = { 'lua', 'python', 'c', 'cpp', 'rust', 'go', 'ps1', 'tex', 'plaintex', 'bib' }
+local lsp_filetypes = { 'lua', 'python', 'c', 'cpp', 'rust', 'go', 'ps1', 'tex', 'plaintex', 'bib', 'sh' }
 local debuggable_filetypes = { 'python', 'c', 'cpp', 'rust', 'go' }
 
 local local_plugins_file = vim.fn.stdpath('config') .. '/lua/local/plugins.lua'
