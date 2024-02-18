@@ -33,7 +33,7 @@ local function cleanup(socket, pid)
 end
 
 local function image_info(path)
-	local information = vim.fn.system({
+	local information = vim.fn.systemlist({
 		'exiftool', path,
 		'-ImageSize',
 		'-Software',
@@ -44,32 +44,33 @@ local function image_info(path)
 	if vim.v.shell_error ~= 0 then
 		return nil
 	end
+	return information
 end
 
 return u.make_default_callable(function (opts)
-	return p.new {
+	return p.new_buffer_previewer {
+		title = 'Ueberzugpp image previewer',
+
 		setup = function (self)
 			local filename = '/tmp/nvim_ueberzugpp_pid'
 			vim.fn.system({ 'ueberzugpp', 'layer', '--no-stdin', '--pid-file', filename })
 			if vim.v.shell_error ~= 0 then
-				return
+				return { }
 			end
 			local pid_file = io.open(filename, 'r')
 			if pid_file == nil then
-				return
+				return { }
 			end
 			local pid = pid_file:read("*l")
 			pid_file:close()
+			vim.fn.delete(filename)
 			self.socket = '/tmp/ueberzugpp-'..pid..'.socket'
 			self.pid = tonumber(pid)
 			if not vim.fn.filereadable(self.socket) then
 				self.socket = nil
-				return
+				return { }
 			end
 			return self
-		end,
-
-		scroll_fn = function (self, direction)
 		end,
 
 		teardown = function (self)
@@ -80,18 +81,23 @@ return u.make_default_callable(function (opts)
 			self.socket = nil
 		end,
 
-		preview_fn = function (self, entry, status)
+		define_preview = function (self, entry, status)
+			local info = image_info(entry.path)
+			if info == nil then
+				return
+			end
+			vim.api.nvim_buf_set_lines(self.state.bufnr, 0, -1, true, info)
 			if self.socket == nil then
 				return
 			end
 			if self.preview_id ~= nil then
 				remove_preview(self.socket, self.preview_id)
 			end
-			local w = vim.fn.winwidth(status.preview_win)
-			local h = vim.fn.winheight(status.preview_win)
+			local w = vim.fn.winwidth(self.state.winid)
+			local h = vim.fn.winheight(self.state.winid) - #info
 			local position = vim.fn.win_screenpos(status.preview_win)
 			local x = position[2] - 1
-			local y = position[1] - 1
+			local y = position[1] - 1 + #info
 			add_preview(self.socket, entry.path, x, y, w, h)
 			if vim.v.shell_error == 0 then
 				self.preview_id = entry.path
