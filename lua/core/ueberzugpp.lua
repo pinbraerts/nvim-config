@@ -1,28 +1,7 @@
 local p = require 'telescope.previewers'
 local u = require 'telescope.utils'
-
-local function remove_preview(socket, id)
-	vim.fn.system({
-		'ueberzugpp', 'cmd',
-		'-s', socket,
-		'-a', 'remove',
-		'-i', id,
-	})
-end
-
-local function add_preview(socket, path, x, y, w, h)
-	vim.fn.system({
-		'ueberzugpp', 'cmd',
-		'-s', socket,
-		'-a', 'add',
-		'-i', path,
-		'-f', path,
-		'-x', x,
-		'-y', y,
-		'--max-width', w,
-		'--max-height', h,
-	})
-end
+local pu = require 'telescope.previewers.utils'
+local c = require("telescope.config").values
 
 local function cleanup(socket, pid)
 	vim.fn.system({ 'ueberzugpp', 'cmd', '-a', 'exit', '-s', socket })
@@ -32,28 +11,68 @@ local function cleanup(socket, pid)
 	end
 end
 
-local function image_info(path)
-	local information = vim.fn.systemlist({
-		'exiftool', path,
+local function get_file_extension(filename)
+	local array = vim.split(filename, '.', { plain = true })
+	return array[#array]
+end
+
+local defaults = {
+	image_filetypes = { 'jpg', 'jpeg', 'png', 'svg', },
+	title = 'File Preview',
+	cmd = 'ueberzug',
+}
+
+function defaults.exiftool (filename)
+	return {
+		'exiftool',
 		'-ImageSize',
 		'-Software',
 		'-FileType',
 		'-Compression',
 		'-ColorSpace',
-	})
-	if vim.v.shell_error ~= 0 then
-		return nil
-	end
-	return information
+		filename,
+	}
+end
+
+function defaults.add (cmd, socket, path, id, x, y, w, h)
+	return {
+		cmd, 'cmd',
+		'-s', socket,
+		'-a', 'add',
+		'-i', id,
+		'-f', path,
+		'-x', x,
+		'-y', y,
+		'--max-width', w,
+		'--max-height', h,
+	}
+end
+
+function defaults.remove (cmd, socket, id)
+	return {
+		cmd, 'cmd',
+		'-s', socket,
+		'-a', 'remove',
+		'-i', id,
+	}
+end
+
+function defaults.start (cmd, filename)
+	return {
+		cmd, 'layer',
+		'--no-stdin', '--pid-file',
+		filename,
+	}
 end
 
 return u.make_default_callable(function (opts)
+	opts = vim.tbl_extend("keep", opts or { }, defaults)
 	return p.new_buffer_previewer {
-		title = 'Ueberzugpp image previewer',
+		title = opts.title,
 
 		setup = function (self)
 			local filename = '/tmp/nvim_ueberzugpp_pid'
-			vim.fn.system({ 'ueberzugpp', 'layer', '--no-stdin', '--pid-file', filename })
+			vim.fn.system(opts.start(opts.cmd, filename))
 			if vim.v.shell_error ~= 0 then
 				return { }
 			end
@@ -82,26 +101,42 @@ return u.make_default_callable(function (opts)
 		end,
 
 		define_preview = function (self, entry, status)
-			local info = image_info(entry.path)
-			if info == nil then
-				return
-			end
-			vim.api.nvim_buf_set_lines(self.state.bufnr, 0, -1, true, info)
-			if self.socket == nil then
-				return
-			end
-			if self.preview_id ~= nil then
-				remove_preview(self.socket, self.preview_id)
-			end
 			local w = vim.fn.winwidth(self.state.winid)
-			local h = vim.fn.winheight(self.state.winid) - #info
+			local h = vim.fn.winheight(self.state.winid) - 5
 			local position = vim.fn.win_screenpos(status.preview_win)
 			local x = position[2] - 1
-			local y = position[1] - 1 + #info
-			add_preview(self.socket, entry.path, x, y, w, h)
-			if vim.v.shell_error == 0 then
-				self.preview_id = entry.path
+			local y = position[1] - 1 + 5
+
+			if self.preview_id ~= nil then
+				pu.job_maker(
+					opts.remove(opts.cmd, self.socket, self.preview_id),
+					self.state.bufnr,
+					{ mode = 'append' }
+				)
 			end
+			self.preview_id = entry.path..x..y..w..h
+			local filetype = get_file_extension(entry.path)
+			if filetype == nil or #filetype == 0 then
+				return { }
+			end
+
+			-- fallback to default buffer preview
+			if not vim.tbl_contains(opts.image_filetypes, filetype) then
+				return c.buffer_previewer_maker(entry.path, self.state.bufnr, {
+					bufname = self.state.bufname,
+					winid = self.state.winid,
+				})
+			end
+
+			-- local info = vim.fn.systemlist(opts.exiftool(entry.path), self.state.bufnr)
+			-- vim.api.nvim_buf_set_lines(self.state.bufnr, 0, -1, true, info)
+			pu.job_maker(opts.exiftool(entry.path), self.state.bufnr)
+
+			pu.job_maker(
+				opts.add(opts.cmd, self.socket, entry.path, self.preview_id, x, y, w, h),
+				self.state.bufnr,
+				{ mode = 'append' }
+			)
 		end,
 
 	}
