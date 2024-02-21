@@ -30,6 +30,8 @@ require 'lazy'.setup {
 		end,
 	},
 
+	'nanotee/zoxide.vim',
+
 	'EdenEast/nightfox.nvim',
 	{ 'catppuccin/nvim', name = 'catppuccin' },
 	'folke/tokyonight.nvim',
