@@ -66,14 +66,17 @@ lspconfig.lua_ls.setup {
 	},
 	single_file_support = true,
 }
+
 lspconfig.pylsp.setup {
 	capabilities = cmp_capabilities,
 	on_attach = on_attach,
 }
+
 lspconfig.clangd.setup {
 	capabilities = cmp_capabilities,
 	on_attach = on_attach,
 }
+
 lspconfig.powershell_es.setup {
 	capabilities = cmp_capabilities,
 	on_attach = on_attach,
@@ -115,6 +118,26 @@ lspconfig.texlab.setup {
 			},
 		},
 	},
+}
+
+-- lspconfig.eslint.setup {
+-- 	capabilities = cmp_capabilities,
+-- 	on_attach = on_attach,
+-- }
+
+lspconfig.tsserver.setup {
+	capabilities = cmp_capabilities,
+	on_attach = on_attach,
+}
+
+lspconfig.cssls.setup {
+	capabilities = cmp_capabilities,
+	on_attach = on_attach,
+}
+
+lspconfig.html.setup {
+	capabilities = cmp_capabilities,
+	on_attach = on_attach,
 }
 
 lspconfig.gopls.setup {
