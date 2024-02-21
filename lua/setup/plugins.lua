@@ -196,7 +196,11 @@ require 'lazy'.setup {
 
 	{
 		'nvim-treesitter/nvim-treesitter',
-		dependencies = { 'nvim-treesitter/nvim-treesitter-textobjects' },
+		dependencies = {
+			'nvim-treesitter/nvim-treesitter-textobjects',
+			'nvim-treesitter/nvim-treesitter-context',
+			'windwp/nvim-ts-autotag',
+		},
 		build = ':TSUpdate',
 		lazy = false,
 		config = function()

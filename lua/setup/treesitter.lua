@@ -9,7 +9,7 @@ require 'nvim-treesitter.configs'.setup {
 	ignore_install = {},
 	modules = {},
 	highlight = {
-		enable = languages,
+		enable = true,
 		additional_vim_regex_highlighting = false,
 	},
 	indent = { enable = true, disable = { 'c', 'cpp' } },
@@ -57,5 +57,15 @@ require 'nvim-treesitter.configs'.setup {
 				['<leader>A'] = '@parameter.inner',
 			},
 		},
+	},
+	context = {
+		enable = true,
+	},
+	autotag = {
+		enable = true,
+		enable_rename = true,
+		enable_close = true,
+		enable_close_on_slash = true,
+		filetypes = { 'xml', 'html' },
 	},
 }
