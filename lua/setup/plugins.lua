@@ -144,7 +144,7 @@ require 'lazy'.setup {
 	{
 		'folke/trouble.nvim',
 		keys = {
-			{ '<leader>te', '<cmd>TroubleToggle<cr>', desc = { "[T]oggle [e]rrors" }, silent = true },
+			{ '<leader>te', '<cmd>TroubleToggle<cr>', desc = "[T]oggle [e]rrors", silent = true },
 		},
 	},
 
