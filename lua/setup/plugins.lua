@@ -225,6 +225,21 @@ require 'lazy'.setup {
 	},
 
 	{
+		'windwp/nvim-ts-autotag',
+		dependencies = {
+			'nvim-treesitter/nvim-treesitter',
+		},
+		ft = {
+			'html', 'xml',
+			'javascript', 'typescript', 'javascriptreact',
+			'typescriptreact', 'svelte', 'vue', 'tsx', 'jsx', 'rescript',
+			'php',
+			'markdown',
+			'astro', 'glimmer', 'handlebars', 'hbs'
+		},
+	},
+
+	{
 		'numToStr/Comment.nvim',
 		config = function ()
 			require 'Comment'.setup {
