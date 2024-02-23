@@ -31,6 +31,7 @@ return {
 
 	{
 		'aserowy/tmux.nvim',
+		cond = function () return os.getenv("TMUX") ~= nil end,
 		config = function ()
 			require('tmux').setup {
 				navigation = {
