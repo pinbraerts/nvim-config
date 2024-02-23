@@ -41,7 +41,12 @@ require 'lazy'.setup {
 		end,
 	},
 
-	'nanotee/zoxide.vim',
+	{
+		'nanotee/zoxide.vim',
+		cmd = {
+			'Z', 'Lz', 'Tz', 'Zi', 'Lzi', 'Tzi',
+		},
+	},
 
 	'EdenEast/nightfox.nvim',
 	{ 'catppuccin/nvim', name = 'catppuccin' },
