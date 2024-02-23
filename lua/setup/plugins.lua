@@ -243,7 +243,7 @@ require 'lazy'.setup {
 
 	{
 		'tpope/vim-fugitive',
-		lazy = false,
+		cmd = 'G',
 		keys = {
 			{ '\\gc', '<cmd>G commit<cr>', desc = '[G]it [c]ommit', silent = true },
 			{ '\\gf', '<cmd>G fetch<cr>', desc = '[G]it [f]etch', silent = true },
