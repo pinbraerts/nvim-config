@@ -379,7 +379,6 @@ require 'lazy'.setup {
 
 	{
 		'mfussenegger/nvim-dap',
-		lazy = true,
 		ft = debuggable_filetypes,
 		config = function ()
 			require 'setup.debugging'
@@ -420,12 +419,9 @@ require 'lazy'.setup {
 
 	{
 		'nvim-telescope/telescope-dap.nvim',
-		lazy = true,
-		ft = debuggable_filetypes,
 		dependencies = {
 			'nvim-telescope/telescope.nvim',
 			'mfussenegger/nvim-dap',
-			'nvim-treesitter/nvim-treesitter',
 		},
 		config = function()
 			local td = require('telescope').load_extension('dap')
@@ -434,6 +430,12 @@ require 'lazy'.setup {
 			vim.keymap.set('n', '<leader>df', td.frames, { desc = '[List] [d]ebug [f]rames' })
 			vim.keymap.set('n', '<leader>dv', td.variables, { desc = '[L]ist [d]ebug [v]ariables' })
 		end,
+		keys = {
+			{ '<leader>db', desc = '[L]ist [d]ebug [b]reakpoints' },
+			{ '<leader>dd', desc = '[L]ist [d]ebug [c]onfigurations' },
+			{ '<leader>df', desc = '[List] [d]ebug [f]rames' },
+			{ '<leader>dv', desc = '[L]ist [d]ebug [v]ariables' },
+		},
 	},
 
 	unpack(local_plugins)
