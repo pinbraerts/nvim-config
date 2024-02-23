@@ -271,6 +271,46 @@ require 'lazy'.setup {
 		config = function ()
 			require 'setup.telescope'
 		end,
+		cmd = 'Telescope',
+		keys = {
+			{ '<leader>]' , desc = 'Fuzzy find' },
+			{ '<leader>t/', desc = 'Search history' },
+			{ '<leader>t;', desc = 'Command history' },
+			{ '<leader>h' , desc = '[h]elp tags' },
+			{ '<leader>mp', desc = '[m]an [p]ages' },
+			{ '<leader>mm', desc = 'marks' },
+			{ '<leader>q' , desc = '[q]uickfix' },
+			{ '<leader>tb', desc = '[b]uffers' },
+			{ '<leader>tc', desc = '[c]olorscheme' },
+			{ '<leader>ch', desc = '[C]heat [s]heet' },
+			{ '<leader>tl', desc = 'Jump[l]is[t]' },
+			{ '<leader>to', desc = '[o]ptions' },
+			{ '<leader>tp', desc = '[p]ickers' },
+			{ '<leader>tq', desc = '[q]uckfix history' },
+			{ '<leader>t=', desc = 'Registers' },
+			{ '<leader>ts', desc = '[S]ymbols' },
+			{ '<leader>tj', desc = 'builtin pickers' },
+			{ '<leader>tr', desc = 'Reopen last picker [T]elescope [r]esume' },
+			{ '<leader>fd', desc = 'Find files (with [fd])' },
+			{ '<leader>gf', desc = '[G]it [f]iles' },
+			{ '<leader>rg', desc = 'Live grep (with [rg])' },
+			{ '<leader>rG', desc = 'Live grea (with [rg], all files)' },
+			{ '<leader>gw', desc = '[G]rep [w]ord' },
+			{ '<leader>gW', desc = '[G]rep [w]ord (all files)' },
+			{ '<leader>rf', desc = '[R]ecent [f]iles' },
+			{ '<leader>ld', desc = '[L]SP buffer [t]ags' },
+			{ '<leader>lf', desc = '[L]SP [f]ull tags' },
+			{ '<leader>li', desc = '[L]SP [i]ncoming calls' },
+			{ '<leader>lo', desc = '[L]SP [o]outgoing calls' },
+			{ '<leader>ls', desc = '[L]SP tag[s]tack' },
+			{ '<leader>lt', desc = '[L]SP [t]ype definitions' },
+			{ '<leader>gb', desc = '[g]it [b]ranches' },
+			{ '<leader>gc', desc = '[g]it [c]ommits' },
+			{ '<leader>gC', desc = '[g]it [C]ommits of the buffer' },
+			{ '<leader>gh', desc = '[G]it stas[h]' },
+			{ '<leader>gl', desc = '[G]it [l]og commits' },
+			{ '<leader>gs', desc = '[G]it [s]tatus' },
+		},
 	},
 
 	{
@@ -280,6 +320,7 @@ require 'lazy'.setup {
 			local tf = require('telescope').load_extension('file_browser')
 			vim.keymap.set('n', '<leader>fb', tf.file_browser, { desc = '[F]ile [b]rowser' })
 		end,
+		keys = { '<leader>fb', desc = '[F]ile [b]rowser' },
 	},
 
 	{
@@ -288,12 +329,13 @@ require 'lazy'.setup {
 		config = function()
 			local ts = require('telescope.builtin')
 			vim.keymap.set('n', '<leader>ts', ts.symbols, { desc = 'Open unicode symbols picker' })
-			vim.keymap.set('i', '<c-s>', ts.symbols, { desc = 'Open unicode symbols picker' })
 		end,
+		keys = { '<leader>ts', desc = 'Open unicode symbols picker' },
 	},
 
 	{
 		'neovim/nvim-lspconfig',
+		dependencies = { 'nvim-telescope/telescope.nvim' },
 		ft = lsp_filetypes,
 		lazy = true,
 		config = function ()

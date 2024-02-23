@@ -138,13 +138,13 @@ vim.keymap.set('n', '<leader>rG', function ()
 	b.live_grep {
 		additional_args = { '-u' },
 	}
-end, { desc = 'Live grep (with [rg], show ignored files)' })
+end, { desc = 'Live grep (with [rg], all files)' })
 vim.keymap.set('n', '<leader>gw', b.grep_string, { desc = '[G]rep [w]ord' })
 vim.keymap.set('n', '<leader>gW', function ()
 	b.grep_string {
 		additional_args = { '-u' },
 	}
-end, { desc = '[G]rep [w]ord' })
+end, { desc = '[G]rep [w]ord (all files)' })
 vim.keymap.set('n', '<leader>rf', b.oldfiles, { desc = '[R]ecent [f]iles' })
 
 vim.keymap.set('n', '<leader>ld', b.current_buffer_tags, { desc = '[L]SP buffer [t]ags' })
