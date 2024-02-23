@@ -186,7 +186,6 @@ require 'lazy'.setup {
 
 	{
 		'mtdl9/vim-log-highlighting',
-		lazy = true,
 		ft = 'log',
 	},
 
@@ -370,7 +369,6 @@ require 'lazy'.setup {
 		'neovim/nvim-lspconfig',
 		dependencies = { 'nvim-telescope/telescope.nvim' },
 		ft = lsp_filetypes,
-		lazy = true,
 		config = function ()
 			require 'setup.lsp'
 		end,
