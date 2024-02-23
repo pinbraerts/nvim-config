@@ -245,6 +245,8 @@ require 'lazy'.setup {
 
 	{
 		'numToStr/Comment.nvim',
+		dependencies = { 'nvim-treesitter/nvim-treesitter' },
+		keys = { { 'gc', mode = { 'n', 'v' } } },
 		config = function ()
 			require 'Comment'.setup {
 				padding = true,
