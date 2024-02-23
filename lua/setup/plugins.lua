@@ -375,6 +375,7 @@ require 'lazy'.setup {
 
 	{
 		'hrsh7th/nvim-cmp',
+		event = { 'CmdLineEnter', 'LspAttach', 'InsertEnter' },
 		dependencies = {
 			'hrsh7th/cmp-nvim-lsp',
 			'hrsh7th/cmp-nvim-lsp-signature-help',
@@ -385,7 +386,6 @@ require 'lazy'.setup {
 			'L3MON4D3/LuaSnip',
 			'saadparwaiz1/cmp_luasnip',
 		},
-		lazy = false,
 		config = function()
 			require 'setup.completion'
 		end,
