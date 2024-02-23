@@ -77,6 +77,16 @@ t.setup {
 				},
 			},
 		},
+		man_pages = {
+			mappings = {
+				i = {
+					['<enter>'] = 'select_vertical',
+				},
+				n = {
+					['<c-enter>'] = 'select_vertical',
+				},
+			},
+		},
 		git_status = {
 			initial_mode = 'normal',
 			mappings = {
@@ -105,7 +115,7 @@ vim.keymap.set('n', '<leader>]', b.current_buffer_fuzzy_find, { desc = 'Fuzzy fi
 vim.keymap.set('n', '<leader>t/', b.search_history, { desc = 'Search history' })
 vim.keymap.set('n', '<leader>t;', b.command_history, { desc = 'Command history' })
 vim.keymap.set('n', '<leader>h', b.help_tags, { desc = '[h]elp tags' })
-vim.keymap.set('n', '<leader>mp', b.git_status, { desc = '[m]an [p]ages' })
+vim.keymap.set('n', '<leader>mp', b.man_pages, { desc = '[m]an [p]ages' })
 vim.keymap.set('n', '<leader>mm', b.marks, { desc = 'marks' })
 vim.keymap.set('n', '<leader>q', b.quickfix, { desc = '[q]uickfix' })
 vim.keymap.set('n', '<leader>tb', b.buffers, { desc = '[b]uffers' })
