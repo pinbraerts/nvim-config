@@ -258,7 +258,19 @@ require 'lazy'.setup {
 
 	{
 		'tpope/vim-fugitive',
-		cmd = 'G',
+		cmd = {
+			'G', 'Git',
+			'Ggrep',
+			'Gclog', 'Gllog',
+			'Gcd', 'Glcd',
+			'Gedit', 'Gtabedit',
+			'Gpedit', 'Gdrop',
+			'Gsplit', 'Gvsplit',
+			'Gread', 'Gwrite', 'Gwq',
+			'Gdiffsplit', 'Gvdiffsplit', 'Ghdiffsplit',
+			'GMove', 'GRename', 'GDelete',
+			'GRemove', 'GUnlink', 'GBrowse',
+		},
 		keys = {
 			{ '\\gc', '<cmd>G commit<cr>', desc = '[G]it [c]ommit', silent = true },
 			{ '\\gf', '<cmd>G fetch<cr>', desc = '[G]it [f]etch', silent = true },
