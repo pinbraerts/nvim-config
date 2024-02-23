@@ -14,7 +14,10 @@ require 'setup.style'
 require 'setup.remap'
 require 'setup.terminal'
 
-local local_file = config .. '/lua/local.lua'
-if vim.fn.filereadable(local_file) ~= 0 then
-	vim.cmd.source(local_file)
+pcall(require, 'local')
+if vim.fn.has('win32') ~= 0 then
+	pcall(require, 'windows')
+end
+if vim.fn.has('linux') ~= 0 then
+	pcall(require, 'linux')
 end

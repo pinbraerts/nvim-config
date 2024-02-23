@@ -14,10 +14,21 @@ vim.opt.rtp:prepend(lazypath)
 local lsp_filetypes = { 'lua', 'python', 'c', 'cpp', 'rust', 'go', 'ps1', 'tex', 'plaintex', 'bib', 'sh', 'javascript' }
 local debuggable_filetypes = { 'python', 'c', 'cpp', 'rust', 'go' }
 
-local local_plugins_file = vim.fn.stdpath('config') .. '/lua/local/plugins.lua'
-local local_plugins = { }
-if vim.fn.filereadable(local_plugins_file) ~= 0 then
-	local_plugins = require('local.plugins')
+local ok, local_plugins = pcall(require, 'local.plugins')
+if not ok then
+	local_plugins = { }
+end
+if vim.fn.has('win32') ~= 0 then
+	local status, plugins = pcall(require, 'windows.plugins')
+	if status then
+		local_plugins = vim.tbl_extend('force', local_plugins, plugins)
+	end
+end
+if vim.fn.has('linux') ~= 0 then
+	local status, plugins = pcall(require, 'linux.plugins')
+	if status then
+		local_plugins = vim.tbl_extend('force', local_plugins, plugins)
+	end
 end
 
 require 'lazy'.setup {
