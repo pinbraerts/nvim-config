@@ -81,7 +81,7 @@ lspconfig.powershell_es.setup {
 	capabilities = cmp_capabilities,
 	on_attach = on_attach,
 	single_file_support = true,
-	bundle_path = 'D:/PowerShellEditorServices',
+	bundle_path = (os.getenv('USERPROFILE') or '') .. '/opt/PowerShellEditorServices',
 }
 
 lspconfig.bashls.setup {
