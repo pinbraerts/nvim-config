@@ -1,9 +1,9 @@
 local l = require 'lualine'
 
 local function refresh_statusline()
-	l.refresh { place = 'statusline' }
+	l.refresh({ place = { 'statusline' } })
 end
-local g = vim.api.nvim_create_augroup('lualine', { clear = true })
+local g = vim.api.nvim_create_augroup('LualineRecording', { clear = true })
 vim.api.nvim_create_autocmd('RecordingEnter', {
 	callback = refresh_statusline,
 	group = g,
