@@ -11,6 +11,17 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+local function join (arrays)
+	local result = { }
+	for _, a in ipairs(arrays) do
+		local result_size = #result
+		for j, v in ipairs(a) do
+			result[result_size + j] = v
+		end
+	end
+	return result
+end
+
 local ft_web = {
 	'javascript', 'html', 'css',
 }
@@ -36,26 +47,26 @@ local ft_documentation = {
 	'jsdoc', 'luadoc', 'vimdoc',
 }
 
-local ft_lsp = {
-	'lua',
-	unpack(ft_shell),
-	unpack(ft_debug),
-	unpack(ft_web),
-	unpack(ft_tex),
+local ft_lsp = join {
+	{ 'lua', },
+	ft_shell,
+	ft_debug,
+	ft_web,
+	ft_tex,
 }
 
-local ft_highlight = {
-	'jq', 'query',
-	'markdown', 'markdown_inline',
-	unpack(ft_documentation),
-	unpack(ft_config),
-	unpack(ft_lsp),
+local ft_highlight = join {
+	{ 'jq', 'query', },
+	{ 'markdown', 'markdown_inline', },
+	ft_documentation,
+	ft_config,
+	ft_lsp,
 }
 
-local ft_colorize = {
-	unpack(ft_web),
-	unpack(ft_config),
-	unpack(ft_shell),
+local ft_colorize = join {
+	ft_web,
+	ft_config,
+	ft_shell,
 }
 
 local ok, local_plugins = pcall(require, 'local.plugins')
