@@ -6,6 +6,7 @@ return {
 				transparent = true,
 			},
 		},
+		lazy = true,
 	},
 
 	{
@@ -14,7 +15,7 @@ return {
 		opts = {
 			transparent_background = true,
 		},
-		enabled = false,
+		lazy = true,
 	},
 
 	{
@@ -26,7 +27,7 @@ return {
 				floats = 'transparent',
 			},
 		},
-		enabled = false,
+		lazy = true,
 	},
 
 	{

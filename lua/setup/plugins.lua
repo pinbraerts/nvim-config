@@ -48,9 +48,9 @@ require 'lazy'.setup {
 		},
 	},
 
-	'EdenEast/nightfox.nvim',
-	{ 'catppuccin/nvim', name = 'catppuccin' },
-	'folke/tokyonight.nvim',
+	{ 'EdenEast/nightfox.nvim', lazy = true },
+	{ 'catppuccin/nvim', name = 'catppuccin', lazy = true },
+	{ 'folke/tokyonight.nvim', lazy = true },
 
 	{
 		'monaqa/dial.nvim',
