@@ -8,10 +8,10 @@ local function test_directory(dir)
 end
 
 local directories = {
-	vim.fn.stdpath('config'),
-	os.getenv('XDG_CONFIG_HOME'),
-	os.getenv('HOME'),
-	os.getenv('USERDATA'),
+	vim.fn.stdpath('config') or '',
+	os.getenv('XDG_CONFIG_HOME') or '',
+	os.getenv('HOME') or '',
+	os.getenv('USERPROFILE') or '',
 }
 
 for _, directory in ipairs(directories) do
