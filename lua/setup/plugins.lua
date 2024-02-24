@@ -11,8 +11,52 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-local lsp_filetypes = { 'lua', 'python', 'c', 'cpp', 'rust', 'go', 'ps1', 'tex', 'plaintex', 'bib', 'sh', 'javascript' }
-local debuggable_filetypes = { 'python', 'c', 'cpp', 'rust', 'go' }
+local ft_web = {
+	'javascript', 'html', 'css',
+}
+
+local ft_shell = {
+	'sh', 'ps1',
+}
+
+local ft_debug = {
+	'python',
+	'c', 'cpp', 'rust', 'go',
+}
+
+local ft_tex = {
+	'tex', 'plaintex', 'bib',
+}
+
+local ft_config = {
+	'json', 'toml', 'xml', 'zathurarc', 'ini',
+}
+
+local ft_documentation = {
+	'jsdoc', 'luadoc', 'vimdoc',
+}
+
+local ft_lsp = {
+	'lua',
+	unpack(ft_shell),
+	unpack(ft_debug),
+	unpack(ft_web),
+	unpack(ft_tex),
+}
+
+local ft_highlight = {
+	'jq', 'query',
+	'markdown', 'markdown_inline',
+	unpack(ft_documentation),
+	unpack(ft_config),
+	unpack(ft_lsp),
+}
+
+local ft_colorize = {
+	unpack(ft_web),
+	unpack(ft_config),
+	unpack(ft_shell),
+}
 
 local ok, local_plugins = pcall(require, 'local.plugins')
 if not ok then
@@ -31,6 +75,7 @@ if vim.fn.has('linux') ~= 0 then
 	end
 end
 
+vim.keymap.set('n', '<leader>lz', '<cmd>Lazy<cr>', { desc = 'Open [L]a[z]y', silent = true })
 require 'lazy'.setup {
 	{
 		'nvim-lualine/lualine.nvim',
@@ -166,9 +211,10 @@ require 'lazy'.setup {
 
 	{
 		'norcalli/nvim-colorizer.lua',
+		ft = ft_colorize,
 		config = function ()
 			require('colorizer').setup(
-				{ "*" },
+				ft_colorize,
 				{
 					RGB      = true,
 					RRGGBB   = true,
@@ -368,7 +414,7 @@ require 'lazy'.setup {
 	{
 		'neovim/nvim-lspconfig',
 		dependencies = { 'nvim-telescope/telescope.nvim' },
-		ft = lsp_filetypes,
+		ft = ft_lsp,
 		config = function ()
 			require 'setup.lsp'
 		end,
@@ -379,7 +425,7 @@ require 'lazy'.setup {
 
 	{
 		'hrsh7th/nvim-cmp',
-		event = { 'CmdLineEnter', 'LspAttach', 'InsertEnter' },
+		event = { 'CmdLineEnter', 'InsertEnter' },
 		dependencies = {
 			'hrsh7th/cmp-nvim-lsp',
 			'hrsh7th/cmp-nvim-lsp-signature-help',
@@ -410,7 +456,7 @@ require 'lazy'.setup {
 
 	{
 		'mfussenegger/nvim-dap',
-		ft = debuggable_filetypes,
+		ft = ft_debug,
 		config = function ()
 			require 'setup.debugging'
 		end,
