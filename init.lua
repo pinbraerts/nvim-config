@@ -1,11 +1,22 @@
-local config = vim.fn.stdpath('config')
-local vimrc = config .. '/../../.vimrc'
-if vim.fn.filereadable(vimrc) ~= 0 then
-	vim.cmd.source(vimrc)
-else
-	vimrc = config .. '/../../../.vimrc'
-	if vim.fn.filereadable(vimrc) ~= 0 then
-		vim.cmd.source(vimrc)
+local function test_directory(dir)
+	local vimrc = dir .. '/.vimrc'
+	if vim.fn.filereadable(vimrc) == 0 then
+		return false
+	end
+	local ok, _ = pcall(vim.cmd.source, vimrc)
+	return ok
+end
+
+local directories = {
+	vim.fn.stdpath('config'),
+	os.getenv('XDG_CONFIG_HOME'),
+	os.getenv('HOME'),
+	os.getenv('USERDATA'),
+}
+
+for _, directory in ipairs(directories) do
+	if test_directory(directory) then
+		break
 	end
 end
 
