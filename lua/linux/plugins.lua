@@ -26,6 +26,7 @@ return {
 				sidebars = 'transparent',
 				floats = 'transparent',
 			},
+			lualine_bold = true,
 		},
 		lazy = true,
 	},
