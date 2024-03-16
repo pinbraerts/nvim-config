@@ -1,5 +1,5 @@
 vim.o.cmdheight = 0
-vim.cmd.colorscheme('tokyonight')
+vim.cmd.colorscheme('nightfox')
 vim.filetype.add {
 	extension = {
 		zsh = 'sh',
