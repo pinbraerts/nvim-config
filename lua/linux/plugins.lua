@@ -5,6 +5,11 @@ return {
 			options = {
 				transparent = true,
 			},
+			groups = {
+				all = {
+					 WinSeparator = { fg = '#719cd6' },
+				},
+			},
 		},
 		lazy = true,
 	},
