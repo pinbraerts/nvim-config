@@ -453,6 +453,27 @@ require 'lazy'.setup {
 	},
 
 	{
+		'errornonamer/cmp-tabby',
+		build = './install.sh',
+		dependencies = { 'hrsh7th/nvim-cmp' },
+		config = function()
+			local tabby = require('cmp_tabby.config')
+			tabby:setup({
+				endpoint = 'http://192.168.10.112:5345',
+				token = nil,
+				device = 'cpu',
+				model = 'TabbyML/StarCoder-1B',
+				temperature = 0.75,
+				max_lines = 1024,
+				max_num_results = 10,
+				priority = 5000,
+				run_on_every_keystroke = false,
+				ignored_file_types = {},
+			})
+		end,
+	},
+
+	{
 		'mrcjkb/rustaceanvim',
 		version = '^4',
 		ft = { 'rust' },
