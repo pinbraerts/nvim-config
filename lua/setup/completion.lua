@@ -33,7 +33,10 @@ cmp.setup {
 		{ name = 'luasnip' },
 		{ name = 'buffer' },
 		{ name = 'path' },
-		{ name = 'cmp_tabby' },
+		{
+			name = 'cmp_tabby',
+			priority = 9999,
+		},
 	},
 	mapping = cmp.mapping.preset.insert {
 		['<c-u>'] = cmp.mapping.scroll_docs(-4),
