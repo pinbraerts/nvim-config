@@ -86,6 +86,14 @@ if vim.fn.has('linux') ~= 0 then
 	end
 end
 
+local function theme(opts)
+	return vim.tbl_extend('keep', opts, {
+		lazy = true,
+		cmd = 'Telescope colorscheme',
+		keys = { '<leader>tc' },
+	})
+end
+
 vim.keymap.set('n', '<leader>lz', '<cmd>Lazy<cr>', { desc = 'Open [L]a[z]y', silent = true })
 require 'lazy'.setup {
 	{
@@ -104,9 +112,9 @@ require 'lazy'.setup {
 		},
 	},
 
-	{ 'EdenEast/nightfox.nvim', lazy = true },
-	{ 'catppuccin/nvim', name = 'catppuccin', lazy = true },
-	{ 'folke/tokyonight.nvim', lazy = true },
+	theme { 'EdenEast/nightfox.nvim' },
+	theme { 'catppuccin/nvim', name = 'catppuccin', setup = true, },
+	theme { 'folke/tokyonight.nvim' },
 
 	{
 		'monaqa/dial.nvim',
