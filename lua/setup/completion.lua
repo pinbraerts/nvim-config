@@ -94,3 +94,6 @@ cmp.setup.cmdline(':', {
 	),
 	matching = { disallow_symbol_nonprefix_matching = false },
 })
+
+vim.api.nvim_set_hl(0, 'CmpItemKindCopilot', { fg = '#6CC644' })
+vim.api.nvim_set_hl(0, 'CmpItemKindTabby', { fg = '#FFFF00' })
