@@ -1,5 +1,6 @@
 local luasnip = require('luasnip')
 local cmp = require('cmp')
+local lspkind = require('lspkind')
 
 local snip_next = cmp.mapping(function  (fallback)
 	if cmp.visible() then
@@ -22,6 +23,17 @@ local snip_prev = cmp.mapping(function (fallback)
 end)
 
 cmp.setup {
+	formatting = {
+		format = lspkind.cmp_format({
+			mode = 'symbol',
+			maxwidth = 50,
+			ellipsis_char = '...',
+			symbol_map = {
+				Copilot = '',
+				Tabby = '',
+			},
+		})
+	},
 	snippet = {
 		expand = function(args)
 			luasnip.lsp_expand(args.body)
