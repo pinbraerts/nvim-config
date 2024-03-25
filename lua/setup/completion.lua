@@ -39,17 +39,15 @@ cmp.setup {
 			luasnip.lsp_expand(args.body)
 		end,
 	},
-	sources = {
+	sources = cmp.config.sources({
 		{ name = 'nvim_lsp' },
 		{ name = 'nvim_lsp_signature_help' },
 		{ name = 'luasnip' },
-		{ name = 'buffer' },
 		{ name = 'path' },
-		{
-			name = 'cmp_tabby',
-			priority = 9999,
-		},
-	},
+		{ name = 'cmp_tabby', priority = 9999, },
+	}, {
+		{ name = 'buffer' },
+	}),
 	mapping = cmp.mapping.preset.insert {
 		['<c-u>'] = cmp.mapping.scroll_docs(-4),
 		['<c-d>'] = cmp.mapping.scroll_docs(4),
@@ -75,10 +73,10 @@ cmp.setup {
 }
 
 cmp.setup.filetype('gitcommit', {
-	sources = {
-		{ name = 'buffer' },
-		{ name = 'git' },
-	},
+	sources = cmp.config.sources(
+		{ { name = 'git' }, },
+		{ { name = 'buffer' }, }
+	),
 })
 
 cmp.setup.cmdline({ '/', '?' }, {
@@ -90,8 +88,9 @@ cmp.setup.cmdline({ '/', '?' }, {
 
 cmp.setup.cmdline(':', {
 	mapping = cmp.mapping.preset.cmdline(),
-	sources = {
-		{ name = 'path' },
-		{ name = 'cmdline' },
-	},
+	sources = cmp.config.sources(
+		{ { name = 'path' }, },
+		{ { name = 'cmdline' }, }
+	),
+	matching = { disallow_symbol_nonprefix_matching = false },
 })
