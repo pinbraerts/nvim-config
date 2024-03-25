@@ -63,6 +63,9 @@ cmp.setup {
 			select = true,
 		},
 	},
+	experimental = {
+		ghost_text = true,
+	},
 }
 
 cmp.setup.filetype('gitcommit', {
