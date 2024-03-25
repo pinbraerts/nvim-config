@@ -48,7 +48,7 @@ local ft_documentation = {
 }
 
 local ft_lsp = join {
-	{ 'lua', },
+	{ 'lua', 'fastbuild', },
 	ft_shell,
 	ft_debug,
 	ft_web,

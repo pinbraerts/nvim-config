@@ -18,6 +18,7 @@ local parsers = require 'nvim-treesitter.parsers'.get_parser_configs()
 vim.filetype.add {
 	extension = {
 		jk = 'jk',
+		bff = 'fastbuild',
 	},
 }
 parsers.jk = {
@@ -32,4 +33,15 @@ parsers.jk = {
 	},
 	filetype = 'jk',
 }
-
+parsers.fastbuild = {
+	install_info = {
+		url = '~/src/tree-sitter-fastbuild/',
+		files = {
+			'src/parser.c',
+			'src/scanner.c',
+		},
+		generate_requires_npm = false,
+		requires_generate_from_grammar = true,
+	},
+	filetype = 'fastbuild',
+}
