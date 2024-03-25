@@ -12,8 +12,6 @@ vim.filetype.add {
 	},
 }
 
-require('telescope.config').values.file_previewer = require('core.ueberzugpp').new
-
 local parsers = require 'nvim-treesitter.parsers'.get_parser_configs()
 vim.filetype.add {
 	extension = {
