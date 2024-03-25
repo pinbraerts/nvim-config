@@ -55,9 +55,15 @@ cmp.setup {
 		['<c-d>'] = cmp.mapping.scroll_docs(4),
 		['<c-n>'] = snip_next,
 		['<c-p>'] = snip_prev,
+		['<tab>'] = snip_next,
+		['<s-tab>'] = snip_prev,
 		['<c-j>'] = snip_next,
 		['<c-k>'] = snip_prev,
 		['<c-space>'] = cmp.mapping.complete(),
+		['<c-y>'] = cmp.mapping.confirm {
+			behavior = cmp.ConfirmBehavior.Replace,
+			select = true,
+		},
 		['<cr>'] = cmp.mapping.confirm {
 			behavior = cmp.ConfirmBehavior.Replace,
 			select = true,
