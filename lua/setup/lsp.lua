@@ -46,6 +46,15 @@ local function on_attach (client, buffer)
 	end
 end
 
+vim.g.rustaceanvim = {
+	server = {
+		on_attach = on_attach,
+	},
+	dap = {
+		autoload_configurations = true,
+	},
+}
+
 lspconfig.lua_ls.setup {
 	capabilities = cmp_capabilities,
 	on_attach = on_attach,

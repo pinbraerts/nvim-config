@@ -477,13 +477,7 @@ require 'lazy'.setup {
 		'mrcjkb/rustaceanvim',
 		version = '^4',
 		ft = { 'rust' },
-		config = function ()
-			vim.g.rustaceanvim = {
-				dap = {
-					autoload_configurations = true,
-				},
-			}
-		end,
+		dependencies = { 'neovim/nvim-lspconfig' },
 	},
 
 	{
