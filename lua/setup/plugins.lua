@@ -319,30 +319,35 @@ require 'lazy'.setup {
 	},
 
 	{
-		'tpope/vim-fugitive',
-		cmd = {
-			'G', 'Git',
-			'Ggrep',
-			'Gclog', 'Gllog',
-			'Gcd', 'Glcd',
-			'Gedit', 'Gtabedit',
-			'Gpedit', 'Gdrop',
-			'Gsplit', 'Gvsplit',
-			'Gread', 'Gwrite', 'Gwq',
-			'Gdiffsplit', 'Gvdiffsplit', 'Ghdiffsplit',
-			'GMove', 'GRename', 'GDelete',
-			'GRemove', 'GUnlink', 'GBrowse',
+		'NeogitOrg/neogit',
+		dependencies = {
+			'nvim-lua/plenary.nvim',
+			'sindrets/diffview.nvim',
+			'nvim-telescope/telescope.nvim',
 		},
+		config = function ()
+			local neogit = require('neogit')
+			vim.keymap.set('n', '\\gc', neogit.action('commit', 'commit'), { desc = '[G]it [c]ommit', })
+			vim.keymap.set('n', '\\gf', neogit.action('fetch', 'fetch_upstream'), { desc = '[G]it [f]etch', })
+			vim.keymap.set('n', '\\gF', neogit.action('fetch', 'fetch_all_remotes', { '--all', '--prune' }), { desc = '[G]it [F]etch all and prune', })
+			vim.keymap.set('n', '\\gp', neogit.action('push', 'to_upstream'), { desc = '[G]it [P]ush', })
+			vim.keymap.set('n', '\\gP', neogit.action('push', 'to_upstream', { '--force-with-lease' }), { desc = '[G]it [P]ush force with lease', })
+			-- vim.keymap.set('n', '\\gu', neogit.action('submodule', 'update', { 'update' }), { desc = '[G]it [u]pdate submodules', })
+			-- vim.keymap.set('n', '\\gU', neogit.action('submodule', 'update', { 'update', '--init', '--recursive' }), { desc = '[G]it [U]pdate submodules recursive init', })
+			vim.keymap.set('n', '\\gl', neogit.action('pull', 'from_upstream'), { desc = '[G]it pu[l]l', })
+			vim.keymap.set('n', '\\gL', neogit.action('pull', 'from_upstream', { '--no-rebase' , { desc = '[G]it pu[l]l no rebase', }}))
+		end,
+		cmd = { 'Neogit' },
 		keys = {
-			{ '\\gc', '<cmd>G commit<cr>', desc = '[G]it [c]ommit', silent = true },
-			{ '\\gf', '<cmd>G fetch<cr>', desc = '[G]it [f]etch', silent = true },
-			{ '\\gF', '<cmd>G fetch --all --prune<cr>', desc = '[G]it [F]etch all and prune', silent = true },
-			{ '\\gp', '<cmd>G push<cr>', desc = '[G]it [p]ush', silent = true },
-			{ '\\gP', '<cmd>G push --force-with-lease<cr>', desc = '[G]it [P]ush force with lease', silent = true },
-			{ '\\gu', '<cmd>G submodule update', desc = '[G]it [u]pdate submodules', silent = true },
-			{ '\\gU', '<cmd>G submodule update --init --recursive<cr>', desc = '[G]it [U]pdate submodules recursive init', silent = true },
-			{ '\\gl', '<cmd>G pull<cr>', desc = '[G]it pu[l]l', silent = true },
-			{ '\\gL', '<cmd>G pull --no-rebase<cr>', desc = '[G]it pu[l]l rebase', silent = true },
+			'\\gc',
+			'\\gf',
+			'\\gF',
+			'\\gp',
+			'\\gP',
+			'\\gu',
+			'\\gU',
+			'\\gl',
+			'\\gL',
 		},
 	},
 
