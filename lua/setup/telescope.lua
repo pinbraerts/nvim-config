@@ -127,7 +127,6 @@ vim.keymap.set('n', '<leader>to', b.vim_options, { desc = '[o]ptions' })
 vim.keymap.set('n', '<leader>tp', b.pickers, { desc = '[p]ickers' })
 vim.keymap.set('n', '<leader>tq', b.quickfixhistory, { desc = '[q]uckfix history' })
 vim.keymap.set('n', '<leader>t=', b.registers, { desc = 'Registers' })
-vim.keymap.set('n', '<leader>ts', b.symbols, { desc = '[S]ymbols' })
 vim.keymap.set('n', '<leader>tj', b.builtin, { desc = 'builtin pickers' })
 vim.keymap.set('n', '<leader>tr', b.resume, { desc = 'Reopen last picker [T]elescope [r]esume' })
 

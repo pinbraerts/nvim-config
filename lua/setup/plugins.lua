@@ -390,7 +390,6 @@ require 'lazy'.setup {
 			{ '<leader>tp', desc = '[p]ickers' },
 			{ '<leader>tq', desc = '[q]uckfix history' },
 			{ '<leader>t=', desc = 'Registers' },
-			{ '<leader>ts', desc = '[S]ymbols' },
 			{ '<leader>tj', desc = 'builtin pickers' },
 			{ '<leader>tr', desc = 'Reopen last picker [T]elescope [r]esume' },
 			{ '<leader>fd', desc = 'Find files (with [fd])' },
@@ -428,11 +427,12 @@ require 'lazy'.setup {
 	{
 		'nvim-telescope/telescope-symbols.nvim',
 		dependencies = { 'nvim-telescope/telescope.nvim' },
-		config = function()
-			local ts = require('telescope.builtin')
-			vim.keymap.set('n', '<leader>ts', ts.symbols, { desc = 'Open unicode symbols picker' })
+		config = function ()
+			local t = require 'telescope.builtin'
+			vim.keymap.set('n', '<leader>ts', t.symbols, { desc = 'unicode symbols picker' })
 		end,
-		keys = { '<leader>ts', desc = 'Open unicode symbols picker' },
+		keys = { '<leader>ts', desc = 'unicode symbols picker' },
+		cmd = 'Telescope symbols',
 	},
 
 	{
