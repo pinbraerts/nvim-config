@@ -291,7 +291,7 @@ require 'lazy'.setup {
 		},
 		ft = {
 			'html', 'xml',
-			'javascript', 'typescript', 'javascriptreact',
+			-- 'javascript', 'typescript', 'javascriptreact',
 			'typescriptreact', 'svelte', 'vue', 'tsx', 'jsx', 'rescript',
 			'php',
 			'markdown',
