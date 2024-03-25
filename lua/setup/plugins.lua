@@ -462,21 +462,19 @@ require 'lazy'.setup {
 			'saadparwaiz1/cmp_luasnip',
 			'onsails/lspkind.nvim',
 			'rafamadriz/friendly-snippets',
+			{
+				'nzlov/cmp-tabby',
+				config = function()
+					local tabby = require('cmp_tabby.config')
+					tabby:setup({
+						host = 'http://192.168.10.112:5345',
+						max_lines = 1024,
+					})
+				end,
+			},
 		},
 		config = function()
 			require 'setup.completion'
-		end,
-	},
-
-	{
-		'nzlov/cmp-tabby',
-		dependencies = { 'hrsh7th/nvim-cmp' },
-		config = function()
-			local tabby = require('cmp_tabby.config')
-			tabby:setup({
-				host = 'http://192.168.10.112:5345',
-				max_lines = 1024,
-			})
 		end,
 	},
 
