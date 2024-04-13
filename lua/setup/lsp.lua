@@ -154,10 +154,10 @@ lspconfig.gopls.setup {
 	on_attach = on_attach,
 }
 
-lspconfig.fastbuild.setup {
-	capabilities = cmp_capabilities,
-	on_attach = on_attach,
-}
+-- lspconfig.fastbuild.setup {
+-- 	capabilities = cmp_capabilities,
+-- 	on_attach = on_attach,
+-- }
 
 vim.keymap.set('n', '<leader>lr', vim.lsp.buf.rename, { desc = '[L]SP rename' })
 vim.keymap.set('n', '<leader>la', vim.lsp.buf.code_action, { desc = '[L]SP code [a]ction' })
