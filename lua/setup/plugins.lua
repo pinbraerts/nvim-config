@@ -520,7 +520,7 @@ require 'lazy'.setup {
 
 	{
 		'rcarriga/nvim-dap-ui',
-		dependencies = { 'mfussenegger/nvim-dap' },
+		dependencies = { 'mfussenegger/nvim-dap', 'nvim-neotest/nvim-nio' },
 		keys = { { '<leader>td', desc = '[T]oggle [d]ebug ui' }, },
 		config = function ()
 			local dapui = require 'dapui'
