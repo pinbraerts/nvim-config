@@ -370,7 +370,7 @@ require 'lazy'.setup {
 		},
 		config = function ()
 			local neogit = require('neogit')
-			neogit.setup()
+			neogit.setup({})
 			vim.keymap.set('n', '\\gc', function () neogit.open({ 'commit' }) end, { desc = '[G]it [c]ommit', })
 			vim.keymap.set('n', '\\gf', neogit.action('fetch', 'fetch_upstream'), { desc = '[G]it [f]etch', })
 			vim.keymap.set('n', '\\gF', neogit.action('fetch', 'fetch_all_remotes', { '--all', '--prune' }), { desc = '[G]it [F]etch all and prune', })
