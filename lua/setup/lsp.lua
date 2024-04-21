@@ -6,13 +6,8 @@ require('mason').setup()
 
 local servers = {
 	clangd = {},
-	gopls = {},
 	bashls = {},
-	eslint = {},
 	pylsp = {},
-	tsserver = {},
-	cssls = {},
-	html = {},
 	powershell_es = {},
 
 	lua_ls = {
