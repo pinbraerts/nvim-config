@@ -23,6 +23,14 @@ vim.keymap.set('n', 'K', function ()
 	end
 end, { desc = 'LSP or DAP hover' })
 
+vim.api.nvim_create_autocmd('FileType', {
+	group = vim.api.nvim_create_augroup("dap-repl-autocomplete", { clear = true }),
+	pattern = "dap-repl",
+	callback = function ()
+		require('dap.ext.autocompl').attach()
+	end,
+})
+
 local function lldb_compiling (compiler)
 	return {
 		type = 'codelldb',
