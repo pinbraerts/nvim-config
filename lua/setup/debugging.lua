@@ -28,23 +28,23 @@ local function lldb_compiling (compiler)
 		type = 'codelldb',
 		request = 'launch',
 		name = 'Compile and run standalone ("'..compiler..'")',
-		program = '${fileDirname}/${fileBasenameNoExtension}.exe',
-		cwd = '${workspaceFolder}',
+		cwd = '${fileDirname}',
 		stopOnEntry = false,
-		preLaunchTask = function ()
+		program = function ()
 			local filename = vim.fs.normalize(vim.api.nvim_buf_get_name(0))
 			local executable = filename:gsub('%..*$', '.exe')
-			if not vim.fn.executable(executable) or vim.fn.getftime(executable) < vim.fn.getftime(filename) then
+			if vim.fn.executable(executable) == 0 or vim.fn.getftime(executable) < vim.fn.getftime(filename) then
 				local command = compiler..' '..executable..' '..filename
 				print("Compililng: "..command)
 				vim.fn.system(command)
 			end
+			return executable
 		end
 	}
 end
 
 local mason_registry = require('mason-registry')
-local extension_path = mason_registry.get_package('codelldb'):get_install_path()
+local extension_path = mason_registry.get_package('codelldb'):get_install_path() .. '/extension'
 local codelldb_path = extension_path .. '/adapter/codelldb'
 local liblldb_path =  extension_path .. '/lldb/lib/liblldb.so'
 d.adapters.codelldb = require 'rustaceanvim.config'.get_codelldb_adapter(
