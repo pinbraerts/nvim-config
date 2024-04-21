@@ -473,8 +473,16 @@ require 'lazy'.setup {
 
 	{
 		'neovim/nvim-lspconfig',
-		dependencies = { 'nvim-telescope/telescope.nvim' },
+		dependencies = {
+			{ 'williamboman/mason.nvim', config = true },
+			'williamboman/mason-lspconfig.nvim',
+			'WhoIsSethDaniel/mason-tool-installer.nvim',
+			{ 'j-hui/fidget.nvim', opts = {} },
+			{ 'folke/neodev.nvim', opts = {} },
+			'nvim-telescope/telescope.nvim',
+		},
 		ft = ft_lsp,
+		lazy = false,
 		config = function ()
 			require 'setup.lsp'
 		end,

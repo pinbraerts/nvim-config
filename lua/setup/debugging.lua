@@ -43,7 +43,8 @@ local function lldb_compiling (compiler)
 	}
 end
 
-local extension_path = '/home/pinbraerts/vscode/extension'
+local mason_registry = require('mason-registry')
+local extension_path = mason_registry.get_package('codelldb'):get_install_path()
 local codelldb_path = extension_path .. '/adapter/codelldb'
 local liblldb_path =  extension_path .. '/lldb/lib/liblldb.so'
 d.adapters.codelldb = require 'rustaceanvim.config'.get_codelldb_adapter(
