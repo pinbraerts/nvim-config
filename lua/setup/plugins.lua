@@ -491,7 +491,15 @@ require 'lazy'.setup {
 				},
 			},
 			'williamboman/mason-lspconfig.nvim',
-			'WhoIsSethDaniel/mason-tool-installer.nvim',
+			{
+				'WhoIsSethDaniel/mason-tool-installer.nvim',
+				opts = {
+					ensure_installed = {
+						'stylua',
+						'codelldb',
+					},
+				},
+			},
 			{ 'j-hui/fidget.nvim', opts = {} },
 			{ 'folke/neodev.nvim', opts = {} },
 			'nvim-telescope/telescope.nvim',
