@@ -354,7 +354,18 @@ require 'lazy'.setup {
 		'NeogitOrg/neogit',
 		dependencies = {
 			'nvim-lua/plenary.nvim',
-			'sindrets/diffview.nvim',
+			{
+				'sindrets/diffview.nvim',
+				cmd = {
+					'DiffviewOpen',
+					'DiffviewFileHistory',
+					'DiffviewClose',
+					'DiffviewToggleFiles',
+					'DiffviewFocusFiles',
+					'DiffviewRefresh',
+					'DiffviewLog',
+				},
+			},
 			'nvim-telescope/telescope.nvim',
 		},
 		config = function ()
