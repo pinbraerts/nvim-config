@@ -496,7 +496,12 @@ require 'lazy'.setup {
 			'L3MON4D3/LuaSnip',
 			'saadparwaiz1/cmp_luasnip',
 			'onsails/lspkind.nvim',
-			'rafamadriz/friendly-snippets',
+			{
+				'rafamadriz/friendly-snippets',
+				config = function ()
+					require('luasnip.loaders.from_vscode').lazy_load()
+				end,
+			},
 			{
 				'nzlov/cmp-tabby',
 				config = function()
