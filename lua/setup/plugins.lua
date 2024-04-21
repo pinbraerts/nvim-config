@@ -474,7 +474,22 @@ require 'lazy'.setup {
 	{
 		'neovim/nvim-lspconfig',
 		dependencies = {
-			{ 'williamboman/mason.nvim', config = true },
+			{
+				'williamboman/mason.nvim',
+				lazy = false,
+				opts = {
+					ui = {
+						icons = {
+							package_installed = '✓',
+							package_pending = '⬇️',
+							package_uninstalled = '✗',
+						},
+					},
+				},
+				keys = {
+					{ '<leader>ms', '<cmd>Mason<cr>', desc = 'Open [M]a[s]on', silent = true },
+				},
+			},
 			'williamboman/mason-lspconfig.nvim',
 			'WhoIsSethDaniel/mason-tool-installer.nvim',
 			{ 'j-hui/fidget.nvim', opts = {} },
