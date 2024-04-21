@@ -506,7 +506,7 @@ require 'lazy'.setup {
 				end,
 			},
 			{
-				'nzlov/cmp-tabby',
+				'pinbraerts/cmp-tabby',
 				config = function()
 					local tabby = require('cmp_tabby.config')
 					tabby:setup({
