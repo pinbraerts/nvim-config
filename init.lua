@@ -20,6 +20,17 @@ for _, directory in ipairs(directories) do
 	end
 end
 
+vim.api.nvim_create_autocmd("TextYankPost", {
+	group = vim.api.nvim_create_augroup("HighlightTextYank", { clear = true }),
+	pattern = "*",
+	callback = function ()
+		vim.highlight.on_yank {
+			higroup = "IncSearch",
+			timeout = 40,
+		}
+	end
+})
+
 if vim.fn.executable('python3') ~= 0 then
 	vim.g.python3_host_prog = 'python3'
 end
