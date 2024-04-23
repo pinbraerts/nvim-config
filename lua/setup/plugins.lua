@@ -625,7 +625,8 @@ require 'lazy'.setup {
 				config = function()
 					local tabby = require('cmp_tabby.config')
 					tabby:setup({
-						host = 'http://192.168.10.112:5345',
+						endpoint = 'http://192.168.10.112:5345',
+						token = 'auth_124c651f3cd24be78e27947b681fd10f',
 						max_lines = 1024,
 					})
 				end,
@@ -670,7 +671,7 @@ require 'lazy'.setup {
 		dependencies = { 'mfussenegger/nvim-dap' },
 		ft = 'python',
 		config = function ()
-			require('dap-python').setup(vim.fn.executable('python3') and 'python3' or 'python')
+			require('dap-python').setup()
 		end,
 	},
 
