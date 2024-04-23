@@ -119,11 +119,6 @@ cnoremap <c-j> <down>
 cnoremap <c-k> <up>
 cnoremap <c-l> <right>
 
-augroup RemoveTrailingSpaces
-	au!
-	au BufWritePre * :silent!%s/\s\+$//e|normal``
-augroup END
-
 function! ProcessModifiable()
 	if &modifiable
 		silent! nunmap <buffer> q

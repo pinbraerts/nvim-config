@@ -20,6 +20,12 @@ for _, directory in ipairs(directories) do
 	end
 end
 
+vim.api.nvim_create_autocmd("BufWritePre", {
+	group = vim.api.nvim_create_augroup("RemoveTrailingWhitespaces", { clear = true }),
+	pattern = "*",
+	command = [[%s/\s\+$//e]],
+})
+
 vim.api.nvim_create_autocmd("TextYankPost", {
 	group = vim.api.nvim_create_augroup("HighlightTextYank", { clear = true }),
 	pattern = "*",
