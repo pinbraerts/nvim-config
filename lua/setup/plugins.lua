@@ -549,40 +549,41 @@ require 'lazy'.setup {
 	},
 
 	{
+		'williamboman/mason.nvim',
+		lazy = false,
+		opts = {
+			ui = {
+				icons = {
+					package_installed = '✓',
+					package_pending = '⬇️',
+					package_uninstalled = '✗',
+				},
+			},
+		},
+		keys = {
+			{ '<leader>ms', '<cmd>Mason<cr>', desc = 'Open [M]a[s]on', silent = true },
+		},
+	},
+
+	{
+		'WhoIsSethDaniel/mason-tool-installer.nvim',
+		opts = {
+			ensure_installed = {
+				'stylua',
+				'codelldb',
+			},
+		},
+	},
+
+	{
 		'neovim/nvim-lspconfig',
 		dependencies = {
-			{
-				'williamboman/mason.nvim',
-				lazy = false,
-				opts = {
-					ui = {
-						icons = {
-							package_installed = '✓',
-							package_pending = '⬇️',
-							package_uninstalled = '✗',
-						},
-					},
-				},
-				keys = {
-					{ '<leader>ms', '<cmd>Mason<cr>', desc = 'Open [M]a[s]on', silent = true },
-				},
-			},
 			'williamboman/mason-lspconfig.nvim',
-			{
-				'WhoIsSethDaniel/mason-tool-installer.nvim',
-				opts = {
-					ensure_installed = {
-						'stylua',
-						'codelldb',
-					},
-				},
-			},
 			{ 'j-hui/fidget.nvim', opts = {} },
 			{ 'folke/neodev.nvim', opts = {} },
 			'nvim-telescope/telescope.nvim',
 		},
 		ft = ft_lsp,
-		lazy = false,
 		config = function ()
 			require 'setup.lsp'
 		end,
