@@ -535,6 +535,7 @@ require 'lazy'.setup {
 			vim.keymap.set('n', '<leader>fb', tf.file_browser, { desc = '[F]ile [b]rowser' })
 		end,
 		keys = { '<leader>fb', desc = '[F]ile [b]rowser' },
+		cmd = 'Telescope file_browser',
 	},
 
 	{
