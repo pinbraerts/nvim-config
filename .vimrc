@@ -19,7 +19,7 @@ set incsearch
 set showmatch
 set smartcase
 set smartindent
-set listchars=space:.,eol:$,trail:-,tab:\|\ 
+set listchars=space:.,eol:$,trail:-,tab:\|\ " prevent removing whitespace
 set nocompatible
 set noswapfile
 set undofile
@@ -118,6 +118,11 @@ cnoremap <c-h> <left>
 cnoremap <c-j> <down>
 cnoremap <c-k> <up>
 cnoremap <c-l> <right>
+
+augroup RemoveTrailingSpaces
+	au!
+	au BufWritePre * :silent!%s/\s\+$//e|normal``
+augroup END
 
 function! ProcessModifiable()
 	if &modifiable
