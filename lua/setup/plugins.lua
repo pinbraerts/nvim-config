@@ -172,6 +172,7 @@ require 'lazy'.setup {
 
 	{
 		'HiPhish/rainbow-delimiters.nvim',
+		ft = ft_colorize,
 		config = function ()
 			local rd = require('rainbow-delimiters')
 			require('rainbow-delimiters.setup').setup {
