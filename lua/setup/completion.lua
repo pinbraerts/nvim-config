@@ -5,7 +5,7 @@ local lspkind = require('lspkind')
 local snip_next = cmp.mapping(function  (fallback)
 	if cmp.visible() then
 		cmp.select_next_item()
-	elseif luasnip.expand_or_jumpable() then
+	elseif luasnip.expand_or_locally_jumpable() then
 		luasnip.expand_or_jump()
 	else
 		fallback()
@@ -15,7 +15,7 @@ end)
 local snip_prev = cmp.mapping(function (fallback)
 	if cmp.visible() then
 		cmp.select_prev_item()
-	elseif luasnip.jumpable(-1) then
+	elseif luasnip.locally_jumpable(-1) then
 		luasnip.jump(-1)
 	else
 		fallback()
@@ -55,8 +55,6 @@ cmp.setup {
 		['<c-p>'] = snip_prev,
 		['<tab>'] = snip_next,
 		['<s-tab>'] = snip_prev,
-		['<c-j>'] = snip_next,
-		['<c-k>'] = snip_prev,
 		['<c-space>'] = cmp.mapping.complete(),
 		['<c-y>'] = cmp.mapping.confirm {
 			behavior = cmp.ConfirmBehavior.Replace,
