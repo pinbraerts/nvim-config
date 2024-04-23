@@ -622,6 +622,7 @@ require 'lazy'.setup {
 			},
 			{
 				'pinbraerts/cmp-tabby',
+				enabled = false, -- breaks on load
 				config = function()
 					local tabby = require('cmp_tabby.config')
 					tabby:setup({
