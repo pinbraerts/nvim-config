@@ -15,13 +15,6 @@ vim.keymap.set('n', '<leader>dx', d.terminate, { desc = '[D]ebug terminate' })
 vim.keymap.set('n', '<leader>j', d.step_over, { desc = 'Step over' })
 vim.keymap.set('n', '<leader>k', d.step_out, { desc = 'Step out' })
 vim.keymap.set('n', '<leader>l', d.step_into, { desc = 'Step into' })
-vim.keymap.set('n', 'K', function ()
-	if d.status() ~= "" then
-		dui.hover()
-	else
-		vim.lsp.buf.hover()
-	end
-end, { desc = 'LSP or DAP hover' })
 
 vim.api.nvim_create_autocmd('FileType', {
 	group = vim.api.nvim_create_augroup("dap-repl-autocomplete", { clear = true }),
@@ -71,3 +64,5 @@ d.configurations.c = {
 d.configurations.rust = {
 	lldb_compiling('rustc -C opt-level=0 -g -o')
 }
+
+require('hover.providers.dap')

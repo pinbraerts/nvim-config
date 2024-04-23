@@ -121,9 +121,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
 				}
 				end, { buffer = buffer, desc = 'LSP apply code action' })
 		end
-		if server_capabilities.hoverProvider and vim.fn.has('dap') == 0 then
-			vim.keymap.set('n', 'K', vim.lsp.buf.hover, { buffer = buffer, desc = 'LSP hover' })
-		end
 		if server_capabilities.formattingProvider then
 			vim.bo[buffer].formatexpr = "v:lua.vim.lsp.formatexpr()"
 			vim.keymap.set({ 'n', 'v' }, '=', 'gq', { remap = true, buffer = buffer, desc = 'LSP formatting' })
