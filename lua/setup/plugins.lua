@@ -292,12 +292,12 @@ require 'lazy'.setup {
 	},
 
 	{
-		'norcalli/nvim-colorizer.lua',
+		'NvChad/nvim-colorizer.lua',
 		ft = ft_colorize,
 		config = function ()
-			require('colorizer').setup(
-				ft_colorize,
-				{
+			require('colorizer').setup {
+				filetypes = ft_colorize,
+				user_default_options = {
 					RGB      = true,
 					RRGGBB   = true,
 					names    = true,
@@ -307,8 +307,8 @@ require 'lazy'.setup {
 					css      = true,
 					css_fn   = true,
 					mode     = 'background',
-				}
-			)
+				},
+			}
 		end,
 	},
 
