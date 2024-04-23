@@ -87,6 +87,16 @@ if vim.fn.has('linux') ~= 0 then
 	end
 end
 
+local function foreground(colors)
+	local result = {}
+	for i, color in ipairs(colors) do
+		local group = 'Rainbow' .. i
+		vim.cmd.highlight(group, 'guifg=' .. color)
+		result[i] = group
+	end
+	return result
+end
+
 vim.keymap.set('n', '<leader>lz', '<cmd>Lazy<cr>', { desc = 'Open [L]a[z]y', silent = true })
 require 'lazy'.setup {
 	{
@@ -158,6 +168,34 @@ require 'lazy'.setup {
 			-- vim.keymap.set('n', '<MouseMove>', require('hover').hover_mouse, { desc = "hover.nvim (mouse)" })
 			-- vim.o.mousemoveevent = true
 		end,
+	},
+
+	{
+		'HiPhish/rainbow-delimiters.nvim',
+		config = function ()
+			local rd = require('rainbow-delimiters')
+			require('rainbow-delimiters.setup').setup {
+				strategy = {
+					[''] = rd.strategy['global'],
+				},
+				query = {
+					[''] = 'rainbow-delimiters',
+					latex = 'rainbow-blocks',
+				},
+				whitelist = ft_colorize,
+				highlight = foreground {
+					"#82aaff",
+					"#ff966c",
+					"#c3e88d",
+					"#ffc777",
+					"#c099ff",
+					"#86e1fc",
+					"#828bb8",
+					"#ff757f",
+					"#c8d3f5",
+				},
+			}
+		end
 	},
 
 	{
