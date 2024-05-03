@@ -5,6 +5,9 @@ syntax on
 let &t_EI = "\e[2 q"
 let &t_SI = "\e[6 q"
 let &t_SR = "\e[4 q"
+set ttimeout
+set ttimeoutlen=1
+set ttyfast
 set t_RV=
 set t_u7=
 set autoindent
@@ -70,12 +73,6 @@ nnoremap <silent> <a-j>      <cmd>m+1<cr>==
 inoremap <silent> <a-j> <c-c><cmd>m+1<cr>==a
 inoremap <silent> <a-k> <c-c><cmd>m-2<cr>==a
 
-" select double quotes
-onoremap aq a"
-onoremap iq i"
-xnoremap aq a"
-xnoremap iq i"
-
 function! ToggleStyle()
 	if &list
 		set colorcolumn=
@@ -107,11 +104,25 @@ nnoremap ]b <cmd>bn<cr>
 nnoremap [q <cmd>cp<cr>
 nnoremap ]q <cmd>cn<cr>
 
-" window maps
-nnoremap <c-j> <c-w>j
-nnoremap <c-k> <c-w>k
-nnoremap <c-h> <c-w>h
-nnoremap <c-l> <c-w>l
+if getenv("TMUX") != v:null
+	function! Navigate(direction)
+		let tmux_map = { "h": "L", "j": "D", "k": "U", "l": "R" }
+		let num_before = winnr()
+		exec "wincmd " . a:direction
+		if winnr() == num_before
+			silent exec "call job_start('tmux select-pane -" . tmux_map[a:direction] . "')"
+		endif
+	endfunction
+	nnoremap <c-j> <cmd>call Navigate("j")<cr>
+	nnoremap <c-k> <cmd>call Navigate("k")<cr>
+	nnoremap <c-h> <cmd>call Navigate("h")<cr>
+	nnoremap <c-l> <cmd>call Navigate("l")<cr>
+else
+	nnoremap <c-j> <c-w>j
+	nnoremap <c-k> <c-w>k
+	nnoremap <c-h> <c-w>h
+	nnoremap <c-l> <c-w>l
+endif
 
 " command line remaps
 cnoremap <c-h> <left>
@@ -135,13 +146,10 @@ function! ProcessModifiable()
 	endif
 endfunction
 
-augroup NotModifiableBuffer
+augroup MyAutoCmds
 	au!
+	au VimEnter * silent !echo -ne "\e[2 q"
 	au BufAdd,BufNew,VimEnter * call ProcessModifiable()
 	au OptionSet modifiable     call ProcessModifiable()
-augroup END
-
-augroup CloseNetrw
-	au!
 	au FileType netrw setl bufhidden=wipe
 augroup END
