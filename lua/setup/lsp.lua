@@ -4,10 +4,26 @@ capabilities = vim.tbl_extend('force', capabilities, cmp_capabilities)
 local lspconfig = require('lspconfig')
 
 local servers = {
-	clangd = {},
-	bashls = {},
-	pylsp = {},
-	powershell_es = {},
+
+	pylsp = {
+		settings = {
+			pylsp = {
+				configurationSources = { "pycodestyle" },
+				plugins = {
+					pycodestyle = {
+						enabled = true,
+						ignore = { "E501" },
+					},
+					rope_autoimport = {
+						completions = { enabled = true },
+						code_actions = { enabled = true },
+						enabled = true,
+						memory = true,
+					},
+				},
+			},
+		},
+	},
 
 	lua_ls = {
 		settings = {
@@ -61,9 +77,10 @@ local servers = {
 
 }
 
-local ensure_installed = vim.tbl_keys(servers or {})
 require('mason-lspconfig').setup {
-	ensure_installed = ensure_installed,
+	ensure_installed = {
+		"clangd", "pylsp", vim.fn.has("win32") ~= 0 and "powershell_es" or "bashls",
+	},
 	automatic_installation = true,
 	handlers = {
 		function (server_name)
@@ -72,6 +89,7 @@ require('mason-lspconfig').setup {
 			server.single_file_support = true
 			lspconfig[server_name].setup(server)
 		end,
+		rust_analyzer = function() end,
 	},
 }
 
@@ -131,6 +149,14 @@ vim.api.nvim_create_autocmd('LspAttach', {
 vim.g.rustaceanvim = {
 	dap = {
 		autoload_configurations = true,
+	},
+	server = {
+		cmd = function()
+			local mason_registry = require('mason-registry')
+			local ra_binary = mason_registry.is_installed('rust-analyzer')
+			and mason_registry.get_package('rust-analyzer'):get_install_path() .. "/rust-analyzer" or "rust-analyzer"
+			return { ra_binary }
+		end,
 	},
 }
 
