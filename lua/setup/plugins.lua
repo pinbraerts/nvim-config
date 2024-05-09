@@ -172,7 +172,7 @@ require 'lazy'.setup {
 
 	{
 		'HiPhish/rainbow-delimiters.nvim',
-		ft = ft_colorize,
+		ft = ft_highlight,
 		config = function ()
 			local rd = require('rainbow-delimiters')
 			require('rainbow-delimiters.setup').setup {
@@ -183,7 +183,7 @@ require 'lazy'.setup {
 					[''] = 'rainbow-delimiters',
 					latex = 'rainbow-blocks',
 				},
-				whitelist = ft_colorize,
+				whitelist = ft_highlight,
 				highlight = foreground {
 					"#82aaff",
 					"#ff966c",
