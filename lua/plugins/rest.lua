@@ -1,62 +1,4 @@
-local function join (arrays)
-	local result = { }
-	for _, a in ipairs(arrays) do
-		local result_size = #result
-		for j, v in ipairs(a) do
-			result[result_size + j] = v
-		end
-	end
-	return result
-end
-
-local ft_web = {
-	'javascript', 'html', 'css',
-}
-
-local ft_shell = {
-	'sh', 'ps1',
-}
-
-local ft_debug = {
-	'python',
-	'c', 'cpp', 'rust', 'go',
-}
-
-local ft_tex = {
-	'tex', 'plaintex', 'bib',
-}
-
-local ft_config = {
-	'json', 'toml', 'xml', 'zathurarc', 'ini',
-}
-
-local ft_documentation = {
-	'jsdoc', 'luadoc', 'vimdoc',
-}
-
-local ft_lsp = join {
-	{ 'lua', 'fastbuild', },
-	ft_shell,
-	ft_debug,
-	ft_web,
-	ft_tex,
-}
-
-local ft_highlight = join {
-	{ 'jq', 'query', },
-	{ 'markdown', 'markdown_inline', },
-	ft_documentation,
-	ft_config,
-	ft_lsp,
-}
-
-local ft_colorize = join {
-	{ 'lua', },
-	ft_web,
-	ft_config,
-	ft_shell,
-}
-
+local ft = require('filetypes')
 local ok, local_plugins = pcall(require, 'local.plugins')
 if not ok then
 	local_plugins = { }
@@ -156,7 +98,7 @@ return {
 
 	{
 		'HiPhish/rainbow-delimiters.nvim',
-		ft = ft_highlight,
+		ft = ft.highlight,
 		config = function ()
 			local rd = require('rainbow-delimiters')
 			require('rainbow-delimiters.setup').setup {
@@ -167,7 +109,7 @@ return {
 					[''] = 'rainbow-delimiters',
 					latex = 'rainbow-blocks',
 				},
-				whitelist = ft_highlight,
+				whitelist = ft.highlight,
 				highlight = foreground {
 					"#82aaff",
 					"#ff966c",
@@ -308,10 +250,10 @@ return {
 
 	{
 		'NvChad/nvim-colorizer.lua',
-		ft = ft_colorize,
+		ft = ft.colorize,
 		config = function ()
 			require('colorizer').setup {
-				filetypes = ft_colorize,
+				filetypes = ft.colorize,
 				user_default_options = {
 					RGB      = true,
 					RRGGBB   = true,

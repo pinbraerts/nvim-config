@@ -1,7 +1,4 @@
-local ft_debug = {
-	'python',
-	'c', 'cpp', 'rust', 'go',
-}
+local ft = require("filetypes")
 
 local function setup ()
 	local d = require 'dap'
@@ -69,7 +66,7 @@ return {
 
 	{
 		'mfussenegger/nvim-dap',
-		ft = ft_debug,
+		ft = ft.debug,
 		config = setup,
 	},
 

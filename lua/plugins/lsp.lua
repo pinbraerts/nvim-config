@@ -1,38 +1,4 @@
-local function join (arrays)
-	local result = { }
-	for _, a in ipairs(arrays) do
-		local result_size = #result
-		for j, v in ipairs(a) do
-			result[result_size + j] = v
-		end
-	end
-	return result
-end
-
-local ft_web = {
-	'javascript', 'html', 'css',
-}
-
-local ft_shell = {
-	'sh', 'ps1',
-}
-
-local ft_debug = {
-	'python',
-	'c', 'cpp', 'rust', 'go',
-}
-
-local ft_tex = {
-	'tex', 'plaintex', 'bib',
-}
-
-local ft_lsp = join {
-	{ 'lua', 'fastbuild', },
-	ft_shell,
-	ft_debug,
-	ft_web,
-	ft_tex,
-}
+local ft = require("filetypes")
 
 local function setup ()
 	local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -212,7 +178,7 @@ return {
 			{ 'folke/neodev.nvim', opts = {} },
 			'nvim-telescope/telescope.nvim',
 		},
-		ft = ft_lsp,
+		ft = ft.lsp,
 		config = setup,
 		keys = {
 			{ 'gh', '<cmd>ClangdSwitchSourceHeader<cr>', desc = '[G]o to header', silent = true, },
