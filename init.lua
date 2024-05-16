@@ -64,10 +64,6 @@ vim.opt.rtp:prepend(lazypath)
 vim.keymap.set('n', '<leader>lz', '<cmd>Lazy<cr>', { desc = 'Open [L]a[z]y', silent = true })
 require 'lazy'.setup("plugins")
 
-require 'setup.style'
-require 'setup.remap'
-require 'setup.terminal'
-
 pcall(require, 'local')
 if vim.fn.has('win32') ~= 0 then
 	pcall(require, 'windows')
