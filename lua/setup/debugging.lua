@@ -33,7 +33,7 @@ local function lldb_compiling (compiler)
 		stopOnEntry = false,
 		program = function ()
 			local filename = vim.fs.normalize(vim.api.nvim_buf_get_name(0))
-			local executable = filename:gsub('%..*$', '.exe')
+			local executable = filename:gsub('%..*$', '')
 			if vim.fn.executable(executable) == 0 or vim.fn.getftime(executable) < vim.fn.getftime(filename) then
 				local command = compiler..' '..executable..' '..filename
 				print("Compililng: "..command)
@@ -43,15 +43,6 @@ local function lldb_compiling (compiler)
 		end
 	}
 end
-
-local mason_registry = require('mason-registry')
-local extension_path = mason_registry.get_package('codelldb'):get_install_path() .. '/extension'
-local codelldb_path = extension_path .. '/adapter/codelldb'
-local liblldb_path =  extension_path .. '/lldb/lib/liblldb.so'
-d.adapters.codelldb = require 'rustaceanvim.config'.get_codelldb_adapter(
-	codelldb_path,
-	liblldb_path
-)
 
 d.configurations.cpp = {
 	lldb_compiling('clang++ -O0 -g -o')
