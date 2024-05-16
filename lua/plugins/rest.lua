@@ -82,6 +82,7 @@ return {
 
 	{
 		'nanotee/zoxide.vim',
+		cond = function () return vim.fn.executable("zoxide") ~= 0 end,
 		cmd = {
 			'Z', 'Lz', 'Tz', 'Zi', 'Lzi', 'Tzi',
 		},
