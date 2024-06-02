@@ -281,5 +281,22 @@ return {
 		end,
 	},
 
-	unpack(local_plugins)
+	{
+		'aserowy/tmux.nvim',
+		enable = vim.fn.executable("tmux") ~= 0,
+		cond = function () return os.getenv("TMUX") ~= nil end,
+		config = function ()
+			require('tmux').setup {
+				navigation = {
+					enable_default_keybindings = true,
+					cycle_navigation = false,
+					persist_zoom = true,
+				},
+				resize = {
+					enable_default_keybindings = false,
+				},
+			}
+		end
+	},
+
 }
