@@ -1,20 +1,4 @@
 local ft = require('filetypes')
-local ok, local_plugins = pcall(require, 'local.plugins')
-if not ok then
-	local_plugins = { }
-end
-if vim.fn.has('win32') ~= 0 then
-	local status, plugins = pcall(require, 'windows.plugins')
-	if status then
-		local_plugins = vim.tbl_extend('force', local_plugins, plugins)
-	end
-end
-if vim.fn.has('linux') ~= 0 then
-	local status, plugins = pcall(require, 'linux.plugins')
-	if status then
-		local_plugins = vim.tbl_extend('force', local_plugins, plugins)
-	end
-end
 
 local function foreground(colors)
 	local result = {}
