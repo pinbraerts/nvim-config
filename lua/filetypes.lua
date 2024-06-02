@@ -1,3 +1,15 @@
+vim.filetype.add {
+	extension = {
+		zsh = 'sh',
+		sh = 'sh',
+	},
+	filename = {
+		['.zshrc'] = 'sh',
+		['.zprofile'] = 'sh',
+		['.zshenv'] = 'sh',
+	},
+}
+
 local function join (arrays)
 	local result = { }
 	for _, a in ipairs(arrays) do
@@ -9,62 +21,78 @@ local function join (arrays)
 	return result
 end
 
-local web = {
+local M = {}
+
+M.web = {
 	'javascript', 'html', 'css',
 }
 
-local shell = {
+M.shell = {
 	'sh', 'ps1',
 }
 
-local debug = {
+M.debug = {
 	'python',
 	'c', 'cpp', 'rust', 'go',
 }
 
-local tex = {
+M.tex = {
 	'tex', 'plaintex', 'bib',
 }
 
-local config = {
+M.config = {
 	'json', 'toml', 'xml', 'zathurarc', 'ini',
 }
 
-local documentation = {
+M.documentation = {
 	'jsdoc', 'luadoc', 'vimdoc',
 }
 
-local lsp = join {
+M.lsp = join {
 	{ 'lua', 'fastbuild', },
-	shell,
-	debug,
-	web,
-	tex,
+	M.shell,
+	M.debug,
+	M.web,
+	M.tex,
 }
 
-local highlight = join {
+M.markdown = { 'markdown', 'markdown_inline', }
+
+M.highlight = join {
 	{ 'jq', 'query', },
-	{ 'markdown', 'markdown_inline', },
-	documentation,
-	config,
-	lsp,
+	M.markdown,
+	M.documentation,
+	M.config,
+	M.lsp,
 }
 
-local colorize = join {
+M.colorize = join {
 	{ 'lua', },
-	web,
-	config,
-	shell,
+	M.web,
+	M.config,
+	M.shell,
 }
 
-return {
-	colorize = colorize,
-	lsp = lsp,
-	highlight = highlight,
-	documentation = documentation,
-	config = config,
-	tex = tex,
-	debug = debug,
-	web = web,
-	shell = shell,
+M.treesitter = join {
+	{ 'lua' },
+	{ 'jq', 'query' },
+	{ 'bash' },
+	M.web,
+	M.debug,
+	M.markdown,
+	M.documentation,
 }
+
+M.webdev = join {
+	M.web,
+	{
+		'xml',
+		'typescript', 'javascriptreact', 'typescriptreact',
+		'svelte', 'vue', 'tsx', 'jsx', 'rescript',
+		'php',
+		'markdown',
+		'astro', 'glimmer', 'handlebars', 'hbs'
+	},
+}
+
+return M
