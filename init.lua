@@ -1,24 +1,6 @@
-local function test_directory(dir)
-	local vimrc = dir .. '/.vimrc'
-	if vim.fn.filereadable(vimrc) == 0 then
-		return false
-	end
-	local ok, _ = pcall(vim.cmd.source, vimrc)
-	return ok
-end
+local path = vim.fn.fnamemodify(vim.fn.expand('<sfile>'), ':p:h') .. '/'
 
-local directories = {
-	vim.fn.stdpath('config') or '',
-	os.getenv('XDG_CONFIG_HOME') or '',
-	os.getenv('HOME') or '',
-	os.getenv('USERPROFILE') or '',
-}
-
-for _, directory in ipairs(directories) do
-	if test_directory(directory) then
-		break
-	end
-end
+pcall(vim.cmd.source, path .. '.vimrc')
 
 vim.api.nvim_create_autocmd("BufWritePre", {
 	group = vim.api.nvim_create_augroup("RemoveTrailingWhitespaces", { clear = true }),
