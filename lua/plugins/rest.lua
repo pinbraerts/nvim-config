@@ -184,12 +184,26 @@ return {
 					},
 				},
 			}
+			local dial_map = require('dial.map')
+			local function manipulate (direction, mode)
+				return function ()
+					dial_map.manipulate(direction, mode)
+				end
+			end
+			vim.keymap.set("n",  "<C-a>", manipulate("increment", "normal"))
+			vim.keymap.set("n",  "<C-x>", manipulate("decrement", "normal"))
+			vim.keymap.set("n", "g<C-a>", manipulate("increment", "gnormal"))
+			vim.keymap.set("n", "g<C-x>", manipulate("decrement", "gnormal"))
+			vim.keymap.set("v",  "<C-a>", manipulate("increment", "visual"))
+			vim.keymap.set("v",  "<C-x>", manipulate("decrement", "visual"))
+			vim.keymap.set("v", "g<C-a>", manipulate("increment", "gvisual"))
+			vim.keymap.set("v", "g<C-x>", manipulate("decrement", "gvisual"))
 		end,
 		keys = {
-			{  '<C-a>',  '<Plug>(dial-increment)', mode = { 'n', 'v' }, },
-			{  '<C-x>',  '<Plug>(dial-decrement)', mode = { 'n', 'v' }, },
-			{ 'g<C-a>', 'g<Plug>(dial-increment)', mode = { 'n', 'v' }, },
-			{ 'g<C-x>', 'g<Plug>(dial-decrement)', mode = { 'n', 'v' }, },
+			{  '<C-a>', mode = { 'n', 'v' }, },
+			{  '<C-x>', mode = { 'n', 'v' }, },
+			{ 'g<C-a>', mode = { 'n', 'v' }, },
+			{ 'g<C-x>', mode = { 'n', 'v' }, },
 		},
 	},
 
