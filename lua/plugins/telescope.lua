@@ -120,7 +120,18 @@ local function setup ()
 	vim.keymap.set('n', '<leader>mm', b.marks, { desc = 'marks' })
 	vim.keymap.set('n', '<leader>q', b.quickfix, { desc = '[q]uickfix' })
 	vim.keymap.set('n', '<leader>tb', b.buffers, { desc = '[b]uffers' })
-	vim.keymap.set('n', '<leader>tc', b.colorscheme, { desc = '[c]olorscheme' })
+	vim.keymap.set('n', '<leader>tc', function ()
+		for _, colorscheme in ipairs(require('plugins.colorscheme')) do
+			local name = colorscheme.name
+			if name == nil then
+				local index = colorscheme[1]:find('/')
+				name = colorscheme[1]:sub(index + 1)
+			end
+			print("Lazy load " .. colorscheme.name)
+			vim.cmd("Lazy load " .. colorscheme.name)
+		end
+		b.colorscheme()
+	end, { desc = '[c]olorscheme' })
 	-- vim.keymap.set('n', '<leader>te', b.diagnostics, { desc = '[e]rrors' })
 	vim.keymap.set('n', '<leader>ch', b.keymaps, { desc = '[C]heat [s]heet' })
 	vim.keymap.set('n', '<leader>tl', b.jumplist, { desc = 'Jump[l]is[t]' })
@@ -230,7 +241,6 @@ return {
 			vim.keymap.set('n', '<leader>fb', tf.file_browser, { desc = '[F]ile [b]rowser' })
 		end,
 		keys = { '<leader>fb', desc = '[F]ile [b]rowser' },
-		cmd = 'Telescope file_browser',
 	},
 
 	{
@@ -241,7 +251,6 @@ return {
 			vim.keymap.set('n', '<leader>ts', t.symbols, { desc = 'unicode symbols picker' })
 		end,
 		keys = { '<leader>ts', desc = 'unicode symbols picker' },
-		cmd = 'Telescope symbols',
 	},
 
 }

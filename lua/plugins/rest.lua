@@ -88,10 +88,6 @@ return {
 		},
 	},
 
-	{ 'EdenEast/nightfox.nvim', lazy = true },
-	{ 'catppuccin/nvim', name = 'catppuccin', setup = true, lazy = true },
-	{ 'folke/tokyonight.nvim', lazy = true },
-
 	{
 		'monaqa/dial.nvim',
 		config = function ()
