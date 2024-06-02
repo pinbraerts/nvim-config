@@ -45,12 +45,13 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 vim.keymap.set('n', '<leader>lz', '<cmd>Lazy<cr>', { desc = 'Open [L]a[z]y', silent = true })
-require 'lazy'.setup("plugins")
 
-pcall(require, 'local')
-if vim.fn.has('win32') ~= 0 then
-	pcall(require, 'windows')
+local spec = {
+	{ import = "plugins" },
+}
+
+if vim.fn.isdirectory(path .. "lua/local") ~= 0 or vim.fn.filereadable(path .. "lua/local.lua") ~= 0 then
+	table.insert(spec, { import = 'local' })
 end
-if vim.fn.has('linux') ~= 0 then
-	pcall(require, 'linux')
-end
+
+require 'lazy'.setup({ spec = spec, })
