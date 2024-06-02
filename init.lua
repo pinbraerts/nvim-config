@@ -24,9 +24,10 @@ if vim.fn.executable('python3') ~= 0 then
 end
 
 if vim.fn.executable('python') ~= 0 then
-	if vim.fn.has('win32') ~= 0 then
+	local version = vim.fn.system({'python', '--version'}):sub(8, 8)
+	if version == '3' then
 		vim.g.python3_host_prog = 'python'
-	else
+	elseif version == '2' then
 		vim.g.python_host_prog = 'python'
 	end
 end
