@@ -13,6 +13,38 @@ local function setup ()
 		opts = { nowait = true, silent = true },
 	}
 
+	local grep_args = nil
+	if vim.fn.executable("rg") ~= 0 then
+		-- use defaults
+	elseif vim.fn.executable("ag") ~= 0 then
+		grep_args = {
+			"ag",
+			"--nocolor",
+			"--noheading",
+			"--numbers",
+			"--column",
+			"--smart-case",
+			"--silent",
+			"--vimgrep",
+		}
+	elseif vim.fn.executable("grep") ~= 0 then
+		grep_args = {
+			"grep",
+			"--extended-regexp",
+			"--color=never",
+			"--with-filename",
+			"--line-number",
+			"-b", -- grep doesn't support a `--column` option :(
+			"--ignore-case",
+			"--recursive",
+			"--no-messages",
+			"--exclude-dir=*cache*",
+			"--exclude-dir=*.git",
+			"--exclude=.*",
+			"--binary-files=without-match",
+		}
+	end
+
 	t.setup {
 		defaults = {
 			path_display = { 'smart', },
@@ -52,6 +84,7 @@ local function setup ()
 					['<c-k>'] = previous,
 				},
 			},
+			vimgrep_arguments = grep_args,
 		},
 		pickers = {
 			pickers = {
