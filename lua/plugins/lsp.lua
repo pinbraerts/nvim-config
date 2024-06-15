@@ -13,10 +13,13 @@ local function setup ()
 				pylsp = {
 					configurationSources = { "pycodestyle" },
 					plugins = {
+						mccabe = { enabled = false },
 						pycodestyle = {
 							enabled = true,
-						ignore = { "E501" },
+							ignore = { "E501" },
 						},
+						pyflakes = { enabled = true },
+						flake8 = { enabled = false },
 						rope_autoimport = {
 							completions = { enabled = true },
 							code_actions = { enabled = true },
