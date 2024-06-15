@@ -105,7 +105,7 @@ return {
 		dependencies = { 'mfussenegger/nvim-dap' },
 		ft = 'python',
 		config = function ()
-			require('dap-python').setup(vim.fn.executable('python3') and 'python3' or 'python')
+			require('dap-python').setup(vim.g.python3_host_prog or vim.g.python_host_prog)
 		end,
 	},
 
