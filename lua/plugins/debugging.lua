@@ -68,6 +68,22 @@ return {
 		'mfussenegger/nvim-dap',
 		ft = ft.debug,
 		config = setup,
+		keys = {
+			{ '<leader>b', desc = 'Toggle breakpoint' },
+			{ '<leader>dc', desc = '[D]ebug [c]ontinue' },
+			{ '<leader>dC', desc = '[D]ebug reverse [c]ontinue' },
+			{ '<leader>dh', desc = '[D]ebug step back' },
+			{ '<leader>dj', desc = '[D]ebug run to cursor' },
+			{ '<leader>dn', desc = '[D]ebug dow[n]' },
+			{ '<leader>dp', desc = '[D]ebug [p]ause' },
+			{ '<leader>dq', desc = '[D]ebug [q]iut' },
+			{ '<leader>dr', desc = '[D]ebug [r]un' },
+			{ '<leader>du', desc = '[D]ebug [u]p' },
+			{ '<leader>dx', desc = '[D]ebug terminate' },
+			{ '<leader>j', desc = 'Step over' },
+			{ '<leader>k', desc = 'Step out' },
+			{ '<leader>l', desc = 'Step into' },
+		},
 	},
 
 	{
