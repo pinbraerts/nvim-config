@@ -56,7 +56,7 @@ local function setup ()
 			settings = {
 				texlab = {
 					build = {
-						executable = 'tectonic',
+						executable = "tectonic",
 						args = {
 							'-X',
 							'compile',
@@ -157,12 +157,7 @@ local function setup ()
 			autoload_configurations = true,
 		},
 		server = {
-			cmd = function()
-				local mason_registry = require('mason-registry')
-				local ra_binary = mason_registry.is_installed('rust-analyzer')
-				and mason_registry.get_package('rust-analyzer'):get_install_path() .. "/rust-analyzer" or "rust-analyzer"
-				return { ra_binary }
-			end,
+			cmd = "rust-analyzer",
 		},
 	}
 
