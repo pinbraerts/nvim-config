@@ -54,4 +54,10 @@ if vim.fn.isdirectory(path .. "lua/local") ~= 0 or vim.fn.filereadable(path .. "
 	table.insert(spec, { import = 'local' })
 end
 
-require 'lazy'.setup({ spec = spec, })
+require 'lazy'.setup({
+	spec = spec,
+	change_detection = {
+		enabled = true,
+		notify = false,
+	},
+})
