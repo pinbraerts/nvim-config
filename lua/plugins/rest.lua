@@ -270,9 +270,10 @@ return {
 		enable = vim.fn.executable("tmux") ~= 0,
 		cond = function () return os.getenv("TMUX") ~= nil end,
 		config = function ()
-			require('tmux').setup {
+			local tmux = require('tmux')
+			tmux.setup {
 				navigation = {
-					enable_default_keybindings = true,
+					enable_default_keybindings = false,
 					cycle_navigation = false,
 					persist_zoom = true,
 				},
@@ -280,7 +281,17 @@ return {
 					enable_default_keybindings = false,
 				},
 			}
-		end
+			vim.keymap.set('n', '<c-h>', tmux.move_left, { silent = true, nowait = true, desc = 'select right pane' })
+			vim.keymap.set('n', '<c-j>', tmux.move_bottom, { silent = true, nowait = true, desc = 'select upper pane' })
+			vim.keymap.set('n', '<c-k>', tmux.move_top, { silent = true, nowait = true, desc = 'select down pane' })
+			vim.keymap.set('n', '<c-l>', tmux.move_right, { silent = true, nowait = true, desc = 'select left pane' })
+		end,
+		keys = {
+			{ '<c-h>', desc = 'select right pane' },
+			{ '<c-j>', desc = 'select down pane' },
+			{ '<c-k>', desc = 'select upper pane' },
+			{ '<c-l>', desc = 'select left pane' },
+		},
 	},
 
 }
