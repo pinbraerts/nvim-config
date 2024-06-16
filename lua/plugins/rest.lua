@@ -250,19 +250,7 @@ return {
 		'numToStr/Comment.nvim',
 		dependencies = { 'nvim-treesitter/nvim-treesitter' },
 		keys = { { 'gc', mode = { 'n', 'v' } } },
-		config = function ()
-			require 'Comment'.setup {
-				padding = true,
-				sticky = true,
-				toggler = {
-					line = 'gc',
-				},
-				mappings = {
-					basic = true,
-					extra = false,
-				},
-			}
-		end,
+		config = true,
 	},
 
 	{
