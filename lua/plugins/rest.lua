@@ -234,7 +234,7 @@ return {
 		dependencies = { 'nvim-lua/plenary.nvim' },
 		opts = {
 			handler_options = {
-				search_engine = "duckduckgo",
+				search_engine = "https://search.disroot.org/?q=",
 			},
 		},
 	},
