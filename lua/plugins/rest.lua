@@ -150,16 +150,16 @@ return {
 					enable_default_keybindings = false,
 				},
 			}
-			vim.keymap.set('n', '<c-h>', tmux.move_left, { silent = true, nowait = true, desc = 'select right pane' })
-			vim.keymap.set('n', '<c-j>', tmux.move_bottom, { silent = true, nowait = true, desc = 'select upper pane' })
-			vim.keymap.set('n', '<c-k>', tmux.move_top, { silent = true, nowait = true, desc = 'select down pane' })
-			vim.keymap.set('n', '<c-l>', tmux.move_right, { silent = true, nowait = true, desc = 'select left pane' })
+			vim.keymap.set('n', '<c-h>', tmux.move_left, { silent = true, nowait = true, desc = 'Select right pane' })
+			vim.keymap.set('n', '<c-j>', tmux.move_bottom, { silent = true, nowait = true, desc = 'Select upper pane' })
+			vim.keymap.set('n', '<c-k>', tmux.move_top, { silent = true, nowait = true, desc = 'Select down pane' })
+			vim.keymap.set('n', '<c-l>', tmux.move_right, { silent = true, nowait = true, desc = 'Select left pane' })
 		end,
 		keys = {
-			{ '<c-h>', desc = 'select right pane' },
-			{ '<c-j>', desc = 'select down pane' },
-			{ '<c-k>', desc = 'select upper pane' },
-			{ '<c-l>', desc = 'select left pane' },
+			{ '<c-h>', desc = 'Select right pane' },
+			{ '<c-j>', desc = 'Select down pane' },
+			{ '<c-k>', desc = 'Select upper pane' },
+			{ '<c-l>', desc = 'Select left pane' },
 		},
 	},
 

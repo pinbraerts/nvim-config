@@ -24,7 +24,7 @@ local function setup()
 					end
 				end
 				vim.cmd.nohls()
-				end, { buffer = buffer, desc = 'close relative window' })
+				end, { buffer = buffer, desc = 'Close relative window' })
 
 			vim.keymap.set('n', ']c', function()
 				if vim.wo.diff then return ']c' end
