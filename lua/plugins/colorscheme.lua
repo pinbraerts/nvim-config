@@ -18,6 +18,20 @@ return {
   },
 
   {
+    "rebelot/kanagawa.nvim",
+    opts = {
+      options = {
+        transparent = is_tty,
+      },
+      groups = {
+        all = {
+          WinSeparator = { fg = "#719cd6" },
+        },
+      },
+    },
+  },
+
+  {
     "catppuccin/nvim",
     name = "catppuccin",
     opts = {
@@ -38,5 +52,4 @@ return {
     },
     lazy = true,
   },
-
 }
