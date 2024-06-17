@@ -19,6 +19,7 @@ vim.api.nvim_create_autocmd({ 'BufWinEnter', 'WinEnter' }, {
 })
 
 vim.keymap.set('t', '<s-esc>', '<c-\\><c-n>', { desc = 'quit terminal mode' })
+vim.keymap.set('t', '<c-q>[', '<c-\\><c-n>', { desc = 'quit terminal mode' })
 vim.keymap.set({ 't', 'i' }, '<c-h>', '<c-\\><c-n><c-w>h', { desc = 'focus left window' })
 vim.keymap.set({ 't', 'i' }, '<c-l>', '<c-\\><c-n><c-w>l', { desc = 'focus right window' })
 vim.keymap.set('i', '<c-j>', '<c-\\><c-n><c-w>j', { desc = 'focus down window' })
@@ -31,3 +32,7 @@ vim.keymap.set('t', '<c-k>', '<c-k>')
 vim.keymap.set('t', '<s-space>', '<space>')
 vim.keymap.set('t', '<s-enter>', '<enter>')
 vim.keymap.set('t', '<s-backspace>', '<backspace>')
+
+vim.keymap.set('n', '<c-q>v', '<cmd>vsplit <bar> term pwsh -nologo<cr>', { silent = true, nowait = true, desc = 'Split vertical terminal' })
+vim.keymap.set('n', '<c-q>h', '<cmd>split <bar> term pwsh -nologo<cr>', { silent = true, nowait = true, desc = 'Split horizontal terminal' })
+vim.keymap.set('n', '<c-q>c', '<cmd>tabnew <bar> term pwsh -nologo<cr>', { silent = true, nowait = true, desc = 'New terminal tab' })
