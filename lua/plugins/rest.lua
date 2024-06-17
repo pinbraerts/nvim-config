@@ -65,6 +65,12 @@ return {
 	},
 
 	{
+		'windwp/nvim-autopairs',
+		event = "InsertEnter",
+		config = true
+	},
+
+	{
 		'nanotee/zoxide.vim',
 		cond = function () return vim.fn.executable("zoxide") ~= 0 end,
 		cmd = {
