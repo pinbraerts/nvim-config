@@ -49,7 +49,7 @@ M.documentation = {
 }
 
 M.lsp = join {
-	{ 'lua', 'fastbuild', },
+	{ 'lua', 'fastbuild', 'fennel' },
 	M.shell,
 	M.debug,
 	M.web,
@@ -59,11 +59,12 @@ M.lsp = join {
 M.markdown = { 'markdown', 'markdown_inline', }
 
 M.highlight = join {
-	{ 'jq', 'query', },
+	{ 'jq', 'query', 'lisp' },
 	M.markdown,
 	M.documentation,
 	M.config,
 	M.lsp,
+	M.tex,
 }
 
 M.colorize = join {
