@@ -63,7 +63,7 @@ M.documentation = {
 }
 
 M.lsp = join({
-  { "lua", "fastbuild", "fennel" },
+  { "lua", "fastbuild", "fennel", "lsp" },
   M.shell,
   M.debug,
   M.web,
