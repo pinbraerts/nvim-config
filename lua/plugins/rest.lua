@@ -167,6 +167,9 @@ return {
           cycle_navigation = false,
           persist_zoom = true,
         },
+        copy_sync = {
+          sync_clipboard = true,
+        },
         resize = {
           enable_default_keybindings = false,
         },
