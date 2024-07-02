@@ -193,6 +193,10 @@ local function setup()
           { remap = true, buffer = buffer, desc = "LSP formatting" }
         )
       end
+      if vim.bo[buffer].filetype == "cpp" then
+        require("clangd_extensions.inlay_hints").setup_autocmd()
+        require("clangd_extensions.inlay_hints").set_inlay_hints()
+      end
     end,
   })
 
@@ -232,4 +236,53 @@ return {
     ft = { "rust" },
     dependencies = { "neovim/nvim-lspconfig" },
   },
+
+  {
+    "p00f/clangd_extensions.nvim",
+    opts = {
+      inlay_hints = {
+        inline = vim.fn.has("nvim-0.10") == 1,
+        only_current_line = false,
+        show_parameter_hints = true,
+        max_len_align = false,
+        right_align = true,
+        right_align_padding = 7,
+        highlight = "Comment",
+        priority = 100,
+      },
+      ast = {
+
+        role_icons = {
+          type = "",
+          declaration = "",
+          expression = "",
+          specifier = "",
+          statement = "",
+          ["template argument"] = "",
+        },
+
+        kind_icons = {
+          Compound = "",
+          Recovery = "",
+          TranslationUnit = "",
+          PackExpansion = "",
+          TemplateTypeParm = "",
+          TemplateTemplateParm = "",
+          TemplateParamObject = "",
+        },
+
+        highlights = {
+          detail = "Comment",
+        },
+      },
+      memory_usage = {
+        border = "none",
+      },
+      symbol_info = {
+        border = "none",
+      },
+    },
+
+  },
+
 }
