@@ -105,18 +105,17 @@ nnoremap [q <cmd>cp<cr>
 nnoremap ]q <cmd>cn<cr>
 
 if getenv("TMUX") != v:null
-  function! Navigate(direction)
-    let tmux_map = { "h": "L", "j": "D", "k": "U", "l": "R" }
+  function! Navigate(direction, tmux_direction)
     let num_before = winnr()
     exec "wincmd " . a:direction
     if winnr() == num_before
-      silent exec "call job_start('tmux select-pane -" . tmux_map[a:direction] . "')"
+      silent exec "call job_start('tmux select-pane -" . a:tmux_direction . "')"
     endif
   endfunction
-  nnoremap <c-j> <cmd>call Navigate("j")<cr>
-  nnoremap <c-k> <cmd>call Navigate("k")<cr>
-  nnoremap <c-h> <cmd>call Navigate("h")<cr>
-  nnoremap <c-l> <cmd>call Navigate("l")<cr>
+  nnoremap <c-j> <cmd>call Navigate("j", "D")<cr>
+  nnoremap <c-k> <cmd>call Navigate("k", "U")<cr>
+  nnoremap <c-h> <cmd>call Navigate("h", "L")<cr>
+  nnoremap <c-l> <cmd>call Navigate("l", "R")<cr>
 else
   nnoremap <c-j> <c-w>j
   nnoremap <c-k> <c-w>k
