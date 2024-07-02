@@ -97,13 +97,13 @@ if getenv("TMUX") != v:null
     let num_before = winnr()
     exec "wincmd " . a:direction
     if winnr() == num_before
-      silent exec "call job_start('tmux select-pane -" . a:tmux_direction . "')"
+      silent call job_start(['tmux', 'select-pane', a:tmux_direction])
     endif
   endfunction
-  nnoremap <c-j> <cmd>call Navigate("j", "D")<cr>
-  nnoremap <c-k> <cmd>call Navigate("k", "U")<cr>
-  nnoremap <c-h> <cmd>call Navigate("h", "L")<cr>
-  nnoremap <c-l> <cmd>call Navigate("l", "R")<cr>
+  nnoremap <c-j> <cmd>call Navigate("j", "-D")<cr>
+  nnoremap <c-k> <cmd>call Navigate("k", "-U")<cr>
+  nnoremap <c-h> <cmd>call Navigate("h", "-L")<cr>
+  nnoremap <c-l> <cmd>call Navigate("l", "-R")<cr>
 else
   nnoremap <c-j> <c-w>j
   nnoremap <c-k> <c-w>k
