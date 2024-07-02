@@ -136,7 +136,7 @@ endfunction
 augroup MyAutoCmds
   au!
   au VimEnter * silent !echo -ne "\e[2 q"
-  au BufAdd,BufNew,VimEnter * call ProcessModifiable()
+  au BufAdd,BufNew,BufEnter * call ProcessModifiable()
   au OptionSet modifiable     call ProcessModifiable()
   au FileType netrw setl bufhidden=wipe
 augroup END
