@@ -115,8 +115,9 @@ local function setup()
   })
 
   local t = require("telescope.builtin")
+  local group = vim.api.nvim_create_augroup("lsp-config-attach", { clear = true })
   vim.api.nvim_create_autocmd("LspAttach", {
-    group = vim.api.nvim_create_augroup("lsp-config-attach", { clear = true }),
+    group = group,
     callback = function(event)
       local client = vim.lsp.get_client_by_id(event.data.client_id)
       if client == nil then
@@ -205,6 +206,11 @@ local function setup()
           "gq",
           { remap = true, buffer = buffer, desc = "LSP formatting" }
         )
+        vim.api.nvim_create_autocmd("BufWritePre", {
+          group = group,
+          buffer = buffer,
+          callback = vim.lsp.buf.format,
+        })
       end
       if vim.bo[buffer].filetype == "cpp" then
         require("clangd_extensions.inlay_hints").setup_autocmd()
