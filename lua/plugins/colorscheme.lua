@@ -1,14 +1,8 @@
 local is_tty = vim.fn.has("gui_running") == 0
 
-local function colorscheme(options)
-  return vim.tbl_extend("force", {
-    lazy = true,
-  }, options)
-end
-
 return {
 
-  colorscheme({
+  {
     "EdenEast/nightfox.nvim",
     opts = {
       options = {
@@ -20,17 +14,19 @@ return {
         },
       },
     },
-  }),
+    lazy = true,
+  },
 
-  colorscheme({
+  {
     "catppuccin/nvim",
     name = "catppuccin",
     opts = {
       transparent_background = is_tty,
     },
-  }),
+    lazy = true,
+  },
 
-  colorscheme({
+  {
     "folke/tokyonight.nvim",
     opts = {
       transparent = is_tty,
@@ -40,5 +36,7 @@ return {
       } or nil,
       lualine_bold = true,
     },
-  }),
+    lazy = true,
+  },
+
 }
