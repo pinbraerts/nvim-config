@@ -1,5 +1,3 @@
-local ft = require("filetypes")
-
 local function foreground(colors)
   local result = {}
   for i, color in ipairs(colors) do
@@ -36,7 +34,6 @@ return {
 
   {
     "HiPhish/rainbow-delimiters.nvim",
-    ft = ft.highlight,
     config = function()
       local rd = require("rainbow-delimiters")
       require("rainbow-delimiters.setup").setup({
@@ -47,7 +44,6 @@ return {
           [""] = "rainbow-delimiters",
           latex = "rainbow-blocks",
         },
-        whitelist = ft.highlight,
         highlight = foreground({
           "#82aaff",
           "#ff966c",
@@ -100,10 +96,8 @@ return {
 
   {
     "NvChad/nvim-colorizer.lua",
-    ft = ft.colorize,
     config = function()
       require("colorizer").setup({
-        filetypes = ft.colorize,
         user_default_options = {
           RGB = true,
           RRGGBB = true,

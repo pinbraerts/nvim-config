@@ -1,11 +1,9 @@
-local ft = require("filetypes")
 vim.wo.foldmethod = "expr"
 vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 vim.o.foldlevel = 9999
 
 function config()
   require("nvim-treesitter.configs").setup({
-    ensure_installed = ft.treesitter,
     auto_install = true,
     sync_install = false,
     ignore_install = {},
@@ -86,6 +84,5 @@ return {
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
     },
-    ft = ft.webdev,
   },
 }

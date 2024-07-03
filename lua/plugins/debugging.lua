@@ -1,5 +1,3 @@
-local ft = require("filetypes")
-
 local function setup()
   local d = require("dap")
   local dui = require("dap.ui.widgets")
@@ -69,7 +67,6 @@ return {
 
   {
     "mfussenegger/nvim-dap",
-    ft = ft.debug,
     config = setup,
     keys = {
       { "<leader>b", desc = "Toggle breakpoint" },

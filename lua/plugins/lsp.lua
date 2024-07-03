@@ -1,5 +1,3 @@
-local ft = require("filetypes")
-
 local function setup()
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   local cmp_capabilities = require("cmp_nvim_lsp").default_capabilities()
@@ -223,7 +221,7 @@ return {
       { "folke/neodev.nvim", opts = {} },
       "nvim-telescope/telescope.nvim",
     },
-    ft = ft.lsp,
+    lazy = false,
     config = setup,
     keys = {
       { "gh", "<cmd>ClangdSwitchSourceHeader<cr>", desc = "[G]o to header", silent = true },
@@ -282,7 +280,7 @@ return {
         border = "none",
       },
     },
-
+    ft = { "cpp", "c" },
   },
 
 }
