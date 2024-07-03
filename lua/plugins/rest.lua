@@ -43,6 +43,7 @@ return {
         query = {
           [""] = "rainbow-delimiters",
           latex = "rainbow-blocks",
+          tex = "rainbow-blocks",
         },
         highlight = foreground({
           "#82aaff",
