@@ -26,7 +26,7 @@ vim.keymap.set("n", "cd", function()
     vim.cmd.cd(vim.b.gitsigns_status_dict.root)
     return
   end
-  local clients = vim.lsp and vim.lsp.get_active_clients() or nil
+  local clients = vim.lsp and vim.lsp.get_clients({ bufnr = vim.api.nvim_get_current_buf() }) or nil
   local lsp_root = clients and #clients > 0 and clients[1].root_dir or nil
   if lsp_root ~= nil then
     vim.cmd.cd(lsp_root)
