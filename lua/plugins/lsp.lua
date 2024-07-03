@@ -3,98 +3,92 @@ local function setup()
   local cmp_capabilities = require("cmp_nvim_lsp").default_capabilities()
   capabilities = vim.tbl_extend("force", capabilities, cmp_capabilities)
   local lspconfig = require("lspconfig")
+  local schemas = require("schemastore")
 
   local servers = {
 
     jsonls = {
-      settings = {
-        json = {
-          schemas = require("schemastore").json.schemas(),
-          validate = { enable = true },
-        },
+      json = {
+        schemas = schemas.json.schemas(),
+        validate = { enable = true },
       },
     },
 
     yamlls = {
-      settings = {
-        yaml = {
-          schemaStore = {
-            enable = false,
-            url = "",
-          },
-          schemas = require("schemastore").yaml.schemas(),
+      yaml = {
+        hover = true,
+        completion = true,
+        validate = true,
+        schemaStore = {
+          enable = false,
+          url = "",
         },
+        schemas = schemas.yaml.schemas(),
       },
     },
 
     pylsp = {
-      settings = {
-        pylsp = {
-          configurationSources = { "pycodestyle" },
-          plugins = {
-            mccabe = { enabled = false },
-            pycodestyle = {
-              enabled = true,
-              ignore = { "E501" },
-            },
-            pyflakes = { enabled = true },
-            flake8 = { enabled = false },
-            rope_autoimport = {
-              completions = { enabled = true },
-              code_actions = { enabled = true },
-              enabled = true,
-              memory = true,
-            },
+      pylsp = {
+        configurationSources = { "pycodestyle" },
+        plugins = {
+          mccabe = { enabled = false },
+          pycodestyle = {
+            enabled = true,
+            ignore = { "E501" },
+          },
+          pyflakes = { enabled = true },
+          flake8 = { enabled = false },
+          rope_autoimport = {
+            completions = { enabled = true },
+            code_actions = { enabled = true },
+            enabled = true,
+            memory = true,
           },
         },
       },
     },
 
     lua_ls = {
-      settings = {
-        Lua = {
-          completion = {
-            callSnippet = "Replace",
-          },
-          runtime = {
-            version = "LuaJIT",
-          },
-          diagnostics = {
-            globals = { "vim" },
-          },
-          workspace = {
-            library = vim.api.nvim_get_runtime_file("", true),
-            checkThirdParty = false,
-          },
-          telemetry = { enable = false },
+      Lua = {
+        completion = {
+          callSnippet = "Replace",
         },
+        runtime = {
+          version = "LuaJIT",
+        },
+        diagnostics = {
+          globals = { "vim" },
+        },
+        workspace = {
+          library = vim.api.nvim_get_runtime_file("", true),
+          checkThirdParty = false,
+        },
+        telemetry = { enable = false },
       },
     },
 
     texlab = {
-      settings = {
-        texlab = {
-          build = {
-            executable = "tectonic",
-            args = {
-              "-X",
-              "compile",
-              "%f",
-              "--synctex",
-              "--keep-logs",
-              "--keep-intermediates",
-            },
-            forwardSearchAfter = true,
-            onSave = true,
+      texlab = {
+        build = {
+          executable = "tectonic",
+          args = {
+            "-X",
+            "compile",
+            "%f",
+            "--synctex",
+            "--keep-logs",
+            "--keep-intermediates",
           },
-          forwardSearch = {
-            onSave = true,
-            executable = "zathura",
-            args = {
-              "--synctex-forward",
-              "%l:1:%f",
-              "%p",
-            },
+          forwardSearchAfter = true,
+          onSave = true,
+        },
+        forwardSearch = {
+          onSave = true,
+          executable = "zathura",
+          args = {
+            "--synctex-forward",
+            "%l:1:%f",
+            "%p",
           },
         },
       },
@@ -110,7 +104,7 @@ local function setup()
     automatic_installation = true,
     handlers = {
       function(server_name)
-        local server = servers[server_name] or {}
+        local server = { settings = servers[server_name] }
         server.capabilities =
           vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
         server.single_file_support = true
