@@ -160,8 +160,9 @@ local function setup()
         local index = colorscheme[1]:find("/")
         name = colorscheme[1]:sub(index + 1)
       end
-      print("Lazy load " .. colorscheme.name)
-      vim.cmd("Lazy load " .. colorscheme.name)
+      if name then
+        vim.cmd("Lazy load " .. name)
+      end
     end
     b.colorscheme()
   end, { desc = "[c]olorscheme" })
