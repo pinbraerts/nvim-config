@@ -6,6 +6,27 @@ local function setup()
 
   local servers = {
 
+    jsonls = {
+      settings = {
+        json = {
+          schemas = require("schemastore").json.schemas(),
+          validate = { enable = true },
+        },
+      },
+    },
+
+    yamlls = {
+      settings = {
+        yaml = {
+          schemaStore = {
+            enable = false,
+            url = "",
+          },
+          schemas = require("schemastore").yaml.schemas(),
+        },
+      },
+    },
+
     pylsp = {
       settings = {
         pylsp = {
@@ -217,6 +238,7 @@ return {
     "neovim/nvim-lspconfig",
     dependencies = {
       "williamboman/mason-lspconfig.nvim",
+      "b0o/schemastore.nvim",
       { "j-hui/fidget.nvim", opts = {} },
       { "folke/neodev.nvim", opts = {} },
       "nvim-telescope/telescope.nvim",
