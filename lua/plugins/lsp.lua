@@ -215,6 +215,8 @@ local function setup()
       if vim.bo[buffer].filetype == "cpp" then
         require("clangd_extensions.inlay_hints").setup_autocmd()
         require("clangd_extensions.inlay_hints").set_inlay_hints()
+      else
+        require('lsp-inlayhints').on_attach(client, buffer)
       end
     end,
   })
@@ -223,8 +225,8 @@ local function setup()
     dap = {
       autoload_configurations = true,
     },
-    server = {
-      cmd = "rust-analyzer",
+    inlay_hints = {
+      highlight = "NonText",
     },
   }
 
@@ -242,6 +244,7 @@ return {
       { "j-hui/fidget.nvim", opts = {} },
       { "folke/neodev.nvim", opts = {} },
       "nvim-telescope/telescope.nvim",
+      { "lvimuser/lsp-inlayhints.nvim", opts = {} },
     },
     lazy = false,
     config = setup,
