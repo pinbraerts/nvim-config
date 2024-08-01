@@ -2,11 +2,11 @@ local path = vim.fn.fnamemodify(vim.fn.expand("<sfile>"), ":p:h") .. "/"
 
 pcall(vim.cmd.source, path .. ".vimrc")
 
--- vim.api.nvim_create_autocmd("BufWritePre", {
---   group = vim.api.nvim_create_augroup("RemoveTrailingWhitespaces", { clear = true }),
---   pattern = "*",
---   command = [[%s/\s\+$//e]],
--- })
+vim.api.nvim_create_autocmd("BufWritePre", {
+  group = vim.api.nvim_create_augroup("RemoveTrailingWhitespaces", { clear = true }),
+  pattern = "*",
+  command = [[%s/\s\+$//e]],
+})
 
 vim.api.nvim_create_autocmd("TextYankPost", {
   group = vim.api.nvim_create_augroup("HighlightTextYank", { clear = true }),
