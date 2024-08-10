@@ -122,16 +122,40 @@ function! ProcessModifiable()
     silent! nunmap <buffer> q
     silent! nunmap <buffer> gj
     silent! nunmap <buffer> gk
+    silent! nunmap <buffer> j
+    silent! nunmap <buffer> k
     silent! nunmap <buffer> d
     silent! nunmap <buffer> u
   else
     nnoremap <buffer> q <c-w>q
     nnoremap <buffer> gj j
     nnoremap <buffer> gk k
+    nnoremap <buffer> j gj
+    nnoremap <buffer> k gk
     nnoremap <buffer> d <c-d>
     nnoremap <buffer> u <c-u>
   endif
 endfunction
+
+function! ToggleText()
+  if &wrap
+    set nowrap
+    set nolinebreak
+    silent! nunmap <buffer> gj
+    silent! nunmap <buffer> gk
+    silent! nunmap <buffer> j
+    silent! nunmap <buffer> k
+  else
+    set wrap
+    set linebreak
+    nnoremap <buffer> gj j
+    nnoremap <buffer> gk k
+    nnoremap <buffer> j gj
+    nnoremap <buffer> k gk
+  endif
+endfunction
+
+command! ToggleText call ToggleText()
 
 augroup MyAutoCmds
   au!
