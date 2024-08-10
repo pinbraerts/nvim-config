@@ -13,6 +13,7 @@ return {
           rust = { "rustfmt", lsp_format = "fallback" },
           fennel = { "fnlfmt" },
           javascript = { "prettierd", "prettier", stop_after_first = true },
+          markdown = { "prettierd", "prettier", stop_after_first = true },
         },
         format_on_save = function(bufnr)
           -- Disable with a global or buffer-local variable
