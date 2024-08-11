@@ -275,6 +275,9 @@ return {
       vim.keymap.set("n", "<leader>fb", tf.file_browser, { desc = "[F]ile [b]rowser" })
     end,
     keys = { "<leader>fb", desc = "[F]ile [b]rowser" },
+    cond = function()
+      return vim.fn.executable("yazi") == 0
+    end,
   },
 
   {

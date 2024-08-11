@@ -82,6 +82,25 @@ return {
   },
 
   {
+    "mikavilpas/yazi.nvim",
+    cond = function()
+      return vim.fn.executable("yazi") ~= 0
+    end,
+    cmd = { "Yazi" },
+    keys = {
+      {
+        "<leader>fb",
+        "<cmd>Yazi cwd<cr>",
+        desc = "Open yazi file manager in current working directory",
+      },
+    },
+    opts = {
+      open_for_directories = false,
+      use_yazi_client_id_flag = true,
+    },
+  },
+
+  {
     "folke/trouble.nvim",
     cmd = { "Trouble" },
     config = true,
