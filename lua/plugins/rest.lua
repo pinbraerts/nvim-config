@@ -15,14 +15,14 @@ return {
     config = function()
       local resession = require("resession")
       resession.setup({})
-      vim.api.nvim_create_autocmd("VimEnter", {
+      vim.api.nvim_create_autocmd({ "VimEnter", "DirChanged" }, {
         callback = function()
           if vim.fn.argc(-1) == 0 then
             resession.load(vim.fn.getcwd(), { dir = ".session", silence_errors = true })
           end
         end,
       })
-      vim.api.nvim_create_autocmd("VimLeavePre", {
+      vim.api.nvim_create_autocmd({ "VimLeavePre", "DirChangedPre" }, {
         callback = function()
           if vim.fn.argc(-1) == 0 then
             resession.save(vim.fn.getcwd(), { dir = ".session", notify = false })
