@@ -20,15 +20,9 @@ return {
   {
     "rebelot/kanagawa.nvim",
     opts = {
-      options = {
-        transparent = is_tty,
-      },
-      groups = {
-        all = {
-          WinSeparator = { fg = "#719cd6" },
-        },
-      },
+      transparent = is_tty,
     },
+    lazy = true,
   },
 
   {
