@@ -63,4 +63,7 @@ require("lazy").setup({
     enabled = true,
     notify = false,
   },
+  dev = {
+    path = vim.fs.joinpath(os.getenv("HOME") or os.getenv("USERPROFILE"), "src"),
+  },
 })
