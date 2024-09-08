@@ -36,18 +36,18 @@ vim.keymap.set("t", "<s-backspace>", "<backspace>")
 vim.keymap.set(
   "n",
   "<c-q>v",
-  "<cmd>vsplit <bar> term pwsh -nologo<cr>",
+  "<cmd>vsplit<bar>term<cr>",
   { silent = true, nowait = true, desc = "Split vertical terminal" }
 )
 vim.keymap.set(
   "n",
   "<c-q>h",
-  "<cmd>split <bar> term pwsh -nologo<cr>",
+  "<cmd>split<bar>term<cr>",
   { silent = true, nowait = true, desc = "Split horizontal terminal" }
 )
 vim.keymap.set(
   "n",
   "<c-q>c",
-  "<cmd>tabnew <bar> term pwsh -nologo<cr>",
+  "<cmd>tabnew<bar>term<cr>",
   { silent = true, nowait = true, desc = "New terminal tab" }
 )
