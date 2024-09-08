@@ -63,6 +63,11 @@ local function setup()
           library = vim.api.nvim_get_runtime_file("", true),
           checkThirdParty = false,
         },
+        library = {
+          [vim.fn.expand("$VIMRUNTIME/lua")] = true,
+          [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
+          [vim.fn.stdpath("config") .. "/lua"] = true,
+        },
         telemetry = { enable = false },
       },
     },
@@ -242,7 +247,6 @@ return {
       "williamboman/mason-lspconfig.nvim",
       "b0o/schemastore.nvim",
       { "j-hui/fidget.nvim", opts = {} },
-      { "folke/neodev.nvim", opts = {} },
       "nvim-telescope/telescope.nvim",
       { "lvimuser/lsp-inlayhints.nvim", opts = {} },
     },
@@ -257,6 +261,27 @@ return {
       },
     },
   },
+
+  {
+    "folke/lazydev.nvim",
+    ft = "lua",
+    opts = {
+      library = {
+        { path = "luvit-meta/library", words = { "vim%.uv" } },
+        "lazy.nvim",
+        { path = "LazyVim", words = { "LazyVim" } },
+        { path = "wezterm-types", words = { "wezterm" } },
+        { path = "xmake-luals-addon/library", files = { "xmake.lua" } },
+        { path = "busted/library", words = { "describe" } },
+        { path = "luassert/library", words = { "assert" } },
+      },
+    },
+  },
+
+  { "Bilal2453/luvit-meta", lazy = true },
+  { "justinsgithub/wezterm-types", lazy = true },
+  { "LuaCATS/luassert", lazy = true },
+  { "LuaCATS/busted", lazy = true },
 
   {
     "mrcjkb/rustaceanvim",
@@ -287,5 +312,4 @@ return {
     },
     ft = { "cpp", "c" },
   },
-
 }

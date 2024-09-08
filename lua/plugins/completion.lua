@@ -57,6 +57,7 @@ local function setup()
       { name = "luasnip" },
       { name = "path" },
       { name = "cmp_tabby", priority = 9999 },
+      { name = "lazydev", group_index = 0 },
     }, {
       { name = "buffer" },
     }),
