@@ -216,7 +216,7 @@ local function setup()
         require("clangd_extensions.inlay_hints").setup_autocmd()
         require("clangd_extensions.inlay_hints").set_inlay_hints()
       else
-        require('lsp-inlayhints').on_attach(client, buffer)
+        require("lsp-inlayhints").on_attach(client, buffer)
       end
     end,
   })
@@ -249,7 +249,12 @@ return {
     lazy = false,
     config = setup,
     keys = {
-      { "gh", "<cmd>ClangdSwitchSourceHeader<cr>", desc = "[G]o to header", silent = true },
+      {
+        "gh",
+        "<cmd>ClangdSwitchSourceHeader<cr>",
+        desc = "[G]o to header",
+        silent = true,
+      },
     },
   },
 
