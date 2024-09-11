@@ -73,6 +73,10 @@ local function setup()
         behavior = cmp.ConfirmBehavior.Replace,
         select = true,
       }),
+      ["<cr>"] = cmp.mapping.confirm({
+        behavior = cmp.ConfirmBehavior.Replace,
+        select = true,
+      }),
     }),
     experimental = {
       ghost_text = true,
