@@ -203,20 +203,6 @@ local function setup()
           })
         end, { buffer = buffer, desc = "LSP apply code action" })
       end
-      if server_capabilities.documentFormattingProvider then
-        vim.bo[buffer].formatexpr = "v:lua.vim.lsp.formatexpr()"
-        vim.keymap.set(
-          { "n", "v" },
-          "=",
-          "gq",
-          { remap = true, buffer = buffer, desc = "LSP formatting" }
-        )
-        vim.api.nvim_create_autocmd("BufWritePre", {
-          group = group,
-          buffer = buffer,
-          callback = vim.lsp.buf.format,
-        })
-      end
       require("lsp-inlayhints").on_attach(client, buffer)
     end,
   })
