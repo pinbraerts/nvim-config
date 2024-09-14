@@ -117,26 +117,6 @@ cnoremap <c-j> <down>
 cnoremap <c-k> <up>
 cnoremap <c-l> <right>
 
-function! ProcessModifiable()
-  if &modifiable
-    silent! nunmap <buffer> q
-    silent! nunmap <buffer> gj
-    silent! nunmap <buffer> gk
-    silent! nunmap <buffer> j
-    silent! nunmap <buffer> k
-    silent! nunmap <buffer> d
-    silent! nunmap <buffer> u
-  else
-    nnoremap <buffer> q <c-w>q
-    nnoremap <buffer> gj j
-    nnoremap <buffer> gk k
-    nnoremap <buffer> j gj
-    nnoremap <buffer> k gk
-    nnoremap <buffer> d <c-d>
-    nnoremap <buffer> u <c-u>
-  endif
-endfunction
-
 function! ToggleText()
   if &wrap
     set nowrap
@@ -152,6 +132,22 @@ function! ToggleText()
     nnoremap <buffer> gk k
     nnoremap <buffer> j gj
     nnoremap <buffer> k gk
+  endif
+endfunction
+
+function! ProcessModifiable()
+  if &modifiable
+    silent! nunmap <buffer> q
+    silent! nunmap <buffer> d
+    silent! nunmap <buffer> u
+    set wrap
+    call ToggleText()
+  else
+    nnoremap <buffer> q <c-w>q
+    nnoremap <buffer> d <c-d>
+    nnoremap <buffer> u <c-u>
+    set nowrap
+    call ToggleText()
   endif
 endfunction
 
