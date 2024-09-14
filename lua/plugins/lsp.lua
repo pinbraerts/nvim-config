@@ -6,118 +6,127 @@ local function setup()
   local schemas = require("schemastore")
 
   local servers = {
+    clangd = {
+      cmd = { "clangd", "--header-insertion=never" },
+    },
 
     jsonls = {
-      json = {
-        schemas = schemas.json.schemas(),
-        validate = { enable = true },
+      settings = {
+        json = {
+          schemas = schemas.json.schemas(),
+          validate = { enable = true },
+        },
       },
     },
 
     yamlls = {
-      yaml = {
-        hover = true,
-        completion = true,
-        validate = true,
-        schemaStore = {
-          enable = false,
-          url = "",
+      settings = {
+        yaml = {
+          hover = true,
+          completion = true,
+          validate = true,
+          schemaStore = {
+            enable = false,
+            url = "",
+          },
+          schemas = schemas.yaml.schemas(),
         },
-        schemas = schemas.yaml.schemas(),
       },
     },
 
     pylsp = {
-      pylsp = {
-        configurationSources = { "pycodestyle" },
-        plugins = {
-          mccabe = { enabled = false },
-          pycodestyle = {
-            enabled = true,
-            ignore = { "E501" },
-          },
-          pyflakes = { enabled = true },
-          flake8 = { enabled = false },
-          rope_autoimport = {
-            completions = { enabled = true },
-            code_actions = { enabled = true },
-            enabled = true,
-            memory = true,
+      settings = {
+        pylsp = {
+          configurationSources = { "pycodestyle" },
+          plugins = {
+            mccabe = { enabled = false },
+            pyflakes = { enabled = false },
+            flake8 = { enabled = false },
+            rope_autoimport = { enabled = false },
           },
         },
       },
     },
 
     lua_ls = {
-      Lua = {
-        completion = {
-          callSnippet = "Replace",
+      settings = {
+        Lua = {
+          completion = {
+            callSnippet = "Replace",
+          },
+          runtime = {
+            version = "LuaJIT",
+          },
+          diagnostics = {
+            globals = { "vim" },
+          },
+          workspace = {
+            library = vim.api.nvim_get_runtime_file("", true),
+            checkThirdParty = false,
+          },
+          library = {
+            [vim.fn.expand("$VIMRUNTIME/lua")] = true,
+            [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
+            [vim.fn.stdpath("config") .. "/lua"] = true,
+          },
+          telemetry = { enable = false },
         },
-        runtime = {
-          version = "LuaJIT",
-        },
-        diagnostics = {
-          globals = { "vim" },
-        },
-        workspace = {
-          library = vim.api.nvim_get_runtime_file("", true),
-          checkThirdParty = false,
-        },
-        library = {
-          [vim.fn.expand("$VIMRUNTIME/lua")] = true,
-          [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
-          [vim.fn.stdpath("config") .. "/lua"] = true,
-        },
-        telemetry = { enable = false },
       },
     },
 
     texlab = {
-      texlab = {
-        build = {
-          executable = "tectonic",
-          args = {
-            "-X",
-            "compile",
-            "%f",
-            "--synctex",
-            "--keep-logs",
-            "--keep-intermediates",
+      settings = {
+        texlab = {
+          build = {
+            executable = "tectonic",
+            args = {
+              "-X",
+              "compile",
+              "%f",
+              "--synctex",
+              "--keep-logs",
+              "--keep-intermediates",
+            },
+            forwardSearchAfter = true,
+            onSave = true,
           },
-          forwardSearchAfter = true,
-          onSave = true,
-        },
-        forwardSearch = {
-          onSave = true,
-          executable = "zathura",
-          args = {
-            "--synctex-forward",
-            "%l:1:%f",
-            "%p",
+          forwardSearch = {
+            onSave = true,
+            executable = "zathura",
+            args = {
+              "--synctex-forward",
+              "%l:1:%f",
+              "%p",
+            },
           },
         },
       },
     },
   }
 
+  local function setup_server(name)
+    local server = servers[name] or {}
+    server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
+    server.single_file_support = true
+    lspconfig[name].setup(server)
+  end
+
   require("mason-lspconfig").setup({
-    ensure_installed = {
-      "clangd",
-      "pylsp",
-      vim.fn.has("win32") ~= 0 and "powershell_es" or "bashls",
-    },
-    automatic_installation = true,
+    ensure_installed = vim.fn.has("win32") ~= 0 and { "powershell_es" }
+      or vim.fn.executable("npm") ~= 0 and { "bashls" }
+      or {},
     handlers = {
-      function(server_name)
-        local server = { settings = servers[server_name] }
-        server.capabilities =
-          vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
-        server.single_file_support = true
-        lspconfig[server_name].setup(server)
-      end,
+      setup_server,
       rust_analyzer = function() end,
     },
   })
+
+  local configured_servers = require("lspconfig.util").available_servers()
+  for name, _ in pairs(servers) do
+    if not vim.tbl_contains(configured_servers, name) and vim.fn.executable(name) ~= 0 then
+      setup_server(name)
+    end
+  end
 
   local t = require("telescope.builtin")
   local group = vim.api.nvim_create_augroup("lsp-config-attach", { clear = true })
@@ -281,16 +290,6 @@ return {
   {
     "p00f/clangd_extensions.nvim",
     opts = {
-      inlay_hints = {
-        inline = vim.fn.has("nvim-0.10") == 1,
-        only_current_line = false,
-        show_parameter_hints = true,
-        max_len_align = false,
-        right_align = true,
-        right_align_padding = 7,
-        highlight = "Comment",
-        priority = 100,
-      },
       memory_usage = {
         border = "none",
       },
