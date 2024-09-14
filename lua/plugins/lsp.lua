@@ -215,9 +215,6 @@ local function setup()
       highlight = "NonText",
     },
   }
-
-  vim.keymap.set("n", "<leader>lr", vim.lsp.buf.rename, { desc = "[L]SP rename" })
-  vim.keymap.set("n", "<leader>la", vim.lsp.buf.code_action, { desc = "[L]SP code [a]ction" })
 end
 
 return {
@@ -239,6 +236,16 @@ return {
         "<cmd>ClangdSwitchSourceHeader<cr>",
         desc = "[G]o to header",
         silent = true,
+      },
+      {
+        "<leader>lr",
+        vim.lsp.buf.rename,
+        desc = "[L]SP rename",
+      },
+      {
+        "<leader>la",
+        vim.lsp.buf.code_action,
+        desc = "[L]SP code [a]ction",
       },
     },
   },
