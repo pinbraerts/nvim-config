@@ -4,12 +4,11 @@ return {
     "stevearc/conform.nvim",
     dependencies = "williamboman/mason.nvim",
     config = function()
-      require("conform").setup({
+      local conform = require("conform")
+      conform.setup({
         formatters_by_ft = {
           lua = { "stylua" },
-          python = { "black" },
-          c = { "clangformat" },
-          cpp = { "clangformat" },
+          python = { "isort", "black" },
           rust = { "rustfmt", lsp_format = "fallback" },
           fennel = { "fnlfmt" },
           javascript = { "prettierd", "prettier", stop_after_first = true },
@@ -25,6 +24,16 @@ return {
         end,
       })
 
+      vim.api.nvim_create_user_command("Format", function(args)
+        conform.format({
+          async = true,
+          quiet = not args.bang,
+        })
+      end, {
+        desc = "Format current buffer",
+        bang = true,
+      })
+
       vim.api.nvim_create_user_command("FormatDisable", function(args)
         if args.bang then
           vim.g.disable_autoformat = true
@@ -35,6 +44,7 @@ return {
         desc = "Disable autoformat-on-save",
         bang = true,
       })
+
       vim.api.nvim_create_user_command("FormatEnable", function(args)
         vim.b.disable_autoformat = false
         if args.bang then
