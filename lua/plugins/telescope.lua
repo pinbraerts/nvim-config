@@ -239,10 +239,9 @@ return {
     "nvim-telescope/telescope-file-browser.nvim",
     dependencies = { "nvim-telescope/telescope.nvim" },
     config = function()
-      local tf = require("telescope").load_extension("file_browser")
-      vim.keymap.set("n", "<leader>fb", tf.file_browser, { desc = "[F]ile [b]rowser" })
+      require("telescope").load_extension("file_browser")
     end,
-    keys = { "<leader>fb", desc = "[F]ile [b]rowser" },
+    keys = { "<leader>fb", "<cmd>Telescope file_browser<cr>", desc = "[F]ile [b]rowser" },
     cond = function()
       return vim.fn.executable("yazi") == 0
     end,
@@ -251,10 +250,6 @@ return {
   {
     "nvim-telescope/telescope-symbols.nvim",
     dependencies = { "nvim-telescope/telescope.nvim" },
-    config = function()
-      local t = require("telescope.builtin")
-      vim.keymap.set("n", "<leader>ts", t.symbols, { desc = "unicode symbols picker" })
-    end,
-    keys = { "<leader>ts", desc = "unicode symbols picker" },
+    keys = { "<leader>ts", mock("telescope.builtin").symbols(), desc = "unicode symbols picker" },
   },
 }
