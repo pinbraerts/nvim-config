@@ -22,6 +22,7 @@ return {
     opts = {
       ensure_installed = {
         "codelldb",
+        vim.fn.executable("cargo") ~= 0 and "stylua" or nil,
       },
     },
   },
