@@ -212,16 +212,16 @@ local function setup()
       require("lsp-inlayhints").on_attach(client, buffer)
     end,
   })
-
-  vim.g.rustaceanvim = {
-    dap = {
-      autoload_configurations = true,
-    },
-    inlay_hints = {
-      highlight = "NonText",
-    },
-  }
 end
+
+vim.g.rustaceanvim = {
+  dap = {
+    autoload_configurations = true,
+  },
+  inlay_hints = {
+    highlight = "NonText",
+  },
+}
 
 return {
 
@@ -281,7 +281,7 @@ return {
     "mrcjkb/rustaceanvim",
     version = "^4",
     ft = { "rust" },
-    dependencies = { "neovim/nvim-lspconfig" },
+    lazy = false,
   },
 
   {
