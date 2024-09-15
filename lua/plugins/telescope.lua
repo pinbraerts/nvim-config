@@ -1,17 +1,5 @@
 local function setup()
   local t = require("telescope")
-  local a = require("telescope.actions")
-
-  local next = {
-    a.move_selection_next,
-    type = "action",
-    opts = { nowait = true, silent = true },
-  }
-  local previous = {
-    a.move_selection_previous,
-    type = "action",
-    opts = { nowait = true, silent = true },
-  }
 
   local grep_args = nil
   if vim.fn.executable("rg") ~= 0 then
@@ -68,38 +56,23 @@ local function setup()
       layout_strategy = "flex",
       mappings = {
         i = {
-          ["<c-j>"] = next,
-          ["<c-k>"] = previous,
-          ["<c-l>"] = "select_vertical",
-          ["<c-v>"] = "select_vertical",
-          ["<c-h>"] = "select_horizontal",
+          ["<c-j>"] = "move_selection_next",
+          ["<c-k>"] = "move_selection_previous",
         },
         n = {
           v = "toggle_selection",
-          l = "select_vertical",
-          h = "select_horizontal",
           q = "close",
+          j = "move_selection_next",
+          k = "move_selection_previous",
           ["<c-c>"] = "close",
-          ["<c-j>"] = next,
-          ["<c-k>"] = previous,
+          ["<c-j>"] = "move_selection_next",
+          ["<c-k>"] = "move_selection_previous",
         },
       },
       vimgrep_arguments = grep_args,
     },
     pickers = {
-      pickers = {
-        mappings = {
-          i = {
-            ["<c-l>"] = "select_default",
-          },
-          n = {
-            l = "select_default",
-          },
-        },
-      },
-      colorscheme = {
-        enable_preview = true,
-      },
+      colorscheme = { enable_preview = true },
       builtin = { include_extensions = true },
       help_tags = {
         mappings = {
