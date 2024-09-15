@@ -1,7 +1,6 @@
 local function setup()
   local d = require("dap")
   require("hover.providers.dap")
-
   vim.api.nvim_create_autocmd("FileType", {
     group = vim.api.nvim_create_augroup("dap-repl-autocomplete", { clear = true }),
     pattern = "dap-repl",
@@ -18,7 +17,7 @@ local function setup()
   local r = require("rustaceanvim.config")
   local codelldb_package = m.get_package("codelldb"):get_install_path()
   local codelldb, liblldb
-  if vim.fn.has("win32") then
+  if vim.fn.has("win32") ~= 0 then
     local extension = vim.fn.join({ codelldb_package, "extension" }, "\\\\")
     codelldb = vim.fn.join({ extension, "adapter", "codelldb.exe" }, "\\\\")
     liblldb = vim.fn.join({ extension, "lldb", "bin", "liblldb.dll" }, "\\\\")
@@ -29,7 +28,7 @@ local function setup()
       extension,
       "lldb",
       "lib",
-      "liblldb" .. (vim.fn.has("mac") and ".dylib" or ".so")
+      "liblldb" .. (vim.fn.has("mac") ~= 0 and ".dylib" or ".so")
     )
   end
   d.adapters.codelldb = r.get_codelldb_adapter(codelldb, liblldb)
@@ -48,12 +47,19 @@ local function setup()
           print("Autosaving", filename)
           vim.cmd.write()
         end
-        local executable = filename:gsub("%..*$", vim.fn.has("win32") and ".exe" or "")
+        local index = filename:match(".*%.()") - 2
+        local executable = filename:sub(1, index)
+        if vim.fn.has("win32") ~= 0 then
+          executable = executable .. ".exe"
+        end
         if
           vim.fn.executable(executable) == 0
           or vim.fn.getftime(executable) < vim.fn.getftime(filename)
         then
           local args = { unpack(a) }
+          if vim.fn.has("linux") then
+            table.insert(args, 2, "-stdlib=libc++")
+          end
           table.insert(args, executable)
           table.insert(args, filename)
           print("Compililng: ", vim.inspect(args))
