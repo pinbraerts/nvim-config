@@ -2,6 +2,9 @@ local t = vim.api.nvim_create_augroup("terminal", { clear = true })
 vim.api.nvim_create_autocmd("TermOpen", {
   group = t,
   callback = function(args)
+    if args.file:match("dap%-terminal") then
+      return
+    end
     vim.opt_local.number = false
     vim.opt_local.relativenumber = false
     vim.opt_local.signcolumn = "no"
@@ -13,7 +16,10 @@ vim.api.nvim_create_autocmd("TermOpen", {
 vim.api.nvim_create_autocmd({ "BufWinEnter", "WinEnter" }, {
   pattern = "term://*",
   group = t,
-  callback = function(_)
+  callback = function(args)
+    if args.file:match("dap%-terminal") then
+      return
+    end
     vim.cmd.startinsert() -- automatically enter normal mode
   end,
 })
