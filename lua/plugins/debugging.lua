@@ -10,15 +10,39 @@ local function setup()
     end,
   })
 
-  local function lldb_compiling(compiler)
+  local m = require("mason-registry")
+  if not m.is_installed("codelldb") then
+    return
+  end
+
+  local r = require("rustaceanvim.config")
+  local codelldb_package = m.get_package("codelldb"):get_install_path()
+  local codelldb, liblldb
+  if vim.fn.has("win32") then
+    local extension = vim.fn.join({ codelldb_package, "extension" }, "\\\\")
+    codelldb = vim.fn.join({ extension, "adapter", "codelldb.exe" }, "\\\\")
+    liblldb = vim.fn.join({ extension, "lldb", "bin", "liblldb.dll" }, "\\\\")
+  else
+    local extension = vim.fs.joinpath(codelldb_package, "extension")
+    codelldb = vim.fs.joinpath(extension, "adapter", "codelldb")
+    liblldb = vim.fs.joinpath(
+      extension,
+      "lldb",
+      "lib",
+      "liblldb" .. (vim.fn.has("mac") and ".dylib" or ".so")
+    )
+  end
+  d.adapters.codelldb = r.get_codelldb_adapter(codelldb, liblldb)
+
+  local function lldb_compiling(...)
+    local a = { ... }
     return {
       type = "codelldb",
       request = "launch",
-      name = 'Compile and run standalone ("' .. compiler .. '")',
+      name = "Compile and run standalone " .. vim.inspect(a),
       cwd = "${fileDirname}",
       stopOnEntry = false,
       program = function()
-        vim.cmd.write()
         local filename = vim.fs.normalize(vim.api.nvim_buf_get_name(0))
         if vim.bo.modified then
           print("Autosaving", filename)
@@ -29,28 +53,34 @@ local function setup()
           vim.fn.executable(executable) == 0
           or vim.fn.getftime(executable) < vim.fn.getftime(filename)
         then
-          local command = compiler .. " " .. executable .. " " .. filename
-          print("Compililng: " .. command)
-          vim.fn.system(command)
+          local args = { unpack(a) }
+          table.insert(args, executable)
+          table.insert(args, filename)
+          print("Compililng: ", vim.inspect(args))
+          vim.fn.system(args)
         end
         return executable
       end,
     }
   end
 
-  d.configurations.cpp = {
-    lldb_compiling("clang++ -O0 -g -o"),
-  }
+  if vim.fn.executable("clang++") then
+    d.configurations.cpp = {
+      lldb_compiling("clang++", "-O0", "-g", "-o"),
+    }
+  end
 
-  d.configurations.c = {
-    lldb_compiling("clang -O0 -g -o"),
-  }
+  if vim.fn.executable("clang") then
+    d.configurations.c = {
+      lldb_compiling("clang", "-O0", "-g", "-o"),
+    }
+  end
 
-  d.configurations.rust = {
-    lldb_compiling("rustc -C opt-level=0 -g -o"),
-  }
-
-  require("hover.providers.dap")
+  if vim.fn.executable("rustc") then
+    d.configurations.rust = {
+      lldb_compiling("rustc", "-C", "opt-level=0", "-g", "-o"),
+    }
+  end
 end
 
 local mock = require("utils.lazy_mock")
