@@ -1,125 +1,37 @@
-local function setup()
-  local t = require("telescope")
-
-  local grep_args = nil
-  if vim.fn.executable("rg") ~= 0 then
-    -- use defaults
-  elseif vim.fn.executable("ag") ~= 0 then
-    grep_args = {
-      "ag",
-      "--nocolor",
-      "--noheading",
-      "--numbers",
-      "--column",
-      "--smart-case",
-      "--silent",
-      "--vimgrep",
-    }
-  elseif vim.fn.executable("grep") ~= 0 then
-    grep_args = {
-      "grep",
-      "--extended-regexp",
-      "--color=never",
-      "--with-filename",
-      "--line-number",
-      "-b", -- grep doesn't support a `--column` option :(
-      "--ignore-case",
-      "--recursive",
-      "--no-messages",
-      "--exclude-dir=*cache*",
-      "--exclude-dir=*.git",
-      "--exclude=.*",
-      "--binary-files=without-match",
-    }
-  end
-
-  t.setup({
-    defaults = {
-      path_display = { "truncate" },
-      layout_config = {
-        flex = {
-          flip_columns = 140,
-        },
-        horizontal = {
-          preview_width = { 0.5, min = 80 },
-          preview_cutoff = 0,
-          width = 0.9,
-          height = 0.9,
-        },
-        vertical = {
-          preview_cutoff = 0,
-          preview_height = 0.5,
-          width = 0.9,
-          height = 0.9,
-        },
-      },
-      layout_strategy = "flex",
-      mappings = {
-        i = {
-          ["<c-j>"] = "move_selection_next",
-          ["<c-k>"] = "move_selection_previous",
-        },
-        n = {
-          v = "toggle_selection",
-          q = "close",
-          j = "move_selection_next",
-          k = "move_selection_previous",
-          ["<c-c>"] = "close",
-          ["<c-j>"] = "move_selection_next",
-          ["<c-k>"] = "move_selection_previous",
-        },
-      },
-      vimgrep_arguments = grep_args,
-    },
-    pickers = {
-      colorscheme = { enable_preview = true },
-      builtin = { include_extensions = true },
-      help_tags = {
-        mappings = {
-          i = {
-            ["<enter>"] = "select_vertical",
-          },
-          n = {
-            ["<c-enter>"] = "select_vertical",
-          },
-        },
-      },
-      man_pages = {
-        mappings = {
-          i = {
-            ["<enter>"] = "select_vertical",
-          },
-          n = {
-            ["<c-enter>"] = "select_vertical",
-          },
-        },
-      },
-      git_status = {
-        initial_mode = "normal",
-        mappings = {
-          n = {
-            s = "git_staging_toggle",
-            u = "git_staging_toggle",
-          },
-        },
-      },
-      find_files = {
-        no_ignore = true,
-        hidden = true,
-      },
-    },
-    extensions = {
-      file_browser = {
-        respect_gitignore = false,
-        auto_depth = 2,
-        hidden = true,
-      },
-    },
-  })
-end
-
 local mock = require("utils.lazy_mock")
 local b = mock("telescope.builtin")
+
+local grep_args = nil
+if vim.fn.executable("rg") ~= 0 then
+  -- use defaults
+elseif vim.fn.executable("ag") ~= 0 then
+  grep_args = {
+    "ag",
+    "--nocolor",
+    "--noheading",
+    "--numbers",
+    "--column",
+    "--smart-case",
+    "--silent",
+    "--vimgrep",
+  }
+elseif vim.fn.executable("grep") ~= 0 then
+  grep_args = {
+    "grep",
+    "--extended-regexp",
+    "--color=never",
+    "--with-filename",
+    "--line-number",
+    "-b", -- grep doesn't support a `--column` option :(
+    "--ignore-case",
+    "--recursive",
+    "--no-messages",
+    "--exclude-dir=*cache*",
+    "--exclude-dir=*.git",
+    "--exclude=.*",
+    "--binary-files=without-match",
+  }
+end
 
 return {
 
@@ -127,7 +39,89 @@ return {
     "nvim-telescope/telescope.nvim",
     branch = "0.1.x",
     dependencies = { "nvim-lua/plenary.nvim" },
-    config = setup,
+    opts = {
+      defaults = {
+        path_display = { "truncate" },
+        layout_config = {
+          flex = {
+            flip_columns = 140,
+          },
+          horizontal = {
+            preview_width = { 0.5, min = 80 },
+            preview_cutoff = 0,
+            width = 0.9,
+            height = 0.9,
+          },
+          vertical = {
+            preview_cutoff = 0,
+            preview_height = 0.5,
+            width = 0.9,
+            height = 0.9,
+          },
+        },
+        layout_strategy = "flex",
+        mappings = {
+          i = {
+            ["<c-j>"] = "move_selection_next",
+            ["<c-k>"] = "move_selection_previous",
+          },
+          n = {
+            v = "toggle_selection",
+            q = "close",
+            j = "move_selection_next",
+            k = "move_selection_previous",
+            ["<c-c>"] = "close",
+            ["<c-j>"] = "move_selection_next",
+            ["<c-k>"] = "move_selection_previous",
+          },
+        },
+        vimgrep_arguments = grep_args,
+      },
+      pickers = {
+        colorscheme = { enable_preview = true },
+        builtin = { include_extensions = true },
+        help_tags = {
+          mappings = {
+            i = {
+              ["<enter>"] = "select_vertical",
+            },
+            n = {
+              ["<c-enter>"] = "select_vertical",
+            },
+          },
+        },
+        man_pages = {
+          mappings = {
+            i = {
+              ["<enter>"] = "select_vertical",
+            },
+            n = {
+              ["<c-enter>"] = "select_vertical",
+            },
+          },
+        },
+        git_status = {
+          initial_mode = "normal",
+          mappings = {
+            n = {
+              s = "git_staging_toggle",
+              u = "git_staging_toggle",
+            },
+          },
+        },
+        find_files = {
+          no_ignore = true,
+          hidden = true,
+        },
+      },
+      extensions = {
+        file_browser = {
+          respect_gitignore = false,
+          auto_depth = 2,
+          hidden = true,
+        },
+      },
+    },
     cmd = "Telescope",
     keys = {
       { "<leader>]", b.current_buffer_fuzzy_find(), desc = "Fuzzy find" },
@@ -138,7 +132,6 @@ return {
       { "<leader>mm", b.marks(), desc = "marks" },
       { "<leader>q", b.quickfix(), desc = "[q]uickfix" },
       { "<leader>tb", b.buffers(), desc = "[b]uffers" },
-      { "<leader>tc", desc = "[c]olorscheme" },
       { "<leader>cs", b.keymaps(), desc = "[C]heat [s]heet" },
       { "<leader>tl", b.jumplist(), desc = "Jump[l]is[t]" },
       { "<leader>to", b.vim_options(), desc = "[o]ptions" },
@@ -212,7 +205,7 @@ return {
     config = function()
       require("telescope").load_extension("file_browser")
     end,
-    keys = { "<leader>fb", "<cmd>Telescope file_browser<cr>", desc = "[F]ile [b]rowser" },
+    keys = { { "<leader>fb", "<cmd>Telescope file_browser<cr>", desc = "[F]ile [b]rowser" } },
     cond = function()
       return vim.fn.executable("yazi") == 0
     end,
@@ -221,6 +214,6 @@ return {
   {
     "nvim-telescope/telescope-symbols.nvim",
     dependencies = { "nvim-telescope/telescope.nvim" },
-    keys = { "<leader>ts", mock("telescope.builtin").symbols(), desc = "unicode symbols picker" },
+    keys = { { "<leader>ts", b.symbols(), desc = "unicode symbols picker" } },
   },
 }
