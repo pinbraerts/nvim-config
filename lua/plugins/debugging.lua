@@ -18,8 +18,13 @@ local function setup()
       cwd = "${fileDirname}",
       stopOnEntry = false,
       program = function()
+        vim.cmd.write()
         local filename = vim.fs.normalize(vim.api.nvim_buf_get_name(0))
-        local executable = filename:gsub("%..*$", "")
+        if vim.bo.modified then
+          print("Autosaving", filename)
+          vim.cmd.write()
+        end
+        local executable = filename:gsub("%..*$", vim.fn.has("win32") and ".exe" or "")
         if
           vim.fn.executable(executable) == 0
           or vim.fn.getftime(executable) < vim.fn.getftime(filename)
