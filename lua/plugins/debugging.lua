@@ -63,7 +63,11 @@ local function setup()
           table.insert(args, executable)
           table.insert(args, filename)
           print("Compililng: ", vim.inspect(args))
-          vim.fn.system(args)
+          local output = vim.fn.system(args)
+          if vim.v.shell_error ~= 0 then
+            print(output)
+            return
+          end
         end
         return executable
       end,
