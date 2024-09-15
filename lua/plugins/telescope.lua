@@ -177,19 +177,7 @@ return {
       { "<leader>fd", b.find_files(), desc = "Find files (with [fd]-find)" },
       { "<leader>gf", b.git_files(), desc = "[G]it [f]iles" },
       { "<leader>rg", b.live_grep(), desc = "Live grep (with [r]ip [g]rep)" },
-      {
-        "<leader>rG",
-        b.live_grep({ additional_args = { "-u" } }),
-        desc = "Live grea (with [r]ip [g]rep, all files)",
-      },
       { "<leader>gw", b.grep_string(), desc = "[G]rep [w]ord" },
-      {
-        "<leader>gW",
-        b.grep_string({
-          additional_args = { "-u" },
-        }),
-        desc = "[G]rep [w]ord (all files)",
-      },
       { "<leader>rf", b.oldfiles(), desc = "[R]ecent [f]iles" },
       { "<leader>ld", b.current_buffer_tags(), desc = "[L]SP buffer [t]ags" },
       { "<leader>lf", b.tags(), desc = "[L]SP [f]ull tags" },
@@ -203,6 +191,16 @@ return {
       { "<leader>gh", b.git_stash(), desc = "[G]it stas[h]" },
       { "<leader>gl", b.git_commits(), desc = "[G]it [l]og commits" },
       { "<leader>gs", b.git_status(), desc = "[G]it [s]tatus" },
+      {
+        "<leader>rG",
+        b.live_grep({ additional_args = { "-u" } }),
+        desc = "Live grea (with [r]ip [g]rep, all files)",
+      },
+      {
+        "<leader>gW",
+        b.grep_string({ additional_args = { "-u" } }),
+        desc = "[G]rep [w]ord (all files)",
+      },
       {
         "<leader>tc",
         function()
