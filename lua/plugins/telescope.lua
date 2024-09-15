@@ -35,7 +35,7 @@ local function setup()
 
   t.setup({
     defaults = {
-      path_display = { "smart" },
+      path_display = { "truncate" },
       layout_config = {
         flex = {
           flip_columns = 140,
