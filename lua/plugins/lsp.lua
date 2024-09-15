@@ -112,9 +112,6 @@ local function setup()
   end
 
   require("mason-lspconfig").setup({
-    ensure_installed = vim.fn.has("win32") ~= 0 and { "powershell_es" }
-      or vim.fn.executable("npm") ~= 0 and { "bashls" }
-      or {},
     handlers = {
       setup_server,
       rust_analyzer = function() end,
