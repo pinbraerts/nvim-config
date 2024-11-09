@@ -20,7 +20,9 @@ return {
     },
     config = function()
       local neogit = require("neogit")
-      neogit.setup({})
+      neogit.setup({
+        process_spinner = false,
+      })
       vim.keymap.set("n", "\\gc", function()
         neogit.open({ "commit" })
       end, { desc = "[G]it [c]ommit" })
