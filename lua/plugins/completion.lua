@@ -32,6 +32,7 @@ local function setup()
         symbol_map = {
           Copilot = "",
           Tabby = "",
+          Intelliboba = "󰂡",
         },
       }),
     },
@@ -58,6 +59,7 @@ local function setup()
       { name = "luasnip" },
       { name = "path" },
       { name = "cmp_tabby", priority = 9999 },
+      { name = "intelliboba", priority = 9999, config = true },
       { name = "lazydev", group_index = 0 },
     }, {
       { name = "buffer" },
@@ -103,6 +105,7 @@ local function setup()
 
   vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#6CC644" })
   vim.api.nvim_set_hl(0, "CmpItemKindTabby", { fg = "#FFFF00" })
+  vim.api.nvim_set_hl(0, "CmpItemKindIntelliboba", { fg = "#003399" })
 end
 
 return {
@@ -111,6 +114,7 @@ return {
     "hrsh7th/nvim-cmp",
     event = { "CmdLineEnter", "InsertEnter" },
     dependencies = {
+      { dir = "~/arcadia/junk/pinbraerts/intelliboba.nvim" },
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-nvim-lsp-signature-help",
       "hrsh7th/cmp-buffer",
