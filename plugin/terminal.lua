@@ -40,20 +40,17 @@ vim.keymap.set("t", "<s-enter>", "<enter>")
 vim.keymap.set("t", "<s-backspace>", "<backspace>")
 
 vim.keymap.set(
-  "n",
+  { "n", "t" },
   "<c-q>v",
   "<cmd>vsplit<bar>term<cr>",
-  { silent = true, nowait = true, desc = "Split vertical terminal" }
+  { desc = "Vertical terminal pane" }
 )
 vim.keymap.set(
-  "n",
+  { "n", "t" },
   "<c-q>h",
   "<cmd>split<bar>term<cr>",
-  { silent = true, nowait = true, desc = "Split horizontal terminal" }
+  { desc = "Horizontal terminal pane" }
 )
-vim.keymap.set(
-  "n",
-  "<c-q>c",
-  "<cmd>tabnew<bar>term<cr>",
-  { silent = true, nowait = true, desc = "New terminal tab" }
-)
+vim.keymap.set({ "n", "t" }, "<c-q>c", "<cmd>tabnew<bar>term<cr>", { desc = "New terminal tab" })
+vim.keymap.set({ "n", "t" }, "<c-q>n", "<c-\\><c-n>gt", { desc = "Go to next tab" })
+vim.keymap.set({ "n", "t" }, "<c-q>p", "<c-\\><c-n>gT", { desc = "Go to previous tab" })
