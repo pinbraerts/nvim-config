@@ -59,7 +59,7 @@ local function setup()
       { name = "luasnip" },
       { name = "path" },
       { name = "cmp_tabby", priority = 9999 },
-      { name = "intelliboba", priority = 9999, config = true },
+      { name = "intelliboba", priority = 9999 },
       { name = "lazydev", group_index = 0 },
     }, {
       { name = "buffer" },
@@ -114,7 +114,6 @@ return {
     "hrsh7th/nvim-cmp",
     event = { "CmdLineEnter", "InsertEnter" },
     dependencies = {
-      { dir = "~/arcadia/junk/pinbraerts/intelliboba.nvim" },
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-nvim-lsp-signature-help",
       "hrsh7th/cmp-buffer",
