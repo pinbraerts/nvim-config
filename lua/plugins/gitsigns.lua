@@ -54,7 +54,7 @@ return {
             return "]c"
           end
           vim.schedule(function()
-            g.next_hunk("next", { preview = true })
+            g.nav_hunk("next", { preview = true })
           end)
           return "<Ignore>"
         end, { expr = true, buffer = buffer, desc = "Go to next hunk" })
