@@ -169,6 +169,12 @@ local function setup()
           { buffer = buffer, desc = "LSP go to implementation" }
         )
       end
+      if server_capabilities.renameProvider then
+        vim.keymap.set("n", "<leader>lr", vim.lsp.buf.rename, {
+          buffer = buffer,
+          desc = "[L]SP rename",
+        })
+      end
       if server_capabilities.documentSymbolProvider then
         vim.keymap.set(
           "n",
@@ -207,7 +213,19 @@ local function setup()
             end,
             apply = true,
           })
-        end, { buffer = buffer, desc = "LSP apply code action" })
+        end, { buffer = buffer, desc = "[L]SP apply code action" })
+        vim.keymap.set(
+          "n",
+          "<leader>la",
+          vim.lsp.buf.code_action,
+          { buffer = buffer, desc = "[L]SP list code [a]ctions" }
+        )
+      end
+      if vim.bo[buffer].ft == "cpp" then
+        vim.keymap.set("n", "<c-^>", "<cmd>ClangdSwitchSourceHeader<cr>", {
+          desc = "[G]o to header",
+          buffer = buffer,
+        })
       end
       require("lsp-inlayhints").on_attach(client, buffer)
     end,
@@ -236,24 +254,6 @@ return {
     },
     lazy = false,
     config = setup,
-    keys = {
-      {
-        "gh",
-        "<cmd>ClangdSwitchSourceHeader<cr>",
-        desc = "[G]o to header",
-        silent = true,
-      },
-      {
-        "<leader>lr",
-        vim.lsp.buf.rename,
-        desc = "[L]SP rename",
-      },
-      {
-        "<leader>la",
-        vim.lsp.buf.code_action,
-        desc = "[L]SP code [a]ction",
-      },
-    },
   },
 
   {
