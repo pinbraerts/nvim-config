@@ -46,24 +46,18 @@ end
 vim.opt.rtp:prepend(lazypath)
 vim.keymap.set("n", "<leader>lz", "<cmd>Lazy<cr>", { desc = "Open [L]a[z]y", silent = true })
 
-local spec = {
-  { import = "plugins" },
-}
-
-if
-  vim.fn.isdirectory(path .. "lua/local") ~= 0
-  or vim.fn.filereadable(path .. "lua/local.lua") ~= 0
-then
-  table.insert(spec, { import = "local" })
-end
-
 require("lazy").setup({
-  spec = spec,
+  spec = {
+    { import = "plugins" },
+  },
   change_detection = {
     enabled = true,
     notify = false,
   },
   dev = {
     path = vim.fs.joinpath(os.getenv("HOME") or os.getenv("USERPROFILE"), "src"),
+    patterns = {
+      "pinbraerts",
+    },
   },
 })
