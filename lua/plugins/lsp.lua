@@ -139,107 +139,67 @@ local function setup()
         return
       end
       local buffer = event.buf
+      local function desc(d)
+        return { buffer = buffer, desc = "LSP " .. d }
+      end
+      local map = vim.keymap.set
       vim.opt_local.signcolumn = "yes"
       if server_capabilities.completionProvider then
         vim.bo[buffer].omnifunc = "v:lua.vim.lsp.omnifunc"
       end
       if server_capabilities.definitionProvider then
         vim.bo[buffer].tagfunc = "v:lua.vim.lsp.tagfunc"
-        vim.keymap.set(
-          "n",
-          "<c-]>",
-          vim.lsp.buf.definition,
-          { buffer = buffer, desc = "LSP go to definition" }
-        )
+        map("n", "gd", vim.lsp.buf.definition, desc("go to definition"))
+        map("n", "<c-]>", vim.lsp.buf.definition, desc("go to definition"))
       end
       if server_capabilities.declarationProvider then
-        -- vim.keymap.set('n', '<c-[>', vim.lsp.buf.declaration, { buffer = buffer, desc = 'LSP go to declaration' })
-        vim.keymap.set(
-          "n",
-          "<leader>l[",
-          t.lsp_definitions,
-          { buffer = buffer, desc = "[L]SP list declarations" }
-        )
+        -- map('n', '<c-[>', vim.lsp.buf.declaration, desc('go to declaration'))
+        map("n", "<leader>l[", t.lsp_definitions, desc("list declarations"))
+      end
+      if server_capabilities.typeDefinitionProvider then
+        map("n", "gt", vim.lsp.buf.type_definition, desc("go to type definition"))
       end
       if server_capabilities.implementationProvider then
-        vim.keymap.set(
-          "n",
-          "<c-p>",
-          vim.lsp.buf.implementation,
-          { buffer = buffer, desc = "LSP go to implementation" }
-        )
+        map("n", "gi", vim.lsp.buf.implementation, desc("go to implementation"))
+        map("n", "<c-p>", vim.lsp.buf.implementation, desc("go to implementation"))
       end
       if server_capabilities.renameProvider then
-        vim.keymap.set("n", "<leader>lr", vim.lsp.buf.rename, {
-          buffer = buffer,
-          desc = "[L]SP rename",
-        })
+        map("n", "<leader>lr", vim.lsp.buf.rename, desc("rename"))
       end
       if server_capabilities.documentSymbolProvider then
-        vim.keymap.set(
-          "n",
-          "<leader>ld",
-          t.lsp_document_symbols,
-          { buffer = buffer, desc = "[L]SP document symbols" }
-        )
+        map("n", "<leader>ld", t.lsp_document_symbols, desc("document symbols"))
       end
       if server_capabilities.workspaceSymbolProvider then
-        vim.keymap.set(
-          "n",
-          "<leader>ls",
-          t.lsp_workspace_symbols,
-          { desc = "[L]SP workspace symbols" }
-        )
-        vim.keymap.set(
+        map("n", "<leader>ls", t.lsp_workspace_symbols, { desc = "workspace symbols" })
+        map(
           "n",
           "<leader>lf",
           t.lsp_dynamic_workspace_symbols,
-          { desc = "[L]SP dynamic workspace symbols" }
+          { desc = "dynamic workspace symbols" }
         )
       end
       if server_capabilities.referencesProvider then
-        vim.keymap.set(
-          "n",
-          "<leader>]",
-          t.lsp_references,
-          { buffer = buffer, desc = "[L]SP references" }
-        )
+        map("n", "<leader>]", t.lsp_references, desc("references"))
+        map("n", "gr", t.lsp_references, desc("[r]eferences"))
       end
       if server_capabilities.codeActionProvider then
-        vim.keymap.set("n", "<leader>ll", function()
+        map("n", "<leader>ll", function()
           vim.lsp.buf.code_action({
             filter = function(action)
               return action.isPreferred
             end,
             apply = true,
           })
-        end, { buffer = buffer, desc = "[L]SP apply code action" })
-        vim.keymap.set(
-          "n",
-          "<leader>la",
-          vim.lsp.buf.code_action,
-          { buffer = buffer, desc = "[L]SP list code [a]ctions" }
-        )
+        end, desc("apply code action"))
+        map("n", "<leader>la", vim.lsp.buf.code_action, desc("list code [a]ctions"))
       end
       if vim.bo[buffer].ft == "cpp" then
-        vim.keymap.set("n", "<c-^>", "<cmd>ClangdSwitchSourceHeader<cr>", {
-          desc = "[G]o to header",
-          buffer = buffer,
-        })
+        map("n", "<c-^>", "<cmd>ClangdSwitchSourceHeader<cr>", desc("go to header"))
       end
       require("lsp-inlayhints").on_attach(client, buffer)
     end,
   })
 end
-
-vim.g.rustaceanvim = {
-  dap = {
-    autoload_configurations = true,
-  },
-  inlay_hints = {
-    highlight = "NonText",
-  },
-}
 
 return {
 
@@ -282,6 +242,16 @@ return {
     version = "^4",
     ft = { "rust" },
     lazy = false,
+    init = function()
+      vim.g.rustaceanvim = {
+        dap = {
+          autoload_configurations = true,
+        },
+        inlay_hints = {
+          highlight = "NonText",
+        },
+      }
+    end,
   },
 
   {
