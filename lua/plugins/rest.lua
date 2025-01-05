@@ -147,9 +147,12 @@ return {
       vim.g.netrw_nogx = 1
     end,
     dependencies = { "nvim-lua/plenary.nvim" },
+    submodules = false,
     opts = {
+      open_browser_app = "yandex-browser",
       handler_options = {
-        search_engine = "https://search.disroot.org/?q=",
+        search_engine = "yandex",
+      },
       },
     },
   },
