@@ -4,6 +4,19 @@ return {
     "stevearc/conform.nvim",
     dependencies = "williamboman/mason.nvim",
     opts = {
+      formatters = {
+        rekson = { command = "rekson" },
+        query = {
+          command = vim.fs.joinpath(
+            vim.fn.stdpath("data"),
+            "lazy/nvim-treesitter/scripts/format-queries.lua"
+          ),
+          args = {
+            "$FILENAME",
+          },
+          stdin = false,
+        },
+      },
       formatters_by_ft = {
         lua = { "stylua" },
         python = { "isort", "black" },
@@ -12,6 +25,8 @@ return {
         javascript = { "prettierd", "prettier", stop_after_first = true },
         markdown = { "prettierd", "prettier", stop_after_first = true },
         yaml = { "yamlfmt" },
+        json = { "rekson" },
+        query = { "query" },
       },
       format_on_save = function(bufnr)
         -- Disable with a global or buffer-local variable
