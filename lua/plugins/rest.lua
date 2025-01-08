@@ -153,6 +153,28 @@ return {
       handler_options = {
         search_engine = "yandex",
       },
+      handlers = {
+        rust = {
+          name = "rust",
+          filetype = { "toml" },
+          filename = "Cargo.toml",
+          handle = function(mode, line, _)
+            local crate = require("gx.helper").find(line, mode, "(%w+)%s-=%s")
+            if crate then
+              return "https://crates.io/crates/" .. crate
+            end
+          end,
+        },
+        github_actions = {
+          name = "checkout",
+          filetype = { "yaml" },
+          handle = function(mode, line, _)
+            local action = require("gx.helper").find(line, mode, ": ([a-zA-Z-_]+/[a-zA-Z-_]+)@v%d+")
+            if action and #action < 50 then
+              return "https://github.com/" .. action
+            end
+          end,
+        },
       },
     },
   },
