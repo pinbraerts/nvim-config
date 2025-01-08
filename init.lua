@@ -1,6 +1,4 @@
-local path = vim.fn.fnamemodify(vim.fn.expand("<sfile>"), ":p:h") .. "/"
-
-pcall(vim.cmd.source, path .. ".vimrc")
+pcall(vim.cmd.source, vim.fs.joinpath(vim.fn.stdpath("config"), ".vimrc"))
 
 vim.api.nvim_create_autocmd("BufWritePre", {
   group = vim.api.nvim_create_augroup("RemoveTrailingWhitespaces", { clear = true }),
