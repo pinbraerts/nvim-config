@@ -27,6 +27,7 @@ return {
         yaml = { "yamlfmt" },
         json = { "rekson" },
         query = { "query" },
+        ["_"] = { "trim_whitespace" },
       },
       format_on_save = function(bufnr)
         -- Disable with a global or buffer-local variable
@@ -66,6 +67,10 @@ return {
       end, {
         desc = "Re-enable autoformat-on-save",
         bang = true,
+      })
+
+      vim.api.nvim_clear_autocmds({
+        group = "RemoveTrailingWhitespaces",
       })
     end,
   },
