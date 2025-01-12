@@ -11,6 +11,9 @@ return {
       groups = {
         all = {
           WinSeparator = { fg = "#719cd6" },
+          DiffAdd = { fg = "#9ece6a" },
+          DiffDelete = { fg = "#bf616a" },
+          DiffChange = { fg = "#e0af68" },
         },
       },
     },
