@@ -28,7 +28,7 @@ return {
           enable = true,
           lookahead = true,
           include_surrounding_whitespace = function(options)
-            return options.selection_mode == "V"
+            return options.selection_mode == "v"
           end,
           keymaps = {
             ["a="] = { query = "@assignment.outer", desc = "[a]round of assignment" },
