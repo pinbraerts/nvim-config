@@ -42,6 +42,8 @@ return {
             ["if"] = { query = "@call.inner", desc = "[i]nside [f]unction call" },
             ["ac"] = { query = "@class.outer", desc = "[a]round [c]lass" },
             ["ic"] = { query = "@class.inner", desc = "[i]nside [c]lass" },
+            ["a?"] = { query = "@conditional.outer", desc = "[a]round [c]onditional" },
+            ["i?"] = { query = "@conditional.inner", desc = "[i]nside [c]onditional" },
           },
           selection_modes = {
             ["@function.outer"] = "V",
@@ -54,18 +56,22 @@ return {
           goto_next_start = {
             ["]m"] = { query = "@function.outer", desc = "next [m]ethod start" },
             ["]]"] = { query = "@class.outer", desc = "next class start" },
+            ["],"] = { query = "@parameter.inner", desc = "next parameter start" },
           },
           goto_next_end = {
             ["]M"] = { query = "@function.outer", desc = "next [m]ethod end" },
             ["]["] = { query = "@class.outer", desc = "next class end" },
+            ["]."] = { query = "@parameter.inner", desc = "next parameter end" },
           },
           goto_previous_start = {
             ["[m"] = { query = "@function.outer", desc = "previous [m]ethod start" },
             ["[["] = { query = "@class.outer", desc = "previous class start" },
+            ["[,"] = { query = "@parameter.inner", desc = "previous parameter start" },
           },
           goto_previous_end = {
             ["[M"] = { query = "@function.outer", desc = "previous [m]ethod end" },
             ["[]"] = { query = "@class.outer", desc = "previous class end" },
+            ["[."] = { query = "@parameter.inner", desc = "previous parameter end" },
           },
         },
         swap = {
