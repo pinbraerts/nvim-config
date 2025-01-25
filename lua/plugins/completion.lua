@@ -60,7 +60,7 @@ local function setup()
       { name = "path" },
       { name = "cmp_tabby", priority = 9999 },
       { name = "intelliboba", priority = 9999 },
-      { name = "lazydev", group_index = 0 },
+      { name = "lazydev" },
     }, {
       { name = "buffer" },
     }),
