@@ -143,7 +143,7 @@ function! ProcessModifiable()
     set wrap
     call ToggleText()
   else
-    nnoremap <buffer> q <c-w>q
+    nnoremap <buffer> q <cmd>bd<cr>
     nnoremap <buffer> d <c-d>
     nnoremap <buffer> u <c-u>
     set nowrap
