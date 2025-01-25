@@ -111,19 +111,20 @@ local function setup()
     lspconfig[name].setup(server)
   end
 
+  for name, _ in pairs(servers) do
+    if vim.fn.executable(name) ~= 0 then
+      setup_server(name)
+    end
+  end
+
   require("mason-lspconfig").setup({
+    ensure_installed = {},
+    automatic_installation = false,
     handlers = {
       setup_server,
       rust_analyzer = function() end,
     },
   })
-
-  local configured_servers = require("lspconfig.util").available_servers()
-  for name, _ in pairs(servers) do
-    if not vim.tbl_contains(configured_servers, name) and vim.fn.executable(name) ~= 0 then
-      setup_server(name)
-    end
-  end
 
   local t = require("telescope.builtin")
   local group = vim.api.nvim_create_augroup("lsp-config-attach", { clear = true })
@@ -157,7 +158,7 @@ local function setup()
         map("n", "<leader>l[", t.lsp_definitions, desc("list declarations"))
       end
       if server_capabilities.typeDefinitionProvider then
-        map("n", "gt", vim.lsp.buf.type_definition, desc("go to type definition"))
+        map("n", "gh", vim.lsp.buf.type_definition, desc("go to type definition"))
       end
       if server_capabilities.implementationProvider then
         map("n", "gi", vim.lsp.buf.implementation, desc("go to implementation"))
