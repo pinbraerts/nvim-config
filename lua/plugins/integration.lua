@@ -23,6 +23,11 @@ return {
     keys = {
       {
         "<leader>fb",
+        "<cmd>Yazi<cr>",
+        desc = "Open yazi file manager in current working directory",
+      },
+      {
+        "<leader>wd",
         "<cmd>Yazi cwd<cr>",
         desc = "Open yazi file manager in current working directory",
       },
