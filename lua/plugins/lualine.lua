@@ -1,3 +1,5 @@
+local yandex = require("utils.yandex")
+
 return {
   {
     "nvim-lualine/lualine.nvim",
@@ -38,6 +40,7 @@ return {
         lualine_a = { "mode" },
         lualine_b = {
           "branch",
+          { yandex.branch, icon = "", type = "lua_expr", cond = yandex.inside_arcadia },
         },
         lualine_c = {
           {
