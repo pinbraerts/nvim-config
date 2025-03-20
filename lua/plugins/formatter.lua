@@ -1,3 +1,14 @@
+local yandex = require("utils.yandex")
+
+local function make_tt_format(...)
+  return {
+    command = "ya",
+    args = { "tool", "tt", "format", "-", "--stdin-filename", "$FILENAME", "--formatters", ... },
+    condition = yandex.inside_arcadia,
+    tmpfile_format = "/tmp/conform/$RANDOM.$FILENAME",
+  }
+end
+
 return {
 
   {
@@ -5,6 +16,10 @@ return {
     dependencies = "williamboman/mason.nvim",
     opts = {
       formatters = {
+        tt_format_python = make_tt_format("initfmt", "ruff"),
+        tt_format_yaml = make_tt_format("yamlfmt"),
+        tt_format_json = make_tt_format("jsonfmt"),
+        tt_format_cpp = make_tt_format("clang-format"),
         rekson = { command = "rekson" },
         query = {
           command = vim.fs.joinpath(
@@ -16,17 +31,24 @@ return {
           },
           stdin = false,
         },
+        jq = {
+          args = {
+            "--sort-keys",
+          },
+        },
       },
       formatters_by_ft = {
         lua = { "stylua" },
-        python = { "isort", "black" },
+        python = { "tt_format_python", lsp_format = "never" },
         rust = { "rustfmt", lsp_format = "fallback" },
         fennel = { "fnlfmt" },
         javascript = { "prettierd", "prettier", stop_after_first = true },
         markdown = { "prettierd", "prettier", stop_after_first = true },
-        yaml = { "yamlfmt" },
-        json = { "rekson" },
+        yaml = { "yamlfmt", "tt_format_yaml" },
+        json = { "rekson", "jq" },
         query = { "query" },
+        cpp = { "tt_format_cpp" },
+        xml = { "xmlformatter" },
         ["_"] = { "trim_whitespace" },
       },
       format_on_save = function(bufnr)
