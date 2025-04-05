@@ -49,7 +49,7 @@ return {
       tmux.setup({
         navigation = {
           enable_default_keybindings = true,
-          cycle_navigation = false,
+          cycle_navigation = true,
           persist_zoom = true,
         },
         copy_sync = {
@@ -59,6 +59,18 @@ return {
           enable_default_keybindings = false,
         },
       })
+      vim.keymap.set(
+        "n",
+        "<c-p>",
+        tmux.previous_window,
+        { desc = "Select next tmux window", silent = true, nowait = true }
+      )
+      vim.keymap.set(
+        "n",
+        "<c-n>",
+        tmux.next_window,
+        { desc = "Select previous tmux window", silent = true, nowait = true }
+      )
     end,
   },
 }
