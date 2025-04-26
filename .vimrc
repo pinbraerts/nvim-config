@@ -93,7 +93,9 @@ inoremap <silent> <a-k> <c-c><cmd>m-2<cr>==a
 nnoremap [q <cmd>cp<cr>
 nnoremap ]q <cmd>cn<cr>
 
-if getenv("TMUX") != v:null
+if has('nvim')
+  " pass
+elseif getenv("TMUX") != v:null
   function! Navigate(direction, tmux_direction)
     let num_before = winnr()
     exec "wincmd " . a:direction
