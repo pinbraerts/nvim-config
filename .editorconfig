@@ -2,20 +2,17 @@ root = true
 
 [*]
 indent_style = space
-indent_size = 2
+indent_size = 4
 tab_width = 4
 end_of_line = lf
 insert_final_newline = true
 max_line_length = 100
 
-[*.{c,h}]
-indent_style = tab
-indent_size = 4
-tab_width = 4
+[*.{json,lua,sh,bash,vim}]
+indent_size = 2
 
-[*.py]
+[*.{yaml,yml}]
 indent_size = 4
 
-[{Makefile,**/Makefile,runtime/doc/*.txt}]
-indent_style = tab
-indent_size = 8
+[.vimrc]
+indent_size = 2
