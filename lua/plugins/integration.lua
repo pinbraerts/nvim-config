@@ -44,21 +44,42 @@ return {
     cond = function()
       return os.getenv("TMUX") ~= nil
     end,
-    config = function()
-      local tmux = require("tmux")
-      tmux.setup({
-        navigation = {
-          enable_default_keybindings = true,
-          cycle_navigation = false,
-          persist_zoom = true,
-        },
-        copy_sync = {
-          sync_clipboard = true,
-        },
-        resize = {
-          enable_default_keybindings = false,
-        },
-      })
-    end,
+    opts = {
+      navigation = {
+        enable_default_keybindings = true,
+        cycle_navigation = true,
+        persist_zoom = true,
+      },
+      copy_sync = {
+        sync_clipboard = true,
+      },
+      resize = {
+        enable_default_keybindings = false,
+      },
+    },
+    keys = {
+      {
+        "<c-n>",
+        function()
+          require("tmux").next_window()
+        end,
+        desc = "Select next tmux window",
+        silent = true,
+        nowait = true,
+      },
+      {
+        "<c-p>",
+        function()
+          require("tmux").previous_window()
+        end,
+        desc = "Select previous tmux window",
+        silent = true,
+        nowait = true,
+      },
+      "<c-h>",
+      "<c-j>",
+      "<c-k>",
+      "<c-l>",
+    },
   },
 }
