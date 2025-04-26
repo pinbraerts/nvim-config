@@ -69,8 +69,5 @@ return {
         end, { expr = true, buffer = buffer, desc = "Go to previous hunk" })
       end,
     },
-    cond = function()
-      return vim.system({ "arc", "root" }, { text = true }):wait().code ~= 0
-    end,
   },
 }
