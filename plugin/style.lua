@@ -4,7 +4,7 @@ vim.fn.sign_define("DapBreakpointRejected", { text = "⭕", texhl = "DapBreakpoi
 vim.fn.sign_define("DapLogPoint", { text = "🟣", texhl = "DapLogPoint" })
 vim.fn.sign_define("DapStopped", { text = "🔹", texhl = "DapStopped" })
 vim.fn.sign_define("DiagnosticSignError", { text = "❗", texhl = "DiagnosticSignError" })
-vim.fn.sign_define("DiagnosticSignWarn", { text = "⚠️ ", texhl = "DiagnosticSignWarn" })
+vim.fn.sign_define("DiagnosticSignWarn", { text = "⚠️", texhl = "DiagnosticSignWarn" })
 vim.fn.sign_define("DiagnosticSignInfo", { text = "🔍", texhl = "DiagnosticSignInfo" })
 vim.fn.sign_define("DiagnosticSignHint", { text = "💡", texhl = "DiagnosticSignHint" })
 -- 📌

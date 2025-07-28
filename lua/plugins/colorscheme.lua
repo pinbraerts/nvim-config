@@ -14,6 +14,7 @@ return {
           DiffAdd = { fg = "#9ece6a" },
           DiffDelete = { fg = "#bf616a" },
           DiffChange = { fg = "#e0af68" },
+          StatusLine = { bg = "none" },
         },
       },
     },

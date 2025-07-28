@@ -5,6 +5,7 @@ local function setup()
   local lspconfig = require("lspconfig")
   local configs = require("lspconfig.configs")
   local schemas = require("schemastore")
+
   if not configs.ya_make_lsp then
     configs.ya_make_lsp = {
       default_config = {
@@ -22,8 +23,12 @@ local function setup()
   }
 
   local servers = {
+    ya_make_lsp = {},
+    gopls = {},
+
     clangd = {
       cmd = { "clangd", "--header-insertion=never" },
+      filetypes = { "c", "cpp", "objc", "objcpp" },
     },
 
     jsonls = {
@@ -62,6 +67,9 @@ local function setup()
             pyflakes = { enabled = false },
             flake8 = { enabled = false },
             rope_autoimport = { enabled = false },
+            pycodestyle = {
+              ignore = python_ignored_warnings,
+            },
           },
         },
       },
@@ -130,8 +138,12 @@ local function setup()
     lspconfig[name].setup(server)
   end
 
-  for name, _ in pairs(servers) do
-    if vim.fn.executable(name) ~= 0 then
+  for name, value in pairs(servers) do
+    if
+      vim.tbl_isempty(value)
+      or vim.fn.executable(name) ~= 0
+      or (value.cmd and value.cmd[1] and vim.fn.executable(value.cmd[1]) ~= 0)
+    then
       setup_server(name)
     end
   end
@@ -139,6 +151,7 @@ local function setup()
   require("mason-lspconfig").setup({
     ensure_installed = {},
     automatic_installation = false,
+    automatic_enable = false,
     handlers = {
       setup_server,
       rust_analyzer = function() end,
@@ -181,7 +194,6 @@ local function setup()
       end
       if server_capabilities.implementationProvider then
         map("n", "gi", vim.lsp.buf.implementation, desc("go to implementation"))
-        map("n", "<c-p>", vim.lsp.buf.implementation, desc("go to implementation"))
       end
       if server_capabilities.renameProvider then
         map("n", "<leader>lr", vim.lsp.buf.rename, desc("rename"))

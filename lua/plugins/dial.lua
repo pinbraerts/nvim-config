@@ -93,7 +93,9 @@ local function config()
       weekday,
       month_ru,
       weekday_ru,
-      augend.hexcolor.new({}),
+      augend.hexcolor.new({
+        case = "lower",
+      }),
       augend.semver.new({}),
     },
     visual = {
