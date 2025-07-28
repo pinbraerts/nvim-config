@@ -141,6 +141,24 @@ return {
             end
           end,
         },
+        startrek = {
+          name = "startrek",
+          handle = function(mode, line, _)
+            local ticket = require("gx.helper").find(line, mode, "(%u+-%d+)")
+            if ticket and #ticket < 20 then
+              return "https://st.yandex-team.ru/" .. ticket
+            end
+          end,
+        },
+        trace_id = {
+          name = "trace_id",
+          handle = function(mode, line, _)
+            local trace_id = require("gx.helper").find(line, mode, "X-YaTraceId: (%w+)")
+            if trace_id and #trace_id < 40 then
+              return "m.yandex-team.ru/projects/market/traces/" .. trace_id
+            end
+          end,
+        },
       },
     },
   },
@@ -150,6 +168,10 @@ return {
     keys = {
       { "<leader>tu", "<cmd>UndotreeToggle<cr>", desc = "[T]oggle [u]ndo tree", silent = true },
     },
+  },
+
+  {
+    "pinbraerts/restman.nvim",
   },
 
   {

@@ -1,6 +1,10 @@
+local yandex = require("utils.yandex")
+local inside_arcadia = yandex.inside_arcadia()
+
 return {
   {
-    "lewis6991/gitsigns.nvim",
+    not inside_arcadia and "lewis6991/gitsigns.nvim" or nil,
+    dir = inside_arcadia and yandex / "contrib/tier1/gitsigns.arc.nvim" or nil,
     opts = {
       attach_to_untracked = true,
       on_attach = function(buffer)
@@ -39,15 +43,6 @@ return {
           { desc = "[G]it toggle blame", buffer = buffer }
         )
         map("n", "<leader>gv", g.preview_hunk, { desc = "[G]it pre[v]iew", buffer = buffer })
-
-        map("n", "<esc>", function()
-          for _, id in ipairs(vim.api.nvim_list_wins()) do
-            if vim.api.nvim_win_get_config(id).relative ~= "" then
-              vim.api.nvim_win_close(id, false)
-            end
-          end
-          vim.cmd.nohls()
-        end, { buffer = buffer, desc = "Close relative window" })
 
         map("n", "]c", function()
           if vim.wo.diff then
