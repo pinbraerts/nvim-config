@@ -49,6 +49,8 @@ return {
         query = { "query" },
         cpp = { "tt_format_cpp" },
         xml = { "xmlformatter" },
+        html = { "prettierd", "prettier", stop_after_first = true },
+        go = { "gofmt" },
         ["_"] = { "trim_whitespace" },
       },
       format_on_save = function(bufnr)
