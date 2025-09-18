@@ -9,6 +9,29 @@ local function setup()
   }
 
   local servers = {
+    ya_make_lsp = {
+      default_config = {
+        cmd = { "node", "/home/pinbraerts/.local/share/ya-make-lsp/ya-make-lsp.js", "--stdio" },
+        filetypes = { "yamake" },
+        root_dir = function(fname)
+          return vim.fs.dirname(fname)
+        end,
+      },
+    },
+
+    apphost_lsp = {
+      default_config = {
+        cmd = {
+          "env",
+          "ARCADIA_ROOT=/home/pinbraerts/arcadia",
+          "/home/pinbraerts/arcadia/apphost/gp/tools/lsp/lsp",
+          "-e",
+          "lua-language-server",
+        },
+        filetypes = { "lua", "yaml" },
+      },
+    },
+
     gopls = {},
 
     clangd = {
