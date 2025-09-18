@@ -76,6 +76,7 @@ local function setup()
     },
 
     lua_ls = {
+      cmd = { "lua-language-server" },
       settings = {
         Lua = {
           completion = {
@@ -225,10 +226,12 @@ local function setup()
         end, desc("apply code action"))
         map("n", "<leader>la", vim.lsp.buf.code_action, desc("list code [a]ctions"))
       end
+      if server_capabilities.inlayHintProvider then
+        vim.lsp.inlay_hint.enable(true, { bufnr = buffer })
+      end
       if vim.bo[buffer].ft == "cpp" then
         map("n", "<c-^>", "<cmd>ClangdSwitchSourceHeader<cr>", desc("go to header"))
       end
-      require("lsp-inlayhints").on_attach(client, buffer)
     end,
   })
 end
@@ -242,7 +245,6 @@ return {
       "b0o/schemastore.nvim",
       { "j-hui/fidget.nvim", opts = {} },
       "nvim-telescope/telescope.nvim",
-      { "lvimuser/lsp-inlayhints.nvim", opts = {} },
     },
     lazy = false,
     config = setup,
