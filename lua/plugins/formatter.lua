@@ -39,7 +39,7 @@ return {
       },
       formatters_by_ft = {
         lua = { "stylua" },
-        python = { "tt_format_python", lsp_format = "never" },
+        -- python = { "tt_format_python", lsp_format = "never" },
         rust = { "rustfmt", lsp_format = "fallback" },
         fennel = { "fnlfmt" },
         javascript = { "prettierd", "prettier", stop_after_first = true },
