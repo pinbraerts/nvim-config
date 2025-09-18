@@ -17,6 +17,10 @@ function M.inside_arcadia()
   return vim.fn.getcwd():match(M.root) ~= nil
 end
 
+function M.inside_taxi()
+  return vim.fn.getcwd():match(vim.fs.joinpath(M.root, "taxi")) ~= nil
+end
+
 function M.join(...)
   return vim.fs.joinpath(M.root, ...)
 end
