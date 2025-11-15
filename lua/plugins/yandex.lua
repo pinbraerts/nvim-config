@@ -1,5 +1,5 @@
 local yandex = require("utils.yandex")
-if not yandex.has_arcadia() then
+if not yandex.arcadia then
   return {}
 end
 

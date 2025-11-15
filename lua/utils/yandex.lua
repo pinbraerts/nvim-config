@@ -6,38 +6,34 @@ vim.filetype.add({
 
 local M = {}
 
-local home = os.getenv("HOME") or os.getenv("USERPROFILE")
-M.root = vim.fs.joinpath(home, "arcadia")
-
-function M.has_arcadia()
-  return vim.fs.dir(M.root)() ~= nil
+local _status = vim.system({ "arc", "root" }, { text = true }):wait()
+M.arcadia = nil
+if _status.code == 0 then
+  M.arcadia = vim.trim(_status.stdout)
 end
 
 function M.inside_arcadia()
-  return vim.fn.getcwd():match(M.root) ~= nil
+  return M.arcadia and vim.fn.getcwd():match(M.arcadia)
 end
 
 function M.inside_taxi()
-  return vim.fn.getcwd():match(vim.fs.joinpath(M.root, "taxi")) ~= nil
-end
-
-function M.join(...)
-  return vim.fs.joinpath(M.root, ...)
-end
-
-function M.__div(m, a)
-  return m.join(a)
+  return M.arcadia and vim.fn.getcwd():match(M / "taxi")
 end
 
 function M.branch()
-  if not home then
+  local info = vim.system({ "arc", "info", "--json" }, { text = true }):wait()
+  if info.code ~= 0 then
     return
   end
-  local link = io.open(vim.fs.joinpath(home, ".arc", "store", ".arc", "HEAD")):read()
-  return link:match('"(.*)"')
+  local info_json = vim.json.decode(info.stdout)
+  return info_json.branch
 end
 
 M.__index = M
-M = setmetatable(M, M)
+M = setmetatable(M, {
+  __div = function(m, o)
+    return vim.fs.joinpath(m.arcadia, o)
+  end,
+})
 
 return M
