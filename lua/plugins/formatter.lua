@@ -9,6 +9,15 @@ local function make_tt_format(...)
   }
 end
 
+local function make_ya_style(...)
+  return {
+    command = "ya",
+    args = { "style", "--stdin-filename", "$FILENAME", ... },
+    condition = yandex.inside_arcadia,
+    tmpfile_format = "/tmp/conform/$RANDOM.$FILENAME",
+  }
+end
+
 return {
 
   {
@@ -20,14 +29,7 @@ return {
         tt_format_yaml = make_tt_format("yamlfmt"),
         tt_format_json = make_tt_format("jsonfmt"),
         tt_format_cpp = make_tt_format("clang-format"),
-        ya_style = {
-          command = "ya",
-          args = { "style", "--stdin-filename", "$FILENAME" },
-          condition = function()
-            return yandex.inside_arcadia() and not yandex.inside_taxi()
-          end,
-          tmpfile_format = "/tmp/conform/$RANDOM.$FILENAME",
-        },
+        ya_style_cpp = make_ya_style("--cpp"),
         rekson = { command = "rekson" },
         query = {
           command = vim.fs.joinpath(
@@ -55,7 +57,7 @@ return {
         yaml = { "yamlfmt", "tt_format_yaml" },
         json = { "rekson", "jq" },
         query = { "query" },
-        cpp = { "tt_format_cpp", "ya_style" },
+        cpp = { "tt_format_cpp", "ya_style_cpp", stop_after_first = true },
         xml = { "xmlformatter" },
         html = { "prettierd", "prettier", stop_after_first = true },
         go = { "gofmt" },
