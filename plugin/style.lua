@@ -1,12 +1,25 @@
+vim.diagnostic.config({
+  signs = {
+    active = true,
+    text = {
+      ERROR = "❗",
+      WARN = "⚠️",
+      INFO = "🔍",
+      HINT = "💡",
+    },
+  },
+  virtual_text = true,
+  underline = true,
+  update_in_insert = false,
+  severity_sort = true,
+})
+
+-- DAP signs (still use sign_define)
 vim.fn.sign_define("DapBreakpoint", { text = "🔴", texhl = "DapBreakpoint" })
 vim.fn.sign_define("DapBreakpointCondition", { text = "🟠", texhl = "DapBreakpoint" })
 vim.fn.sign_define("DapBreakpointRejected", { text = "⭕", texhl = "DapBreakpoint" })
 vim.fn.sign_define("DapLogPoint", { text = "🟣", texhl = "DapLogPoint" })
 vim.fn.sign_define("DapStopped", { text = "🔹", texhl = "DapStopped" })
-vim.fn.sign_define("DiagnosticSignError", { text = "❗", texhl = "DiagnosticSignError" })
-vim.fn.sign_define("DiagnosticSignWarn", { text = "⚠️", texhl = "DiagnosticSignWarn" })
-vim.fn.sign_define("DiagnosticSignInfo", { text = "🔍", texhl = "DiagnosticSignInfo" })
-vim.fn.sign_define("DiagnosticSignHint", { text = "💡", texhl = "DiagnosticSignHint" })
 -- 📌
 
 if vim.g.neovide then
