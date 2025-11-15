@@ -2,28 +2,13 @@ local function setup()
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   local cmp_capabilities = require("cmp_nvim_lsp").default_capabilities()
   capabilities = vim.tbl_extend("force", capabilities, cmp_capabilities)
-  local lspconfig = require("lspconfig")
-  local configs = require("lspconfig.configs")
   local schemas = require("schemastore")
-
-  if not configs.ya_make_lsp then
-    configs.ya_make_lsp = {
-      default_config = {
-        cmd = { "node", "/home/pinbraerts/.local/share/ya-make-lsp/ya-make-lsp.js", "--stdio" },
-        filetypes = { "yamake" },
-        root_dir = function(fname)
-          return vim.fs.dirname(fname)
-        end,
-      },
-    }
-  end
 
   local python_ignored_warnings = {
     "E501",
   }
 
   local servers = {
-    ya_make_lsp = {},
     gopls = {},
 
     clangd = {
@@ -136,7 +121,8 @@ local function setup()
     local server = servers[name] or {}
     server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
     server.single_file_support = true
-    lspconfig[name].setup(server)
+    vim.lsp.config(name, server)
+    vim.lsp.enable(name)
   end
 
   for name, value in pairs(servers) do
