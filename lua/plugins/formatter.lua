@@ -1,20 +1,11 @@
 local yandex = require("utils.yandex")
 
-local function make_tt_format(...)
-  return {
-    command = "ya",
-    args = { "tool", "tt", "format", "-", "--stdin-filename", "$FILENAME", "--formatters", ... },
-    condition = yandex.inside_taxi,
-    tmpfile_format = "/tmp/conform/$RANDOM.$FILENAME",
-  }
-end
-
 local function make_ya_style(...)
   return {
     command = "ya",
     args = { "style", "--stdin-filename", "$FILENAME", ... },
     condition = yandex.inside_arcadia,
-    tmpfile_format = "/tmp/conform/$RANDOM.$FILENAME",
+    stdin = true,
   }
 end
 
@@ -25,11 +16,9 @@ return {
     dependencies = "williamboman/mason.nvim",
     opts = {
       formatters = {
-        tt_format_python = make_tt_format("initfmt", "ruff"),
-        tt_format_yaml = make_tt_format("yamlfmt"),
-        tt_format_json = make_tt_format("jsonfmt"),
-        tt_format_cpp = make_tt_format("clang-format"),
-        ya_style_cpp = make_ya_style("--cpp"),
+        ya_style = make_ya_style(),
+        ya_style_py = make_ya_style("--py"),
+        ya_style_yaml = make_ya_style("--yaml"),
         rekson = { command = "rekson" },
         query = {
           command = vim.fs.joinpath(
@@ -49,15 +38,15 @@ return {
       },
       formatters_by_ft = {
         lua = { "stylua" },
-        -- python = { "tt_format_python", lsp_format = "never" },
+        -- python = { "ya_style_py", lsp_format = "never" },
         rust = { "rustfmt", lsp_format = "fallback" },
         fennel = { "fnlfmt" },
         javascript = { "prettierd", "prettier", stop_after_first = true },
         markdown = { "prettierd", "prettier", stop_after_first = true },
-        yaml = { "yamlfmt", "tt_format_yaml" },
+        -- yaml = { "yamlfmt", "ya_style_yaml" },
         json = { "rekson", "jq" },
         query = { "query" },
-        cpp = { "tt_format_cpp", "ya_style_cpp", stop_after_first = true },
+        cpp = { "ya_style" },
         xml = { "xmlformatter" },
         html = { "prettierd", "prettier", stop_after_first = true },
         go = { "gofmt" },
@@ -68,7 +57,7 @@ return {
         if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
           return
         end
-        return { timeout_ms = 500, lsp_format = "fallback" }
+        return { timeout_ms = 2000, lsp_format = "fallback" }
       end,
     },
     init = function()
