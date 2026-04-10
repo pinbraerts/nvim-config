@@ -155,7 +155,16 @@ return {
           handle = function(mode, line, _)
             local trace_id = require("gx.helper").find(line, mode, "X-YaTraceId: (%w+)")
             if trace_id and #trace_id < 40 then
-              return "m.yandex-team.ru/projects/market/traces/" .. trace_id
+              return "https://m.yandex-team.ru/projects/market/traces/" .. trace_id
+            end
+          end,
+        },
+        traceparent = {
+          name = "traceparent",
+          handle = function(mode, line, _)
+            local trace_id = require("gx.helper").find(line, mode, "traceparent: %w+-(%w+)-%w+-%w+")
+            if trace_id and #trace_id < 40 then
+              return "https://m.yandex-team.ru/projects/market/traces/" .. trace_id
             end
           end,
         },
