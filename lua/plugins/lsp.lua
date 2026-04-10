@@ -1,3 +1,5 @@
+local yandex = require("utils.yandex")
+
 local function setup()
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   local cmp_capabilities = require("cmp_nvim_lsp").default_capabilities()
@@ -10,29 +12,29 @@ local function setup()
 
   local servers = {
     ya_make_lsp = {
-      default_config = {
-        cmd = { "node", "/home/pinbraerts/.local/share/ya-make-lsp/ya-make-lsp.js", "--stdio" },
-        filetypes = { "yamake" },
-        root_dir = function(fname)
-          return vim.fs.dirname(fname)
-        end,
-      },
+      cmd = { "node", "/home/pinbraerts/.local/share/ya-make-lsp/ya-make-lsp.js", "--stdio" },
+      filetypes = { "yamake" },
+      root_dir = function(bufnr)
+        return vim.fs.dirname(vim.api.nvim_buf_get_name(bufnr))
+      end,
     },
 
     apphost_lsp = {
-      default_config = {
-        cmd = {
-          "env",
-          "ARCADIA_ROOT=/home/pinbraerts/arcadia",
-          "/home/pinbraerts/arcadia/apphost/gp/tools/lsp/lsp",
-          "-e",
-          "lua-language-server",
-        },
-        filetypes = { "lua", "yaml" },
+      cmd = {
+        "env",
+        "ARCADIA_ROOT=/home/pinbraerts/arcadia",
+        "/home/pinbraerts/arcadia/apphost/gp/tools/lsp/lsp",
+        "-e",
+        "lua-language-server",
       },
+      filetypes = { "lua", "yaml" },
     },
 
+    ruff = {},
+
     gopls = {},
+
+    terraformls = {},
 
     clangd = {
       cmd = { "clangd", "--header-insertion=never" },
@@ -77,6 +79,11 @@ local function setup()
             rope_autoimport = { enabled = false },
             pycodestyle = {
               ignore = python_ignored_warnings,
+            },
+            jedi = {
+              extra_paths = {
+                yandex.arcadia,
+              },
             },
           },
         },
