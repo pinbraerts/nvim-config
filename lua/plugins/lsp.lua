@@ -11,6 +11,11 @@ local function setup()
   }
 
   local servers = {
+    tinymist = {
+      cmd = { "tinymist" },
+      filetypes = { "typst" },
+    },
+
     ya_make_lsp = {
       cmd = { "node", "/home/pinbraerts/.local/share/ya-make-lsp/ya-make-lsp.js", "--stdio" },
       filetypes = { "yamake" },
