@@ -13,7 +13,7 @@ if _status.code == 0 then
 end
 
 function M.inside_arcadia()
-  return M.arcadia and vim.fn.getcwd():match(M.arcadia)
+  return M.arcadia and vim.startswith(vim.fn.getcwd(), M.arcadia)
 end
 
 function M.inside_taxi()
